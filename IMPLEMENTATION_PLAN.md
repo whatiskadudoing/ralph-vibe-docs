@@ -54,6 +54,6 @@
 
 ## Phase 7: Cleanup & Verification
 
-- [ ] Remove old index.html and styles.css after verifying Astro build works
+- [x] Remove old index.html and styles.css after verifying Astro build works
 - [ ] Run final checks: all 9 sections render, colors match spec, page loads <2s, no layout shifts
 - [ ] Update README.md with new dev commands (npm install, npm run dev, npm run build)

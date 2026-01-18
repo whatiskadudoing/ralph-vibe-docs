@@ -1,5 +1,6 @@
 ---
 // Card component - reusable container with white background, border, shadow, and padding variants
+// Responsive padding: smaller on mobile, larger on desktop
 
 interface Props {
   variant?: 'default' | 'transparent';
@@ -22,10 +23,11 @@ const variantClasses = {
   transparent: 'bg-transparent'
 };
 
+// Responsive padding classes - smaller on mobile, larger on desktop
 const paddingClasses = {
-  sm: 'p-4',
-  md: 'p-6',
-  lg: 'p-8'
+  sm: 'p-3 md:p-4',
+  md: 'p-4 md:p-6',
+  lg: 'p-6 md:p-8'
 };
 
 const hoverClass = hover ? 'hover:shadow-md' : '';

@@ -10,71 +10,71 @@ import Card from '../components/Card.astro';
 
   <main>
     <!-- Hero Section -->
-    <section id="hero" class="py-20 md:py-32 px-6">
+    <section id="hero" class="py-16 md:py-24 lg:py-32 px-4 sm:px-6">
       <div class="max-w-[800px] mx-auto text-center">
-        <p class="text-sm font-medium text-[--color-accent] mb-4 tracking-wide uppercase">Autonomous Development</p>
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-[--color-text-primary] mb-6 leading-tight">
+        <p class="text-xs sm:text-sm font-medium text-[--color-accent] mb-3 md:mb-4 tracking-wide uppercase">Autonomous Development</p>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[--color-text-primary] mb-4 md:mb-6 leading-tight">
           The Ralph technique, without learning the Ralph technique
         </h1>
-        <p class="text-lg md:text-xl text-[--color-text-muted] mb-8 max-w-[600px] mx-auto">
+        <p class="text-base sm:text-lg md:text-xl text-[--color-text-muted] mb-6 md:mb-8 max-w-[600px] mx-auto">
           All the power of autonomous AI development. None of the setup.
         </p>
-        <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-4 mb-8 max-w-[600px] mx-auto">
-          <code class="text-sm md:text-base text-[--color-text-primary]">curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh</code>
+        <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-3 md:p-4 mb-6 md:mb-8 max-w-[600px] mx-auto overflow-x-auto">
+          <code class="text-xs sm:text-sm md:text-base text-[--color-text-primary] whitespace-nowrap">curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh</code>
         </div>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#quick-start" class="inline-block px-6 py-3 bg-[--color-accent] text-white font-medium rounded-lg hover:bg-[--color-accent-hover] hover:no-underline transition-colors">Get Started</a>
-          <a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-3 border border-[--color-accent] text-[--color-accent] font-medium rounded-lg hover:bg-[--color-accent] hover:text-white hover:no-underline transition-colors">View on GitHub</a>
+        <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+          <a href="#quick-start" class="inline-block px-5 md:px-6 py-2.5 md:py-3 bg-[--color-accent] text-white font-medium rounded-lg hover:bg-[--color-accent-hover] hover:no-underline transition-colors text-sm md:text-base">Get Started</a>
+          <a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="inline-block px-5 md:px-6 py-2.5 md:py-3 border border-[--color-accent] text-[--color-accent] font-medium rounded-lg hover:bg-[--color-accent] hover:text-white hover:no-underline transition-colors text-sm md:text-base">View on GitHub</a>
         </div>
       </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 px-6 bg-[--color-bg-secondary]">
+    <section id="about" class="py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-[--color-bg-secondary]">
       <div class="max-w-[800px] mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">What is Ralph Vibe?</h2>
-        <div class="space-y-4 text-lg">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">What is Ralph Vibe?</h2>
+        <div class="space-y-3 md:space-y-4 text-base md:text-lg">
           <p>Setting up the Ralph Wiggum technique for autonomous AI development is complex and time-consuming. You need specifications, implementation plans, build prompts, and a structured workflow.</p>
           <p>Ralph Vibe handles all of that automatically.</p>
-          <p class="text-xl font-medium text-[--color-text-primary]">Describe what you want. Ralph builds it while you sleep.</p>
+          <p class="text-lg md:text-xl font-medium text-[--color-text-primary]">Describe what you want. Ralph builds it while you sleep.</p>
         </div>
       </div>
     </section>
 
     <!-- How It Works Section -->
-    <section id="how-it-works" class="py-20 px-6">
+    <section id="how-it-works" class="py-16 md:py-20 lg:py-24 px-4 sm:px-6">
       <div class="max-w-[1000px] mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">How It Works</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center">How It Works</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           <div class="text-center">
-            <div class="w-12 h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
-            <h3 class="text-lg font-semibold mb-2">Interview</h3>
-            <p class="text-[--color-text-muted]">Ralph asks what you want to build</p>
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">1</div>
+            <h3 class="text-base md:text-lg font-semibold mb-2">Interview</h3>
+            <p class="text-sm md:text-base text-[--color-text-muted]">Ralph asks what you want to build</p>
           </div>
           <div class="text-center">
-            <div class="w-12 h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
-            <h3 class="text-lg font-semibold mb-2">Specs</h3>
-            <p class="text-[--color-text-muted]">Your answers become precise specifications</p>
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">2</div>
+            <h3 class="text-base md:text-lg font-semibold mb-2">Specs</h3>
+            <p class="text-sm md:text-base text-[--color-text-muted]">Your answers become precise specifications</p>
           </div>
           <div class="text-center">
-            <div class="w-12 h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
-            <h3 class="text-lg font-semibold mb-2">Plan</h3>
-            <p class="text-[--color-text-muted]">Tasks are generated from specs</p>
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">3</div>
+            <h3 class="text-base md:text-lg font-semibold mb-2">Plan</h3>
+            <p class="text-sm md:text-base text-[--color-text-muted]">Tasks are generated from specs</p>
           </div>
           <div class="text-center">
-            <div class="w-12 h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">4</div>
-            <h3 class="text-lg font-semibold mb-2">Build</h3>
-            <p class="text-[--color-text-muted]">Autonomous loop builds and tests until done</p>
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">4</div>
+            <h3 class="text-base md:text-lg font-semibold mb-2">Build</h3>
+            <p class="text-sm md:text-base text-[--color-text-muted]">Autonomous loop builds and tests until done</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Commands Section -->
-    <section id="commands" class="py-20 px-6 bg-[--color-bg-secondary]">
+    <section id="commands" class="py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-[--color-bg-secondary]">
       <div class="max-w-[1000px] mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Commands</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center">Commands</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <Card>
             <code class="text-lg font-semibold text-[--color-accent]">ralph init</code>
             <p class="mt-3 text-[--color-text-muted]">Initialize a new project or integrate with existing code. Add <code class="text-sm bg-[--color-bg-code] px-1.5 py-0.5 rounded">--vibe</code> to run the full pipeline automatically.</p>
@@ -104,10 +104,10 @@ import Card from '../components/Card.astro';
     </section>
 
     <!-- Philosophy Section -->
-    <section id="philosophy" class="py-20 px-6">
+    <section id="philosophy" class="py-16 md:py-20 lg:py-24 px-4 sm:px-6">
       <div class="max-w-[1000px] mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Why Ralph Vibe?</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center">Why Ralph Vibe?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <Card>
             <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">1</div>
             <h3 class="text-lg font-semibold mb-2">Fresh Context</h3>
@@ -138,105 +138,105 @@ import Card from '../components/Card.astro';
     </section>
 
     <!-- Quick Start Section -->
-    <section id="quick-start" class="py-20 px-6 bg-[--color-bg-secondary]">
+    <section id="quick-start" class="py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-[--color-bg-secondary]">
       <div class="max-w-[800px] mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Quick Start</h2>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center">Quick Start</h2>
 
-        <div class="space-y-8">
+        <div class="space-y-6 md:space-y-8">
           <div>
-            <h3 class="text-xl font-semibold mb-4">Prerequisites</h3>
-            <ul class="list-disc list-inside space-y-2 text-[--color-text-secondary]">
+            <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4">Prerequisites</h3>
+            <ul class="list-disc list-inside space-y-2 text-sm md:text-base text-[--color-text-secondary]">
               <li><a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer">Claude Code CLI</a> installed with Pro or Team subscription</li>
             </ul>
           </div>
 
           <div>
-            <h3 class="text-xl font-semibold mb-4">Installation</h3>
-            <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-4">
-              <code class="text-sm text-[--color-text-primary]">curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh</code>
+            <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4">Installation</h3>
+            <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-3 md:p-4 overflow-x-auto">
+              <code class="text-xs sm:text-sm text-[--color-text-primary] whitespace-nowrap">curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh</code>
             </div>
           </div>
 
           <div>
-            <h3 class="text-xl font-semibold mb-4">Verify Installation</h3>
-            <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-4">
-              <code class="text-sm text-[--color-text-primary]">ralph --version</code>
+            <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4">Verify Installation</h3>
+            <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-3 md:p-4">
+              <code class="text-xs sm:text-sm text-[--color-text-primary]">ralph --version</code>
             </div>
           </div>
 
           <div>
-            <h3 class="text-xl font-semibold mb-4">Start Building</h3>
-            <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-4">
-              <code class="text-sm text-[--color-text-primary]">ralph init --vibe</code>
+            <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4">Start Building</h3>
+            <div class="bg-[--color-bg-code] border border-[--color-border-light] rounded-lg p-3 md:p-4">
+              <code class="text-xs sm:text-sm text-[--color-text-primary]">ralph init --vibe</code>
             </div>
-            <p class="mt-4 text-[--color-text-muted]">This will initialize your project, conduct an interview to gather requirements, generate an implementation plan, and begin the autonomous work loop.</p>
+            <p class="mt-3 md:mt-4 text-sm md:text-base text-[--color-text-muted]">This will initialize your project, conduct an interview to gather requirements, generate an implementation plan, and begin the autonomous work loop.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- FAQ Section -->
-    <section id="faq" class="py-20 px-6">
+    <section id="faq" class="py-16 md:py-20 lg:py-24 px-4 sm:px-6">
       <div class="max-w-[800px] mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">FAQ</h2>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center">FAQ</h2>
 
-        <div class="space-y-4">
+        <div class="space-y-3 md:space-y-4">
           <details class="group border border-[--color-border-light] rounded-lg">
-            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-[--color-text-primary] hover:text-[--color-accent]">
+            <summary class="flex items-center justify-between p-3 md:p-4 cursor-pointer font-medium text-sm md:text-base text-[--color-text-primary] hover:text-[--color-accent]">
               Do I need a Claude Pro subscription?
-              <span class="text-[--color-accent] transition-transform group-open:rotate-45">+</span>
+              <span class="text-[--color-accent] transition-transform group-open:rotate-45 flex-shrink-0 ml-2">+</span>
             </summary>
-            <div class="px-4 pb-4 text-[--color-text-secondary]">
+            <div class="px-3 md:px-4 pb-3 md:pb-4 text-sm md:text-base text-[--color-text-secondary]">
               Yes. Ralph Vibe uses Claude Code under the hood, which requires an active Claude Pro or Team subscription.
             </div>
           </details>
 
           <details class="group border border-[--color-border-light] rounded-lg">
-            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-[--color-text-primary] hover:text-[--color-accent]">
+            <summary class="flex items-center justify-between p-3 md:p-4 cursor-pointer font-medium text-sm md:text-base text-[--color-text-primary] hover:text-[--color-accent]">
               Can I use Ralph Vibe with an existing project?
-              <span class="text-[--color-accent] transition-transform group-open:rotate-45">+</span>
+              <span class="text-[--color-accent] transition-transform group-open:rotate-45 flex-shrink-0 ml-2">+</span>
             </summary>
-            <div class="px-4 pb-4 text-[--color-text-secondary]">
-              Yes. Run <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-sm">ralph init</code> in your project directory and it will integrate with your existing codebase.
+            <div class="px-3 md:px-4 pb-3 md:pb-4 text-sm md:text-base text-[--color-text-secondary]">
+              Yes. Run <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-xs md:text-sm">ralph init</code> in your project directory and it will integrate with your existing codebase.
             </div>
           </details>
 
           <details class="group border border-[--color-border-light] rounded-lg">
-            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-[--color-text-primary] hover:text-[--color-accent]">
+            <summary class="flex items-center justify-between p-3 md:p-4 cursor-pointer font-medium text-sm md:text-base text-[--color-text-primary] hover:text-[--color-accent]">
               What happens if a build fails?
-              <span class="text-[--color-accent] transition-transform group-open:rotate-45">+</span>
+              <span class="text-[--color-accent] transition-transform group-open:rotate-45 flex-shrink-0 ml-2">+</span>
             </summary>
-            <div class="px-4 pb-4 text-[--color-text-secondary]">
-              Ralph Vibe runs tests after each task. If tests fail, it attempts to fix the issues. You can also intervene manually and run <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-sm">ralph work</code> to continue.
+            <div class="px-3 md:px-4 pb-3 md:pb-4 text-sm md:text-base text-[--color-text-secondary]">
+              Ralph Vibe runs tests after each task. If tests fail, it attempts to fix the issues. You can also intervene manually and run <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-xs md:text-sm">ralph work</code> to continue.
             </div>
           </details>
 
           <details class="group border border-[--color-border-light] rounded-lg">
-            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-[--color-text-primary] hover:text-[--color-accent]">
+            <summary class="flex items-center justify-between p-3 md:p-4 cursor-pointer font-medium text-sm md:text-base text-[--color-text-primary] hover:text-[--color-accent]">
               How is this different from using Claude Code directly?
-              <span class="text-[--color-accent] transition-transform group-open:rotate-45">+</span>
+              <span class="text-[--color-accent] transition-transform group-open:rotate-45 flex-shrink-0 ml-2">+</span>
             </summary>
-            <div class="px-4 pb-4 text-[--color-text-secondary]">
+            <div class="px-3 md:px-4 pb-3 md:pb-4 text-sm md:text-base text-[--color-text-secondary]">
               Ralph Vibe adds structure: specifications, task planning, and an autonomous loop. Claude Code is the engine; Ralph Vibe is the autopilot.
             </div>
           </details>
 
           <details class="group border border-[--color-border-light] rounded-lg">
-            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-[--color-text-primary] hover:text-[--color-accent]">
+            <summary class="flex items-center justify-between p-3 md:p-4 cursor-pointer font-medium text-sm md:text-base text-[--color-text-primary] hover:text-[--color-accent]">
               What files does Ralph Vibe create?
-              <span class="text-[--color-accent] transition-transform group-open:rotate-45">+</span>
+              <span class="text-[--color-accent] transition-transform group-open:rotate-45 flex-shrink-0 ml-2">+</span>
             </summary>
-            <div class="px-4 pb-4 text-[--color-text-secondary]">
-              It creates <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-sm">specs/</code> for specifications, <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-sm">IMPLEMENTATION_PLAN.md</code> for tasks, <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-sm">AGENTS.md</code> for configuration, and supporting prompt files.
+            <div class="px-3 md:px-4 pb-3 md:pb-4 text-sm md:text-base text-[--color-text-secondary]">
+              It creates <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-xs md:text-sm">specs/</code> for specifications, <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-xs md:text-sm">IMPLEMENTATION_PLAN.md</code> for tasks, <code class="bg-[--color-bg-code] px-1.5 py-0.5 rounded text-xs md:text-sm">AGENTS.md</code> for configuration, and supporting prompt files.
             </div>
           </details>
 
           <details class="group border border-[--color-border-light] rounded-lg">
-            <summary class="flex items-center justify-between p-4 cursor-pointer font-medium text-[--color-text-primary] hover:text-[--color-accent]">
+            <summary class="flex items-center justify-between p-3 md:p-4 cursor-pointer font-medium text-sm md:text-base text-[--color-text-primary] hover:text-[--color-accent]">
               Can I edit the generated files?
-              <span class="text-[--color-accent] transition-transform group-open:rotate-45">+</span>
+              <span class="text-[--color-accent] transition-transform group-open:rotate-45 flex-shrink-0 ml-2">+</span>
             </summary>
-            <div class="px-4 pb-4 text-[--color-text-secondary]">
+            <div class="px-3 md:px-4 pb-3 md:pb-4 text-sm md:text-base text-[--color-text-secondary]">
               Absolutely. Ralph creates the scaffolding; you own all the files. Edit specs, adjust the plan, customize as needed.
             </div>
           </details>

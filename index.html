@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ralph Vibe - Autonomous Development, Simplified. A CLI tool that automates the Ralph Wiggum technique for autonomous AI development.">
+  <meta name="keywords" content="ralph vibe, autonomous development, AI development, CLI tool, Claude Code">
+  <meta name="author" content="Ralph Vibe">
+  <title>Ralph Vibe - Autonomous Development, Simplified</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="#" class="logo">Ralph Vibe</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#quick-start">Quick Start</a></li>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#philosophy">Philosophy</a></li>
+        <li><a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="hero" class="hero">
+      <h1>Autonomous Development, Simplified</h1>
+      <p class="hero-subtitle">A CLI tool that eliminates complex setup for autonomous AI development with Claude Code.</p>
+      <div class="cta-buttons">
+        <a href="#quick-start" class="btn btn-primary">Get Started</a>
+        <a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View on GitHub</a>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>What is Ralph Vibe?</h2>
+      <p>Ralph Vibe automates the <strong>Ralph Wiggum technique</strong> for autonomous AI development. Instead of manually crafting prompts and managing context for each coding session, Ralph Vibe provides the infrastructure through a simple command-line interface.</p>
+      <p>The Ralph Wiggum technique addresses a fundamental challenge in AI-assisted development: maintaining reliable, consistent output across long development sessions. By structuring work into discrete iterations with fresh context, specifications as the source of truth, and test-driven completion, Ralph Vibe enables truly autonomous development workflows.</p>
+      <p>With Ralph Vibe, you describe what you want to build, and the tool handles the rest—generating specs, planning tasks, and executing work in a structured loop until your project is complete.</p>
+    </section>
+
+    <section id="quick-start" class="quick-start">
+      <h2>Quick Start</h2>
+      <h3>Prerequisites</h3>
+      <ul>
+        <li><a href="https://deno.com/" target="_blank" rel="noopener noreferrer">Deno</a> runtime installed</li>
+        <li><a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer">Claude Code</a> (requires Pro or Team subscription)</li>
+      </ul>
+      <h3>Installation</h3>
+      <pre><code>deno install -g -A -n ralph jsr:@anthropic/ralph</code></pre>
+      <h3>Basic Usage</h3>
+      <p>The quickest way to start is with the <code>--vibe</code> flag, which chains all commands automatically:</p>
+      <pre><code>ralph init --vibe</code></pre>
+      <p>This will initialize your project, conduct an interview to gather requirements, generate an implementation plan, and begin the autonomous work loop.</p>
+    </section>
+
+    <section id="commands" class="commands">
+      <h2>Commands Reference</h2>
+      <dl>
+        <dt><code>ralph init</code></dt>
+        <dd>Sets up project scaffolding with specs directory, AGENTS.md, and build instructions. Creates the foundation for autonomous development.</dd>
+
+        <dt><code>ralph start</code></dt>
+        <dd>Conducts an interactive interview to gather project requirements. Generates detailed specifications based on your responses.</dd>
+
+        <dt><code>ralph plan</code></dt>
+        <dd>Analyzes your specifications and generates an ordered list of implementation tasks in IMPLEMENTATION_PLAN.md.</dd>
+
+        <dt><code>ralph work</code></dt>
+        <dd>Executes the autonomous build loop. Picks up tasks from the plan, implements them, validates with tests, and iterates until complete.</dd>
+
+        <dt><code>ralph spec</code></dt>
+        <dd>Adds new features to an existing project via an interview process. Great for extending functionality after initial setup.</dd>
+
+        <dt><code>--vibe</code> flag</dt>
+        <dd>Chains commands automatically: <code>init → start → plan → work</code>. The fastest path from zero to working project.</dd>
+      </dl>
+    </section>
+
+    <section id="philosophy" class="philosophy">
+      <h2>Philosophy</h2>
+      <p>Ralph Vibe is built on five reliability principles that make autonomous development work:</p>
+      <ol>
+        <li>
+          <strong>Fresh context each iteration</strong>
+          <p>Every work iteration starts with clean context. No accumulated confusion, no stale assumptions—just the current task and relevant specifications.</p>
+        </li>
+        <li>
+          <strong>Specs as truth</strong>
+          <p>Written specifications are the single source of truth. Claude follows what's documented, not what might have been discussed or implied.</p>
+        </li>
+        <li>
+          <strong>Single-task focus</strong>
+          <p>One feature per iteration. This constraint prevents scope creep and ensures each change is complete and tested before moving on.</p>
+        </li>
+        <li>
+          <strong>Test-driven completion</strong>
+          <p>Tasks aren't done until tests pass. This provides an objective completion criteria that doesn't rely on subjective assessment.</p>
+        </li>
+        <li>
+          <strong>File-based persistence</strong>
+          <p>All state lives in files—specs, plans, code. Context can reset, but progress persists through the filesystem.</p>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>
+        <a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      </p>
+      <p>&copy; 2025 Ralph Vibe. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

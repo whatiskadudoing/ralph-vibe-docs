@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0",
+  "paths": {
+    "specs": "specs",
+    "plan": "IMPLEMENTATION_PLAN.md",
+    "agents": "AGENTS.md",
+    "buildPrompt": "PROMPT_build.md",
+    "planPrompt": "PROMPT_plan.md"
+  },
+  "work": {
+    "model": "opus",
+    "maxIterations": 50,
+    "autoPush": true,
+    "stopOnFailure": false,
+    "cooldown": 5
+  }
+}

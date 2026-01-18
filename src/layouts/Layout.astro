@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Ralph Vibe - Autonomous Development, Simplified. A CLI tool that automates the Ralph Wiggum technique for autonomous AI development."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content={description}>
+  <meta name="keywords" content="ralph vibe, autonomous development, AI development, CLI tool, Claude Code">
+  <meta name="author" content="Ralph Vibe">
+  <title>{title}</title>
+</head>
+<body>
+  <slot />
+</body>
+</html>

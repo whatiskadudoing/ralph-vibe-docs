@@ -1,53 +1,50 @@
 # Implementation Plan
 
-## Phase 1: HTML Structure
-- [x] Create `index.html` with HTML5 boilerplate, meta tags, and link to `styles.css`
-- [x] Add semantic structure: `<header>`, `<main>` with 5 `<section>` elements, and `<footer>`
-- [x] Add navigation header with logo text and anchor links to all sections
-- [x] Add hero section with tagline, subtitle, and two CTA button placeholders
-- [x] Add "What is Ralph Vibe?" section with placeholder paragraphs
-- [x] Add Quick Start section with prerequisites list and code block placeholders
-- [x] Add Commands section with definition list structure for all CLI commands
-- [x] Add Philosophy section with ordered list for 5 principles
-- [x] Add footer with GitHub link, copyright, and external link attributes
+## Phase 1: Build System Setup ✓
 
-## Phase 2: CSS Foundation
-- [x] Create `styles.css` with CSS reset and root variables (colors, fonts, spacing)
-- [x] Add base typography styles: system font stack, sizes, line-height, headings
-- [x] Add layout styles: max-width container, section spacing, centered content
-- [x] Add navigation styles: sticky header, horizontal link layout, hover states
-- [x] Add button styles: primary and secondary CTA variants with hover states
-- [x] Add code block styles: monospace font, background color, horizontal scroll
+- [x] Initialize Astro project with `npm create astro@latest` in a temp directory, then migrate config files (package.json, astro.config.mjs, tsconfig.json) to project root
+- [x] Install and configure Tailwind CSS with `@tailwindcss/vite` integration (Tailwind v4), custom color palette defined in global.css @theme block
+- [x] Create src/ directory structure: layouts/, components/, pages/, styles/
+- [x] Create src/styles/global.css with Tailwind directives and Inter + JetBrains Mono font imports
+- [x] Create src/layouts/Layout.astro base template with HTML head, meta tags, and global styles
 
-## Phase 3: Responsive Design
-- [x] Add mobile-first base styles (single column, full-width sections)
-- [x] Add tablet/desktop media query breakpoints (768px, 1024px)
-- [x] Make navigation responsive: stack on mobile, inline on desktop
-- [x] Make hero CTAs responsive: stack on mobile, side-by-side on desktop
-- [x] Test and adjust spacing/typography at all breakpoints
+**Note:** Tailwind v4 uses CSS-based configuration with `@theme` block instead of tailwind.config.mjs. Colors are defined as CSS custom properties (e.g., `--color-bg-primary: #FAF9F6`).
 
-## Phase 4: Content Population
-- [x] Write hero section copy: main tagline and subtitle text
-- [x] Write "What is Ralph Vibe?" section: 2-3 explanatory paragraphs
-- [x] Write Quick Start section: prerequisites, installation command, basic usage example
-- [x] Write Commands section: document init, start, plan, work, spec, and --vibe flag
-- [x] Write Philosophy section: 5 reliability principles with descriptions
-- [x] Update footer: correct GitHub URL, year, and any social links
+## Phase 2: Core Components
 
-## Phase 5: Polish & Validation
-- [x] Verify all anchor links work correctly (click each nav link)
-- [x] Verify all external links have `target="_blank" rel="noopener noreferrer"`
-- [x] Test page renders correctly with JavaScript disabled
-- [x] Verify total page size is under 500KB
-- [x] Review visual design matches RalphCoin.org minimalist aesthetic
-- [x] Create `README.md` with repository description and local development instructions
+- [ ] Create src/components/Nav.astro with sticky header, logo, and navigation links for all 9 sections (desktop version)
+- [ ] Create src/components/Footer.astro with copyright, external links (GitHub, npm), and proper rel="noopener noreferrer" attributes
+- [ ] Create src/components/CodeBlock.astro with copy-to-clipboard button and JavaScript functionality
+- [ ] Create src/components/Card.astro reusable component with white background, border, shadow, and padding variants
 
----
+## Phase 3: Section Components (Part 1)
 
-## Learnings
+- [ ] Create src/components/Hero.astro with headline, tagline, install command CodeBlock, and CTA buttons
+- [ ] Create src/pages/index.astro with Layout and placeholder sections to verify build works
+- [ ] Create About section in index.astro with Ralph character description and cream/orange styling
+- [ ] Create Quick Start section in index.astro with numbered steps and CodeBlock components
 
-- Static HTML/CSS project with no build tooling - validate via file size checks and grep patterns
-- External link security pattern: `target="_blank" rel="noopener noreferrer"` prevents tabnabbing
-- Mobile-first CSS: base styles work on small screens, `@media (min-width: ...)` enhances for larger
-- Three responsive breakpoints: mobile (<640px), tablet (768px+), desktop (1024px+) - matches spec requirements
-- Visual design verified against RalphCoin.org: minimalist aesthetic achieved with white background (#ffffff), dark text (#1a1a1a), indigo accent (#4f46e5), system font stack, 850px max-width, and generous whitespace
+## Phase 4: Section Components (Part 2)
+
+- [ ] Create "How It Works" section with 3-step workflow visualization (Write → Run → Vibe)
+- [ ] Create Commands section with card grid layout showing ralph init, ralph work, ralph review, --vibe flag highlight
+- [ ] Create Philosophy/Principles section with 5-card grid (icons/numbers, titles, descriptions)
+
+## Phase 5: Interactive Components
+
+- [ ] Create src/components/FAQItem.astro accordion component with expand/collapse JavaScript
+- [ ] Create FAQ section in index.astro with 5-6 FAQ items using FAQItem component
+- [ ] Add mobile hamburger menu to Nav.astro with toggle JavaScript and slide-out menu
+
+## Phase 6: Responsive & Polish
+
+- [ ] Implement responsive breakpoints: mobile (<640px), tablet (640-1024px), desktop (>1024px) across all components
+- [ ] Add alternating section backgrounds (#FAF9F6 and #F5F3EF) and proper section spacing (80-120px)
+- [ ] Test all interactive features: copy buttons, FAQ accordion, mobile menu, smooth scroll navigation
+- [ ] Verify GitHub Pages deployment: update any paths if needed, test `astro build` produces valid dist/
+
+## Phase 7: Cleanup & Verification
+
+- [ ] Remove old index.html and styles.css after verifying Astro build works
+- [ ] Run final checks: all 9 sections render, colors match spec, page loads <2s, no layout shifts
+- [ ] Update README.md with new dev commands (npm install, npm run dev, npm run build)

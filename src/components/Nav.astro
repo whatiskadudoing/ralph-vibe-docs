@@ -1,10 +1,13 @@
 ---
 // Navigation component with sticky header, logo, and section links
+// Includes mobile hamburger menu with slide-out navigation
 ---
 
 <header class="sticky top-0 z-50 bg-[--color-bg-primary] border-b border-[--color-border-light]">
   <nav class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
     <a href="#" class="text-xl font-bold text-[--color-text-primary] hover:text-[--color-accent] hover:no-underline">Ralph Vibe</a>
+
+    <!-- Desktop Navigation -->
     <ul class="hidden md:flex items-center gap-6 list-none m-0 p-0">
       <li><a href="#about" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">About</a></li>
       <li><a href="#how-it-works" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">How It Works</a></li>
@@ -13,5 +16,100 @@
       <li><a href="#faq" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">FAQ</a></li>
       <li><a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">GitHub</a></li>
     </ul>
+
+    <!-- Mobile Hamburger Button -->
+    <button
+      id="mobile-menu-button"
+      class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="hamburger-line w-6 h-0.5 bg-[--color-text-primary] transition-all duration-300 origin-center"></span>
+      <span class="hamburger-line w-6 h-0.5 bg-[--color-text-primary] transition-all duration-300"></span>
+      <span class="hamburger-line w-6 h-0.5 bg-[--color-text-primary] transition-all duration-300 origin-center"></span>
+    </button>
   </nav>
+
+  <!-- Mobile Navigation Menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden bg-[--color-bg-primary] border-b border-[--color-border-light] overflow-hidden transition-all duration-300 ease-in-out"
+  >
+    <ul class="flex flex-col list-none m-0 p-0">
+      <li><a href="#about" class="mobile-nav-link block px-6 py-4 text-[--color-text-secondary] hover:text-[--color-accent] hover:bg-[--color-bg-secondary] hover:no-underline font-medium border-b border-[--color-border-light]">About</a></li>
+      <li><a href="#how-it-works" class="mobile-nav-link block px-6 py-4 text-[--color-text-secondary] hover:text-[--color-accent] hover:bg-[--color-bg-secondary] hover:no-underline font-medium border-b border-[--color-border-light]">How It Works</a></li>
+      <li><a href="#commands" class="mobile-nav-link block px-6 py-4 text-[--color-text-secondary] hover:text-[--color-accent] hover:bg-[--color-bg-secondary] hover:no-underline font-medium border-b border-[--color-border-light]">Commands</a></li>
+      <li><a href="#quick-start" class="mobile-nav-link block px-6 py-4 text-[--color-text-secondary] hover:text-[--color-accent] hover:bg-[--color-bg-secondary] hover:no-underline font-medium border-b border-[--color-border-light]">Quick Start</a></li>
+      <li><a href="#faq" class="mobile-nav-link block px-6 py-4 text-[--color-text-secondary] hover:text-[--color-accent] hover:bg-[--color-bg-secondary] hover:no-underline font-medium border-b border-[--color-border-light]">FAQ</a></li>
+      <li><a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="mobile-nav-link block px-6 py-4 text-[--color-text-secondary] hover:text-[--color-accent] hover:bg-[--color-bg-secondary] hover:no-underline font-medium">GitHub</a></li>
+    </ul>
+  </div>
 </header>
+
+<style>
+  /* Hamburger animation when menu is open */
+  .menu-open .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .menu-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-open .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+</style>
+
+<script>
+  function initMobileMenu() {
+    const button = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (!button || !menu) return;
+
+    function toggleMenu() {
+      const isOpen = !menu.classList.contains('hidden');
+
+      if (isOpen) {
+        // Close menu
+        menu.classList.add('hidden');
+        button.classList.remove('menu-open');
+        button.setAttribute('aria-expanded', 'false');
+      } else {
+        // Open menu
+        menu.classList.remove('hidden');
+        button.classList.add('menu-open');
+        button.setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    function closeMenu() {
+      menu.classList.add('hidden');
+      button.classList.remove('menu-open');
+      button.setAttribute('aria-expanded', 'false');
+    }
+
+    // Toggle menu on button click
+    button.addEventListener('click', toggleMenu);
+
+    // Close menu when a link is clicked
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+        closeMenu();
+        button.focus();
+      }
+    });
+  }
+
+  // Initialize on page load
+  initMobileMenu();
+
+  // Re-initialize on Astro page transitions
+  document.addEventListener('astro:page-load', initMobileMenu);
+</script>

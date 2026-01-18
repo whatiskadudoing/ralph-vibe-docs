@@ -10,31 +10,34 @@
 
 **Note:** Tailwind v4 uses CSS-based configuration with `@theme` block instead of tailwind.config.mjs. Colors are defined as CSS custom properties (e.g., `--color-bg-primary: #FAF9F6`).
 
-## Phase 2: Core Components
+## Phase 2: Core Components ✓
 
 - [x] Create src/components/Nav.astro with sticky header, logo, and navigation links for all 9 sections (desktop version)
 - [x] Create src/components/Footer.astro with copyright, external links (GitHub, npm), and proper rel="noopener noreferrer" attributes
 - [x] Create src/components/CodeBlock.astro with copy-to-clipboard button and JavaScript functionality
 - [x] Create src/components/Card.astro reusable component with white background, border, shadow, and padding variants (used in Commands and Philosophy sections)
 
-## Phase 3: Section Components (Part 1)
+## Phase 3: Page Sections (Part 1) ✓
 
-- [ ] Create src/components/Hero.astro with headline, tagline, install command CodeBlock, and CTA buttons
-- [ ] Create src/pages/index.astro with Layout and placeholder sections to verify build works
-- [ ] Create About section in index.astro with Ralph character description and cream/orange styling
-- [ ] Create Quick Start section in index.astro with numbered steps and CodeBlock components
+- [x] Create src/pages/index.astro with Layout and all sections implemented inline
+- [x] Create Hero section with headline, tagline, install command, and CTA buttons
+- [x] Create About section with Ralph character description and cream styling
+- [x] Create Quick Start section with numbered steps and code blocks
 
-## Phase 4: Section Components (Part 2)
+**Note:** Sections implemented inline in index.astro rather than as separate components (Hero.astro). This keeps the codebase simpler for a single-page site.
 
-- [ ] Create "How It Works" section with 3-step workflow visualization (Write → Run → Vibe)
-- [ ] Create Commands section with card grid layout showing ralph init, ralph work, ralph review, --vibe flag highlight
-- [ ] Create Philosophy/Principles section with 5-card grid (icons/numbers, titles, descriptions)
+## Phase 4: Page Sections (Part 2) ✓
 
-## Phase 5: Interactive Components
+- [x] Create "How It Works" section with 4-step workflow visualization (Interview → Specs → Plan → Build)
+- [x] Create Commands section with card grid layout showing ralph init, ralph start, ralph spec, ralph plan, ralph work, and --vibe flag
+- [x] Create Philosophy/Principles section with 5-card grid (Fresh Context, Specs as Truth, Atomic Tasks, Test-Driven, File Persistence)
 
-- [ ] Create src/components/FAQItem.astro accordion component with expand/collapse JavaScript
-- [ ] Create FAQ section in index.astro with 5-6 FAQ items using FAQItem component
-- [ ] Add mobile hamburger menu to Nav.astro with toggle JavaScript and slide-out menu
+## Phase 5: Interactive Components ✓
+
+- [x] Create FAQ section in index.astro using native HTML details/summary elements (works without JS)
+- [x] Add mobile hamburger menu to Nav.astro with toggle JavaScript and slide-out menu
+
+**Note:** FAQ uses native `<details>`/`<summary>` elements instead of a separate FAQItem.astro component. This ensures accordion works without JavaScript while keeping implementation simple.
 
 ## Phase 6: Responsive & Polish
 

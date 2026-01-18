@@ -353,6 +353,18 @@ section + section {
   }
 }
 
+/* Desktop */
+@media (min-width: 1024px) {
+  section {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .hero {
+    padding-top: calc(var(--spacing-2xl) * 1.5);
+    padding-bottom: calc(var(--spacing-2xl) * 1.5);
+  }
+}
+
 /* Mobile adjustments */
 @media (max-width: 640px) {
   :root {

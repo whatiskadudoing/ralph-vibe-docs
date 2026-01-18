@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout title="Ralph Vibe - Autonomous Development, Simplified">
@@ -243,12 +244,5 @@ import Nav from '../components/Nav.astro';
     </section>
   </main>
 
-  <footer class="border-t border-[--color-border-light] py-12 px-6">
-    <div class="max-w-[800px] mx-auto text-center">
-      <p class="text-xl font-bold text-[--color-text-primary] mb-2">Ralph Vibe</p>
-      <p class="text-[--color-text-muted] mb-4">Autonomous development, simplified.</p>
-      <a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="text-[--color-accent] hover:underline">View on GitHub</a>
-      <p class="mt-6 text-sm text-[--color-text-muted]">&copy; 2025 Ralph Vibe. All rights reserved.</p>
-    </div>
-  </footer>
+  <Footer />
 </Layout>

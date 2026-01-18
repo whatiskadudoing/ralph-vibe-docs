@@ -1,0 +1,75 @@
+---
+// CodeBlock component with copy-to-clipboard functionality
+// Uses progressive enhancement: works without JS, copy button requires JS
+
+interface Props {
+  code: string;
+  lang?: string;
+}
+
+const { code, lang = 'bash' } = Astro.props;
+---
+
+<div class="code-block relative group">
+  <pre class="bg-[--color-bg-code] rounded-lg p-4 md:p-6 overflow-x-auto border border-[--color-border-light]"><code class="font-mono text-sm md:text-base text-[--color-text-primary] whitespace-pre">{code}</code></pre>
+  <button
+    type="button"
+    class="copy-button absolute top-3 right-3 px-3 py-1.5 text-xs font-medium rounded-md bg-[--color-bg-secondary] border border-[--color-border-dark] text-[--color-text-secondary] hover:bg-[--color-border-light] hover:text-[--color-text-primary] transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+    data-code={code}
+    aria-label="Copy code to clipboard"
+  >
+    Copy
+  </button>
+</div>
+
+<script>
+  function initCopyButtons() {
+    document.querySelectorAll('.copy-button').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const code = button.getAttribute('data-code');
+        if (!code) return;
+
+        try {
+          await navigator.clipboard.writeText(code);
+          const originalText = button.textContent;
+          button.textContent = 'Copied!';
+          button.classList.add('text-[--color-accent]');
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('text-[--color-accent]');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    });
+  }
+
+  // Initialize on page load
+  initCopyButtons();
+
+  // Re-initialize on Astro page transitions (if using View Transitions)
+  document.addEventListener('astro:page-load', initCopyButtons);
+</script>
+
+<style>
+  /* Ensure code blocks don't wrap */
+  .code-block pre {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-dark) transparent;
+  }
+
+  .code-block pre::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .code-block pre::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .code-block pre::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-dark);
+    border-radius: 3px;
+  }
+</style>

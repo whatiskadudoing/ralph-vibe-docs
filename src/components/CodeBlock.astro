@@ -11,10 +11,10 @@ const { code, lang = 'bash' } = Astro.props;
 ---
 
 <div class="code-block relative group">
-  <pre class="bg-[--color-bg-code] rounded-lg p-4 md:p-6 overflow-x-auto border border-[--color-border-light]"><code class="font-mono text-sm md:text-base text-[--color-text-primary] whitespace-pre">{code}</code></pre>
+  <pre class="bg-[#EDEAE5] rounded-lg p-4 md:p-6 overflow-x-auto border border-[#E5E2DD]"><code class="font-mono text-sm md:text-base text-[#1A1A1A] whitespace-pre">{code}</code></pre>
   <button
     type="button"
-    class="copy-button absolute top-3 right-3 px-3 py-1.5 text-xs font-medium rounded-md bg-[--color-bg-secondary] border border-[--color-border-dark] text-[--color-text-secondary] hover:bg-[--color-border-light] hover:text-[--color-text-primary] transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+    class="copy-button absolute top-1/2 -translate-y-1/2 right-3 px-3 py-1.5 text-xs font-medium rounded-md bg-[#EDEAE5] border border-[#D1CEC8] text-[#4A4A4A] hover:bg-[#E5E2DD] hover:text-[#1A1A1A] transition-colors"
     data-code={code}
     aria-label="Copy code to clipboard"
   >
@@ -54,10 +54,17 @@ const { code, lang = 'bash' } = Astro.props;
 </script>
 
 <style>
-  /* Ensure code blocks don't wrap */
+  /* Ensure space for copy button */
   .code-block pre {
+    padding-right: 5rem;
     scrollbar-width: thin;
     scrollbar-color: var(--color-border-dark) transparent;
+  }
+
+  @media (min-width: 768px) {
+    .code-block pre {
+      padding-right: 6rem;
+    }
   }
 
   .code-block pre::-webkit-scrollbar {

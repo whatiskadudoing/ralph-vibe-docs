@@ -37,7 +37,8 @@ import CodeBlock from '../components/CodeBlock.astro';
         <div class="space-y-3 md:space-y-4 text-base md:text-lg">
           <p>Setting up the Ralph Wiggum technique for autonomous AI development is complex and time-consuming. You need specifications, implementation plans, build prompts, and a structured workflow.</p>
           <p>Ralph Vibe handles all of that automatically.</p>
-          <p class="text-lg md:text-xl font-medium text-[--color-text-primary]">Describe what you want. Ralph builds it while you sleep.</p>
+          <p>Have an idea you want to validate? Run the interview, then <span class="text-[--color-text-primary] font-medium">go grab a beer</span>. Meet friends. Play a video game. Ralph works autonomously in the background—writing code, running tests, iterating—until it's done.</p>
+          <p class="text-lg md:text-xl font-medium text-[--color-text-primary]">Come back later and see your idea brought to life. 🍺</p>
         </div>
       </div>
     </section>
@@ -46,27 +47,35 @@ import CodeBlock from '../components/CodeBlock.astro';
     <section id="how-it-works" class="py-16 md:py-20 lg:py-24 px-4 sm:px-6">
       <div class="max-w-[1000px] mx-auto">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center">How It Works</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          <div class="text-center">
-            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">1</div>
-            <h3 class="text-base md:text-lg font-semibold mb-2">Interview</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <Card>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">01</span>
+              <h3 class="text-base md:text-lg font-semibold">Interview</h3>
+            </div>
             <p class="text-sm md:text-base text-[--color-text-muted]">Ralph asks what you want to build</p>
-          </div>
-          <div class="text-center">
-            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">2</div>
-            <h3 class="text-base md:text-lg font-semibold mb-2">Specs</h3>
+          </Card>
+          <Card>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">02</span>
+              <h3 class="text-base md:text-lg font-semibold">Specs</h3>
+            </div>
             <p class="text-sm md:text-base text-[--color-text-muted]">Your answers become precise specifications</p>
-          </div>
-          <div class="text-center">
-            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">3</div>
-            <h3 class="text-base md:text-lg font-semibold mb-2">Plan</h3>
+          </Card>
+          <Card>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">03</span>
+              <h3 class="text-base md:text-lg font-semibold">Plan</h3>
+            </div>
             <p class="text-sm md:text-base text-[--color-text-muted]">Tasks are generated from specs</p>
-          </div>
-          <div class="text-center">
-            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[--color-accent] text-white flex items-center justify-center text-lg md:text-xl font-bold mx-auto mb-3 md:mb-4">4</div>
-            <h3 class="text-base md:text-lg font-semibold mb-2">Build</h3>
+          </Card>
+          <Card>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">04</span>
+              <h3 class="text-base md:text-lg font-semibold">Build</h3>
+            </div>
             <p class="text-sm md:text-base text-[--color-text-muted]">Autonomous loop builds and tests until done</p>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -110,28 +119,38 @@ import CodeBlock from '../components/CodeBlock.astro';
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 md:mb-12 text-center">Why Ralph Vibe?</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <Card>
-            <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">1</div>
-            <h3 class="text-lg font-semibold mb-2">Fresh Context</h3>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">01</span>
+              <h3 class="text-lg font-semibold">Fresh Context</h3>
+            </div>
             <p class="text-[--color-text-muted]">Each iteration starts clean. No accumulated confusion from long sessions.</p>
           </Card>
           <Card>
-            <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">2</div>
-            <h3 class="text-lg font-semibold mb-2">Specs as Truth</h3>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">02</span>
+              <h3 class="text-lg font-semibold">Specs as Truth</h3>
+            </div>
             <p class="text-[--color-text-muted]">What's in <code class="text-sm bg-[--color-bg-code] px-1.5 py-0.5 rounded">specs/</code> is what gets built. No ambiguity.</p>
           </Card>
           <Card>
-            <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">3</div>
-            <h3 class="text-lg font-semibold mb-2">Atomic Tasks</h3>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">03</span>
+              <h3 class="text-lg font-semibold">Atomic Tasks</h3>
+            </div>
             <p class="text-[--color-text-muted]">One task per iteration. No partial implementations.</p>
           </Card>
           <Card>
-            <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">4</div>
-            <h3 class="text-lg font-semibold mb-2">Test-Driven</h3>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">04</span>
+              <h3 class="text-lg font-semibold">Test-Driven</h3>
+            </div>
             <p class="text-[--color-text-muted]">Tasks only complete when tests pass. Quality enforced automatically.</p>
           </Card>
           <Card>
-            <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">5</div>
-            <h3 class="text-lg font-semibold mb-2">File Persistence</h3>
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl md:text-3xl font-bold text-[#C46849]">05</span>
+              <h3 class="text-lg font-semibold">File Persistence</h3>
+            </div>
             <p class="text-[--color-text-muted]">All state lives in files. Survives context resets across sessions.</p>
           </Card>
         </div>
@@ -235,6 +254,32 @@ import CodeBlock from '../components/CodeBlock.astro';
               Absolutely. Ralph creates the scaffolding; you own all the files. Edit specs, adjust the plan, customize as needed.
             </div>
           </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Credits & Open Source Section -->
+    <section class="py-16 md:py-20 lg:py-24 px-4 sm:px-6 bg-[--color-bg-secondary]">
+      <div class="max-w-[800px] mx-auto text-center">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8">Open Source</h2>
+        <p class="text-base md:text-lg text-[--color-text-secondary] mb-6">
+          Ralph Vibe is open source and free to use. Contributions, issues, and feature requests are welcome.
+        </p>
+        <a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-3 bg-[#1A1A1A] text-white font-medium rounded-lg hover:bg-[#333] hover:no-underline transition-colors mb-10 md:mb-12">
+          View on GitHub
+        </a>
+
+        <div class="border-t border-[--color-border-light] pt-8 md:pt-10">
+          <h3 class="text-lg md:text-xl font-semibold mb-4">Credits</h3>
+          <p class="text-sm md:text-base text-[--color-text-muted]">
+            Built on the <span class="text-[--color-text-primary] font-medium">Ralph Wiggum Technique</span> created by
+            <a href="https://ghuntley.com/ralph/" target="_blank" rel="noopener noreferrer" class="text-[#C46849] hover:underline">Geoffrey Huntley</a>.
+          </p>
+          <div class="flex items-center justify-center gap-4 mt-4 text-sm text-[--color-text-muted]">
+            <a href="https://github.com/ghuntley" target="_blank" rel="noopener noreferrer" class="hover:text-[#C46849]">@ghuntley</a>
+            <span class="text-[--color-border-dark]">·</span>
+            <a href="https://github.com/ghuntley/how-to-ralph-wiggum" target="_blank" rel="noopener noreferrer" class="hover:text-[#C46849]">Original Technique</a>
+          </div>
         </div>
       </div>
     </section>

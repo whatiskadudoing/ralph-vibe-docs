@@ -1,21 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
 ---
 
 <Layout title="Ralph Vibe - Autonomous Development, Simplified">
-  <header class="sticky top-0 z-50 bg-[--color-bg-primary] border-b border-[--color-border-light]">
-    <nav class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="#" class="text-xl font-bold text-[--color-text-primary] hover:text-[--color-accent] hover:no-underline">Ralph Vibe</a>
-      <ul class="hidden md:flex items-center gap-6 list-none m-0 p-0">
-        <li><a href="#about" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">About</a></li>
-        <li><a href="#how-it-works" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">How It Works</a></li>
-        <li><a href="#commands" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">Commands</a></li>
-        <li><a href="#quick-start" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">Quick Start</a></li>
-        <li><a href="#faq" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">FAQ</a></li>
-        <li><a href="https://github.com/whatiskadudoing/ralph-vibe" target="_blank" rel="noopener noreferrer" class="text-[--color-text-secondary] hover:text-[--color-accent] hover:no-underline text-sm font-medium">GitHub</a></li>
-      </ul>
-    </nav>
-  </header>
+  <Nav />
 
   <main>
     <!-- Hero Section -->

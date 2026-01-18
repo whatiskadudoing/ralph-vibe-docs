@@ -15,7 +15,7 @@
 - [x] Create src/components/Nav.astro with sticky header, logo, and navigation links for all 9 sections (desktop version)
 - [x] Create src/components/Footer.astro with copyright, external links (GitHub, npm), and proper rel="noopener noreferrer" attributes
 - [x] Create src/components/CodeBlock.astro with copy-to-clipboard button and JavaScript functionality
-- [ ] Create src/components/Card.astro reusable component with white background, border, shadow, and padding variants
+- [x] Create src/components/Card.astro reusable component with white background, border, shadow, and padding variants (used in Commands and Philosophy sections)
 
 ## Phase 3: Section Components (Part 1)
 

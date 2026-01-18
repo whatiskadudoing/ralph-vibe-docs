@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Card from '../components/Card.astro';
 ---
 
 <Layout title="Ralph Vibe - Autonomous Development, Simplified">
@@ -74,30 +75,30 @@ import Footer from '../components/Footer.astro';
       <div class="max-w-[1000px] mx-auto">
         <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Commands</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          <Card>
             <code class="text-lg font-semibold text-[--color-accent]">ralph init</code>
             <p class="mt-3 text-[--color-text-muted]">Initialize a new project or integrate with existing code. Add <code class="text-sm bg-[--color-bg-code] px-1.5 py-0.5 rounded">--vibe</code> to run the full pipeline automatically.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <code class="text-lg font-semibold text-[--color-accent]">ralph start</code>
             <p class="mt-3 text-[--color-text-muted]">Interactive interview to understand your project and generate specifications.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <code class="text-lg font-semibold text-[--color-accent]">ralph spec</code>
             <p class="mt-3 text-[--color-text-muted]">Add new features via interview. Use <code class="text-sm bg-[--color-bg-code] px-1.5 py-0.5 rounded">-f "feature"</code> to skip the interview.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <code class="text-lg font-semibold text-[--color-accent]">ralph plan</code>
             <p class="mt-3 text-[--color-text-muted]">Analyze specs and create an implementation task list with file linkage.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <code class="text-lg font-semibold text-[--color-accent]">ralph work</code>
             <p class="mt-3 text-[--color-text-muted]">Execute the autonomous build loop. One task per iteration until tests pass.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <code class="text-lg font-semibold text-[--color-accent]">--vibe</code>
             <p class="mt-3 text-[--color-text-muted]">Chain commands automatically: <code class="text-sm bg-[--color-bg-code] px-1.5 py-0.5 rounded">init → start → plan → work</code></p>
-          </div>
+          </Card>
         </div>
       </div>
     </section>
@@ -107,31 +108,31 @@ import Footer from '../components/Footer.astro';
       <div class="max-w-[1000px] mx-auto">
         <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Why Ralph Vibe?</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          <Card>
             <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">1</div>
             <h3 class="text-lg font-semibold mb-2">Fresh Context</h3>
             <p class="text-[--color-text-muted]">Each iteration starts clean. No accumulated confusion from long sessions.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">2</div>
             <h3 class="text-lg font-semibold mb-2">Specs as Truth</h3>
             <p class="text-[--color-text-muted]">What's in <code class="text-sm bg-[--color-bg-code] px-1.5 py-0.5 rounded">specs/</code> is what gets built. No ambiguity.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">3</div>
             <h3 class="text-lg font-semibold mb-2">Atomic Tasks</h3>
             <p class="text-[--color-text-muted]">One task per iteration. No partial implementations.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">4</div>
             <h3 class="text-lg font-semibold mb-2">Test-Driven</h3>
             <p class="text-[--color-text-muted]">Tasks only complete when tests pass. Quality enforced automatically.</p>
-          </div>
-          <div class="bg-white border border-[--color-border-light] rounded-xl p-6">
+          </Card>
+          <Card>
             <div class="w-10 h-10 rounded-lg bg-[--color-bg-code] flex items-center justify-center text-[--color-accent] font-bold mb-4">5</div>
             <h3 class="text-lg font-semibold mb-2">File Persistence</h3>
             <p class="text-[--color-text-muted]">All state lives in files. Survives context resets across sessions.</p>
-          </div>
+          </Card>
         </div>
       </div>
     </section>

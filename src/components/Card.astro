@@ -1,0 +1,44 @@
+---
+// Card component - reusable container with white background, border, shadow, and padding variants
+
+interface Props {
+  variant?: 'default' | 'transparent';
+  padding?: 'sm' | 'md' | 'lg';
+  hover?: boolean;
+  class?: string;
+}
+
+const {
+  variant = 'default',
+  padding = 'md',
+  hover = true,
+  class: className = ''
+} = Astro.props;
+
+const baseClasses = 'rounded-xl border border-[--color-border-light] transition-shadow';
+
+const variantClasses = {
+  default: 'bg-white',
+  transparent: 'bg-transparent'
+};
+
+const paddingClasses = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8'
+};
+
+const hoverClass = hover ? 'hover:shadow-md' : '';
+
+const classes = [
+  baseClasses,
+  variantClasses[variant],
+  paddingClasses[padding],
+  hoverClass,
+  className
+].filter(Boolean).join(' ');
+---
+
+<div class={classes}>
+  <slot />
+</div>

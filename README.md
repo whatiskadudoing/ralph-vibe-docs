@@ -2,33 +2,45 @@
 
 A single-page marketing and documentation website for [Ralph Vibe](https://github.com/whatiskadudoing/ralph-vibe), the CLI tool that automates the Ralph Wiggum technique for autonomous AI development.
 
+Built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/) v4.
+
 ## Local Development
 
-This is a static HTML/CSS site with no build step required.
-
-To preview locally:
-
 ```bash
-# Start a local server
-python3 -m http.server 8000
+# Install dependencies
+npm install
 
-# Open in browser
-open http://localhost:8000
+# Start development server (localhost:4321)
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
-
-Alternatively, open `index.html` directly in your browser.
 
 ## Deployment
 
-The site deploys automatically to GitHub Pages from the `main` branch root directory.
+The site builds to `dist/` and deploys automatically to GitHub Pages from the `main` branch.
 
-To set up a custom domain, create a `CNAME` file with your domain name.
+Configured for deployment at `whatiskadudoing.github.io/ralph-vibe-docs/`.
 
 ## File Structure
 
 ```
-index.html    # The single page
-styles.css    # All styles
-CNAME         # Custom domain (optional)
-README.md     # This file
+src/
+  components/     # Astro components (Nav, Footer, Card, CodeBlock)
+  layouts/        # Base layout template
+  pages/          # Page routes (index.astro)
+  styles/         # Global CSS with Tailwind
+specs/            # Feature specifications
+dist/             # Build output (generated)
 ```
+
+## Tech Stack
+
+- **Framework:** Astro (static site generator)
+- **Styling:** Tailwind CSS v4 (CSS-based config)
+- **Output:** Static HTML/CSS
+- **Hosting:** GitHub Pages

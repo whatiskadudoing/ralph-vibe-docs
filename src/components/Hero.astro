@@ -1,9 +1,8 @@
 ---
-import CopyButton from './CopyButton.astro';
+import InstallCommand from './InstallCommand.astro';
 import TerminalDemo from './TerminalDemo.astro';
 import GitHubStats from './GitHubStats.astro';
 
-const installCommand = 'curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh';
 const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
 const repoOwner = 'whatiskadudoing';
 const repoName = 'ralph-vibe';
@@ -21,10 +20,7 @@ const repoName = 'ralph-vibe';
     </div>
 
     <div class="install-block">
-      <div class="code-wrapper">
-        <code class="install-command">{installCommand}</code>
-        <CopyButton text={installCommand} />
-      </div>
+      <InstallCommand />
       <p class="install-links">
         Or <a href={githubUrl} target="_blank" rel="noopener noreferrer">view on GitHub</a>
         <GitHubStats owner={repoOwner} repo={repoName} />
@@ -77,56 +73,6 @@ const repoName = 'ralph-vibe';
     margin-bottom: var(--space-3);
   }
 
-  .code-wrapper {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    background: var(--void);
-    border: 1px solid var(--concrete);
-    border-radius: 8px;
-    padding: var(--space-3) var(--space-4);
-    box-shadow: var(--shadow-subtle);
-  }
-
-  .install-command {
-    flex: 1;
-    min-width: 0;
-    font-family: var(--font-mono);
-    font-size: clamp(0.75rem, 2vw, var(--text-code));
-    color: var(--signal);
-    white-space: nowrap;
-    text-align: left;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--metal) var(--void);
-  }
-
-  .install-command::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  .install-command::-webkit-scrollbar-track {
-    background: var(--void);
-  }
-
-  .install-command::-webkit-scrollbar-thumb {
-    background: var(--metal);
-    border-radius: 2px;
-  }
-
-  .code-wrapper :global(.copy-button) {
-    flex-shrink: 0;
-    background: var(--metal);
-    border-color: var(--concrete);
-    color: var(--text-primary);
-  }
-
-  .code-wrapper :global(.copy-button:hover) {
-    background: var(--concrete);
-    border-color: var(--metal);
-    color: var(--signal);
-  }
-
   .install-links {
     margin-top: var(--space-3);
     font-size: 0.9rem;
@@ -157,23 +103,6 @@ const repoName = 'ralph-vibe';
   @media (max-width: 640px) {
     .hero {
       padding: var(--space-4) var(--space-3);
-    }
-
-    .code-wrapper {
-      flex-direction: column;
-      align-items: stretch;
-      gap: var(--space-3);
-      padding: var(--space-3);
-    }
-
-    .install-command {
-      overflow-x: auto;
-      padding-bottom: var(--space-2);
-    }
-
-    .code-wrapper :global(.copy-button) {
-      width: 100%;
-      justify-content: center;
     }
   }
 </style>

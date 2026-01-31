@@ -98,22 +98,23 @@ Add a visual comparison that shows why Ralph Vibe exists.
 
 Transform the install command into an intelligent, OS-aware component.
 
-- [ ] **Create InstallCommand component with OS detection and method tabs** [spec: install-tool.md] [files: src/components/InstallCommand.astro (new), src/components/Hero.astro, src/components/Footer.astro]
-  - Create new InstallCommand.astro component
-  - Detect OS on client-side (navigator.platform / userAgentData)
-  - Show 3 install methods as tabs: curl (default), npm, brew
-  - Auto-select appropriate tab based on detected OS:
-    - macOS: Prefer brew, show curl as fallback
-    - Linux: Prefer curl
-    - Windows: Show npm (WSL note for curl)
-  - Each tab shows the relevant command with CopyButton
-  - Commands:
-    - curl: `curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh`
-    - npm: `npm install -g ralph-vibe`
-    - brew: `brew install ralph-vibe`
-  - Industrial tab styling: concrete borders, signal accent on active tab
-  - Replace existing install blocks in Hero.astro and Footer.astro
-  - Graceful fallback: show curl if JS disabled or OS undetected
+- [x] **Create InstallCommand component with OS detection and method tabs** [spec: install-tool.md] [files: src/components/InstallCommand.astro (new), src/components/Hero.astro, src/components/Footer.astro]
+  - ✅ Created new InstallCommand.astro component with tabbed interface
+  - ✅ OS detection via navigator.userAgentData (modern) with navigator.platform fallback
+  - ✅ Three install methods as tabs: curl (default fallback), npm, brew
+  - ✅ Auto-select tab based on detected OS:
+    - macOS: Selects brew tab
+    - Linux: Selects curl tab
+    - Windows: Selects npm tab
+  - ✅ Each tab shows relevant command with CopyButton and method-specific note
+  - ✅ Commands implemented with correct URLs
+  - ✅ Industrial tab styling: concrete borders, signal accent on active tab, bracket syntax labels
+  - ✅ Replaced install blocks in Hero.astro and Footer.astro
+  - ✅ Graceful fallback: curl shown by default in SSR HTML before JS runs
+  - ✅ Full keyboard navigation: Arrow keys, Home/End, proper tabindex management
+  - ✅ ARIA attributes for accessibility: role="tab", role="tabpanel", aria-selected, aria-controls
+  - ✅ "Detected: [OS]" hint shown after OS detection
+  - ✅ Mobile responsive: tabs compact on small screens (375px+)
 
 ---
 <!-- CHECKPOINT: Verify OS detection works, tabs switch correctly, all commands copy properly -->

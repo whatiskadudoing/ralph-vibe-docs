@@ -1,0 +1,431 @@
+---
+import CopyButton from './CopyButton.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+// Install commands for each method
+const commands = {
+  curl: 'curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh',
+  npm: 'npm install -g ralph-vibe',
+  brew: 'brew install ralph-vibe',
+};
+---
+
+<div class:list={['install-command-wrapper', className]} data-install-tabs>
+  <div class="tab-list" role="tablist" aria-label="Installation methods">
+    <button
+      class="tab active"
+      role="tab"
+      aria-selected="true"
+      aria-controls="panel-curl"
+      id="tab-curl"
+      data-method="curl"
+      type="button"
+    >
+      <span class="tab-label">[curl]</span>
+    </button>
+    <button
+      class="tab"
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-npm"
+      id="tab-npm"
+      data-method="npm"
+      type="button"
+    >
+      <span class="tab-label">[npm]</span>
+    </button>
+    <button
+      class="tab"
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-brew"
+      id="tab-brew"
+      data-method="brew"
+      type="button"
+    >
+      <span class="tab-label">[brew]</span>
+    </button>
+  </div>
+
+  <div class="tab-panels">
+    <div
+      class="tab-panel active"
+      role="tabpanel"
+      id="panel-curl"
+      aria-labelledby="tab-curl"
+      data-method="curl"
+    >
+      <div class="code-wrapper">
+        <code class="command-text">{commands.curl}</code>
+        <CopyButton text={commands.curl} />
+      </div>
+      <p class="method-note">Works on macOS, Linux, and WSL</p>
+    </div>
+
+    <div
+      class="tab-panel"
+      role="tabpanel"
+      id="panel-npm"
+      aria-labelledby="tab-npm"
+      data-method="npm"
+      hidden
+    >
+      <div class="code-wrapper">
+        <code class="command-text">{commands.npm}</code>
+        <CopyButton text={commands.npm} />
+      </div>
+      <p class="method-note">Requires Node.js 18+</p>
+    </div>
+
+    <div
+      class="tab-panel"
+      role="tabpanel"
+      id="panel-brew"
+      aria-labelledby="tab-brew"
+      data-method="brew"
+      hidden
+    >
+      <div class="code-wrapper">
+        <code class="command-text">{commands.brew}</code>
+        <CopyButton text={commands.brew} />
+      </div>
+      <p class="method-note">macOS and Linux with Homebrew</p>
+    </div>
+  </div>
+
+  <p class="os-hint" aria-live="polite"></p>
+</div>
+
+<style>
+  .install-command-wrapper {
+    width: 100%;
+    overflow: visible;
+  }
+
+  /* Tab List - Industrial styling */
+  .tab-list {
+    display: flex;
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+  }
+
+  .tab {
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: 1px solid var(--concrete);
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--text-code);
+    color: var(--text-secondary);
+    transition: background var(--duration-micro) var(--ease-out),
+                border-color var(--duration-micro) var(--ease-out),
+                color var(--duration-micro) var(--ease-out);
+    min-height: 44px;
+    position: relative;
+    top: 1px;
+  }
+
+  .tab:hover {
+    color: var(--text-primary);
+    background: var(--void-warm);
+  }
+
+  .tab:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus), var(--shadow-signal-glow);
+    z-index: 1;
+  }
+
+  .tab.active {
+    background: var(--void);
+    border-color: var(--concrete);
+    border-bottom-color: var(--void);
+    color: var(--signal);
+  }
+
+  .tab-label {
+    color: inherit;
+  }
+
+  /* Tab Panels */
+  .tab-panels {
+    background: var(--void);
+    border: 1px solid var(--concrete);
+    border-radius: 0 8px 8px 8px;
+    overflow: hidden;
+  }
+
+  .tab-panel {
+    padding: var(--space-3) var(--space-4);
+    display: none;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  .tab-panel[hidden] {
+    display: none;
+  }
+
+  /* Code wrapper - matches existing pattern */
+  .code-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .command-text {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(0.75rem, 2vw, var(--text-code));
+    color: var(--signal);
+    white-space: nowrap;
+    text-align: left;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--metal) var(--void);
+  }
+
+  .command-text::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .command-text::-webkit-scrollbar-track {
+    background: var(--void);
+  }
+
+  .command-text::-webkit-scrollbar-thumb {
+    background: var(--metal);
+    border-radius: 2px;
+  }
+
+  .code-wrapper :global(.copy-button) {
+    flex-shrink: 0;
+    background: var(--metal);
+    border-color: var(--concrete);
+    color: var(--text-primary);
+  }
+
+  .code-wrapper :global(.copy-button:hover) {
+    background: var(--concrete);
+    border-color: var(--metal);
+    color: var(--signal);
+  }
+
+  /* Method note - subtle hint below command */
+  .method-note {
+    margin: var(--space-2) 0 0 0;
+    font-size: var(--text-small);
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+  }
+
+  /* OS detection hint */
+  .os-hint {
+    margin: var(--space-2) 0 0 0;
+    font-size: var(--text-small);
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    text-align: center;
+  }
+
+  .os-hint:empty {
+    display: none;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 640px) {
+    .tab-list {
+      gap: 0;
+      display: flex;
+      width: 100%;
+    }
+
+    .tab {
+      flex: 1 1 0;
+      padding: 6px 2px;
+      text-align: center;
+      font-size: 11px;
+      min-width: 0;
+      white-space: nowrap;
+      min-height: 36px;
+    }
+
+    .tab-panels {
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* Tighten the tab panel padding on mobile */
+    .tab-panel {
+      padding: var(--space-3) var(--space-2);
+    }
+
+    .tab-panel {
+      padding: var(--space-3);
+    }
+
+    .code-wrapper {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-3);
+    }
+
+    .command-text {
+      overflow-x: auto;
+      padding-bottom: var(--space-2);
+    }
+
+    .code-wrapper :global(.copy-button) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  interface OSInfo {
+    os: 'macos' | 'windows' | 'linux' | 'unknown';
+    preferredMethod: 'curl' | 'npm' | 'brew';
+  }
+
+  class InstallTabs {
+    private wrapper: HTMLElement;
+    private tabs: NodeListOf<HTMLButtonElement>;
+    private panels: NodeListOf<HTMLElement>;
+    private osHint: HTMLElement | null;
+
+    constructor(wrapper: HTMLElement) {
+      this.wrapper = wrapper;
+      this.tabs = wrapper.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+      this.panels = wrapper.querySelectorAll<HTMLElement>('[role="tabpanel"]');
+      this.osHint = wrapper.querySelector('.os-hint');
+
+      this.init();
+    }
+
+    private init(): void {
+      // Add click listeners to tabs
+      this.tabs.forEach(tab => {
+        tab.addEventListener('click', () => this.selectTab(tab));
+      });
+
+      // Add keyboard navigation
+      this.wrapper.addEventListener('keydown', (e) => this.handleKeydown(e));
+
+      // Detect OS and auto-select appropriate tab
+      this.autoSelectByOS();
+    }
+
+    private selectTab(selectedTab: HTMLButtonElement): void {
+      const method = selectedTab.dataset.method;
+      if (!method) return;
+
+      // Update tabs
+      this.tabs.forEach(tab => {
+        const isSelected = tab === selectedTab;
+        tab.classList.toggle('active', isSelected);
+        tab.setAttribute('aria-selected', String(isSelected));
+        tab.tabIndex = isSelected ? 0 : -1;
+      });
+
+      // Update panels
+      this.panels.forEach(panel => {
+        const isActive = panel.dataset.method === method;
+        panel.classList.toggle('active', isActive);
+        panel.hidden = !isActive;
+      });
+    }
+
+    private handleKeydown(e: KeyboardEvent): void {
+      const target = e.target as HTMLElement;
+      if (!target.matches('[role="tab"]')) return;
+
+      const tabsArray = Array.from(this.tabs);
+      const currentIndex = tabsArray.indexOf(target as HTMLButtonElement);
+
+      let newIndex: number;
+
+      switch (e.key) {
+        case 'ArrowLeft':
+          newIndex = currentIndex === 0 ? tabsArray.length - 1 : currentIndex - 1;
+          break;
+        case 'ArrowRight':
+          newIndex = currentIndex === tabsArray.length - 1 ? 0 : currentIndex + 1;
+          break;
+        case 'Home':
+          newIndex = 0;
+          break;
+        case 'End':
+          newIndex = tabsArray.length - 1;
+          break;
+        default:
+          return;
+      }
+
+      e.preventDefault();
+      const newTab = tabsArray[newIndex];
+      newTab.focus();
+      this.selectTab(newTab);
+    }
+
+    private detectOS(): OSInfo {
+      // Try modern userAgentData API first
+      const platform = (navigator as any).userAgentData?.platform?.toLowerCase() ||
+                       navigator.platform?.toLowerCase() ||
+                       '';
+
+      const userAgent = navigator.userAgent.toLowerCase();
+
+      if (platform.includes('mac') || userAgent.includes('mac')) {
+        return { os: 'macos', preferredMethod: 'brew' };
+      }
+
+      if (platform.includes('win') || userAgent.includes('win')) {
+        return { os: 'windows', preferredMethod: 'npm' };
+      }
+
+      if (platform.includes('linux') || userAgent.includes('linux')) {
+        return { os: 'linux', preferredMethod: 'curl' };
+      }
+
+      return { os: 'unknown', preferredMethod: 'curl' };
+    }
+
+    private autoSelectByOS(): void {
+      const { os, preferredMethod } = this.detectOS();
+
+      // Find and select the preferred tab
+      const preferredTab = Array.from(this.tabs).find(
+        tab => tab.dataset.method === preferredMethod
+      );
+
+      if (preferredTab) {
+        this.selectTab(preferredTab);
+      }
+
+      // Show OS hint
+      if (this.osHint && os !== 'unknown') {
+        const osNames: Record<string, string> = {
+          macos: 'macOS',
+          windows: 'Windows',
+          linux: 'Linux',
+        };
+        this.osHint.textContent = `Detected: ${osNames[os]}`;
+      }
+    }
+  }
+
+  // Initialize all install command wrappers
+  document.querySelectorAll<HTMLElement>('[data-install-tabs]').forEach(
+    wrapper => new InstallTabs(wrapper)
+  );
+</script>

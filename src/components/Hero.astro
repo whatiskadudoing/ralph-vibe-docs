@@ -1,5 +1,6 @@
 ---
 import CopyButton from './CopyButton.astro';
+import TerminalDemo from './TerminalDemo.astro';
 
 const installCommand = 'curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh';
 const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
@@ -11,6 +12,10 @@ const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
     <p class="subheadline">
       Everyone's talking about the Ralph Wiggum technique. It works. But have you tried setting it up? Ralph Vibe gives you all the benefits — without the homework.
     </p>
+
+    <div class="terminal-wrapper">
+      <TerminalDemo />
+    </div>
 
     <div class="install-block">
       <div class="code-wrapper">
@@ -55,6 +60,10 @@ const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .terminal-wrapper {
+    margin-bottom: 2.5rem;
   }
 
   .install-block {

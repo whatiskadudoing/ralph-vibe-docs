@@ -1,0 +1,304 @@
+---
+/**
+ * TerminalDemo: Animated terminal showing the ralph init --vibe flow
+ * Shows the "describe it, walk away, working code" promise in action
+ */
+---
+
+<div class="terminal" role="img" aria-label="Animated terminal showing Ralph Vibe in action: describe your project, it builds while you're away">
+  <div class="terminal-header">
+    <div class="terminal-buttons">
+      <span class="terminal-button close"></span>
+      <span class="terminal-button minimize"></span>
+      <span class="terminal-button maximize"></span>
+    </div>
+    <span class="terminal-title">ralph-vibe</span>
+  </div>
+  <div class="terminal-body">
+    <div class="terminal-content" id="terminal-content">
+      <!-- Lines are added by JavaScript animation -->
+      <!-- Noscript fallback shows final state -->
+    </div>
+    <noscript>
+      <div class="terminal-line"><span class="text-accent">✶</span> Welcome to Ralph Vibe</div>
+      <div class="terminal-line"></div>
+      <div class="terminal-line"><span class="text-muted">&gt;</span> ralph init --vibe</div>
+      <div class="terminal-line"><span class="text-cyan">?</span> What are you building? <span class="text-muted">A task management app...</span></div>
+      <div class="terminal-line"></div>
+      <div class="terminal-line"><span class="text-success">✓</span> 47 files created</div>
+      <div class="terminal-line"><span class="text-success">✓</span> Tests passing</div>
+      <div class="terminal-line"><span class="text-success">✓</span> Ready when you are</div>
+    </noscript>
+  </div>
+</div>
+
+<style>
+  .terminal {
+    background: #1e1e2e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+
+  .terminal-header {
+    background: #313244;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .terminal-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #45475a;
+  }
+
+  .terminal-button.close { background: #f38ba8; }
+  .terminal-button.minimize { background: #f9e2af; }
+  .terminal-button.maximize { background: #a6e3a1; }
+
+  .terminal-title {
+    color: #6c7086;
+    font-size: 0.75rem;
+    flex: 1;
+    text-align: center;
+    margin-right: 56px; /* Balance the buttons width */
+  }
+
+  .terminal-body {
+    padding: 1rem 1.25rem 1.5rem;
+    min-height: 280px;
+  }
+
+  .terminal-content {
+    color: #cdd6f4;
+  }
+
+  .terminal-line {
+    line-height: 1.6;
+    min-height: 1.6em;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .terminal-line.typing::after {
+    content: '▋';
+    animation: blink 1s step-end infinite;
+    color: #cdd6f4;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .spinner {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+
+  .text-accent { color: #f9e2af; }
+  .text-muted { color: #6c7086; }
+  .text-cyan { color: #89dceb; }
+  .text-success { color: #a6e3a1; }
+  .text-beer { color: #fab387; }
+
+  /* Reduced motion: show final state immediately */
+  @media (prefers-reduced-motion: reduce) {
+    .terminal-line.typing::after {
+      animation: none;
+      opacity: 1;
+    }
+    .spinner {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  interface AnimationStep {
+    type: 'line' | 'type' | 'wait' | 'clear-typing' | 'update-spinner';
+    content?: string;
+    delay?: number;
+    className?: string;
+  }
+
+  class TerminalAnimation {
+    private container: HTMLElement;
+    private lines: HTMLDivElement[] = [];
+    private currentTypingLine: HTMLDivElement | null = null;
+    private reducedMotion: boolean;
+
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (this.reducedMotion) {
+        this.showFinalState();
+      } else {
+        this.runAnimation();
+      }
+    }
+
+    private showFinalState(): void {
+      const finalLines = [
+        { text: '<span class="text-accent">✶</span> Welcome to Ralph Vibe', class: '' },
+        { text: '', class: '' },
+        { text: '<span class="text-muted">&gt;</span> ralph init --vibe', class: '' },
+        { text: '<span class="text-cyan">?</span> What are you building? <span class="text-muted">A task management app...</span>', class: '' },
+        { text: '', class: '' },
+        { text: '<span class="text-success">✓</span> 47 files created', class: '' },
+        { text: '<span class="text-success">✓</span> Tests passing', class: '' },
+        { text: '<span class="text-success">✓</span> Ready when you are', class: '' },
+      ];
+
+      finalLines.forEach(line => {
+        const div = document.createElement('div');
+        div.className = 'terminal-line';
+        div.innerHTML = line.text;
+        this.container.appendChild(div);
+      });
+    }
+
+    private async runAnimation(): Promise<void> {
+      const steps: AnimationStep[] = [
+        // Welcome
+        { type: 'line', content: '<span class="text-accent">✶</span> Welcome to Ralph Vibe' },
+        { type: 'wait', delay: 600 },
+        { type: 'line', content: '' },
+
+        // Command
+        { type: 'line', content: '<span class="text-muted">&gt;</span> ', className: 'typing' },
+        { type: 'type', content: 'ralph init --vibe', delay: 50 },
+        { type: 'clear-typing' },
+        { type: 'wait', delay: 400 },
+
+        // Question
+        { type: 'line', content: '<span class="text-cyan">?</span> What are you building? ', className: 'typing' },
+        { type: 'type', content: 'A task management app...', delay: 40 },
+        { type: 'clear-typing' },
+        { type: 'wait', delay: 600 },
+
+        { type: 'line', content: '' },
+
+        // Spinner states
+        { type: 'line', content: '<span class="spinner">◐</span> Interviewing...' },
+        { type: 'wait', delay: 800 },
+        { type: 'update-spinner', content: '<span class="spinner">◐</span> Writing specs...' },
+        { type: 'wait', delay: 800 },
+        { type: 'update-spinner', content: '<span class="spinner">◐</span> Planning...' },
+        { type: 'wait', delay: 800 },
+        { type: 'update-spinner', content: '<span class="spinner">◐</span> Building...' },
+        { type: 'wait', delay: 1200 },
+
+        // Clear spinner line and show beer message
+        { type: 'update-spinner', content: '' },
+        { type: 'line', content: '' },
+        { type: 'line', content: '  <span class="text-beer">☕</span> Go grab a coffee. Or a beer.' },
+        { type: 'wait', delay: 400 },
+        { type: 'line', content: '  <span class="text-muted">We\'ll keep shipping while you\'re gone.</span>' },
+        { type: 'wait', delay: 1500 },
+
+        { type: 'line', content: '' },
+
+        // Success
+        { type: 'line', content: '<span class="text-success">✓</span> 47 files created' },
+        { type: 'wait', delay: 300 },
+        { type: 'line', content: '<span class="text-success">✓</span> Tests passing' },
+        { type: 'wait', delay: 300 },
+        { type: 'line', content: '<span class="text-success">✓</span> Ready when you are' },
+      ];
+
+      for (const step of steps) {
+        await this.executeStep(step);
+      }
+
+      // Loop the animation after a pause
+      await this.wait(5000);
+      this.container.innerHTML = '';
+      this.lines = [];
+      this.currentTypingLine = null;
+      this.runAnimation();
+    }
+
+    private async executeStep(step: AnimationStep): Promise<void> {
+      switch (step.type) {
+        case 'line':
+          this.addLine(step.content || '', step.className);
+          break;
+        case 'type':
+          await this.typeText(step.content || '', step.delay || 50);
+          break;
+        case 'wait':
+          await this.wait(step.delay || 500);
+          break;
+        case 'clear-typing':
+          this.clearTypingCursor();
+          break;
+        case 'update-spinner':
+          this.updateLastLine(step.content || '');
+          break;
+      }
+    }
+
+    private addLine(content: string, className?: string): void {
+      const line = document.createElement('div');
+      line.className = 'terminal-line' + (className ? ` ${className}` : '');
+      line.innerHTML = content;
+      this.container.appendChild(line);
+      this.lines.push(line);
+      if (className?.includes('typing')) {
+        this.currentTypingLine = line;
+      }
+    }
+
+    private async typeText(text: string, delay: number): Promise<void> {
+      if (!this.currentTypingLine) return;
+
+      for (const char of text) {
+        this.currentTypingLine.innerHTML = this.currentTypingLine.innerHTML.replace('▋', '') + char;
+        await this.wait(delay);
+      }
+    }
+
+    private clearTypingCursor(): void {
+      if (this.currentTypingLine) {
+        this.currentTypingLine.classList.remove('typing');
+        this.currentTypingLine = null;
+      }
+    }
+
+    private updateLastLine(content: string): void {
+      const lastLine = this.lines[this.lines.length - 1];
+      if (lastLine) {
+        lastLine.innerHTML = content;
+      }
+    }
+
+    private wait(ms: number): Promise<void> {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+  }
+
+  // Initialize when DOM is ready
+  const terminalContent = document.getElementById('terminal-content');
+  if (terminalContent) {
+    new TerminalAnimation(terminalContent);
+  }
+</script>

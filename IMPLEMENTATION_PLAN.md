@@ -53,7 +53,7 @@
 
 **Goal:** The animated terminal demo that sells the "walk away" promise.
 
-- [ ] Implement TerminalDemo component with typing animation sequence
+- [x] Implement TerminalDemo component with typing animation sequence
   - Build terminal UI shell (dark background, border, mock title bar)
   - Implement typing animation for `ralph init --vibe` command
   - Add status message cycling: Interviewing → Specs → Planning → Building

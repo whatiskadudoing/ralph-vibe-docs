@@ -79,12 +79,12 @@ Add live GitHub stats (stars, forks) fetched at build time to demonstrate projec
 
 Add "Read the docs" link to complete the conversion funnel for users who want to learn more before installing.
 
-- [ ] **Add documentation link to Footer section** [spec: install-tool.md] [file: src/components/Footer.astro]
-  - Add "Read the docs" link alongside "View on GitHub"
-  - Link to: `https://github.com/whatiskadudoing/ralph-vibe-docs` (or docs subdomain when available)
-  - Style consistently with existing GitHub link
-  - Ensure `target="_blank"` and `rel="noopener noreferrer"`
-  - Update Hero section to include docs link if space allows
+- [x] **Add documentation link to Footer section** [spec: install-tool.md] [file: src/components/Footer.astro]
+  - Added "Read the docs" link alongside "View on GitHub" in Footer
+  - Links to: `https://github.com/whatiskadudoing/ralph-vibe-docs`
+  - Uses same `.footer-link` styling with book icon SVG
+  - Has `target="_blank"` and `rel="noopener noreferrer"` for security
+  - Hero section already has GitHub link with stats; docs link kept footer-only to avoid clutter
 
 ---
 <!-- CHECKPOINT: Full credibility layer complete -->

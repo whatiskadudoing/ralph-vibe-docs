@@ -45,6 +45,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 </head>
 <body>
   <a href="#main-content" class="skip-to-main">Skip to main content</a>
+
+  <!-- Industrial corner marks - fixed position frame -->
+  <div class="corner-marks" aria-hidden="true">
+    <div class="corner-mark corner-mark--top-left"></div>
+    <div class="corner-mark corner-mark--top-right"></div>
+    <div class="corner-mark corner-mark--bottom-left"></div>
+    <div class="corner-mark corner-mark--bottom-right"></div>
+  </div>
+
   <main id="main-content">
     <slot />
   </main>
@@ -53,4 +62,58 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 <style is:global>
   @import '../styles/global.css';
+</style>
+
+<style>
+  /* Industrial corner marks - ambient industrial framing */
+  .corner-marks {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .corner-mark {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: var(--concrete);
+    border-style: solid;
+    border-width: 0;
+  }
+
+  .corner-mark--top-left {
+    top: var(--space-4);
+    left: var(--space-4);
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .corner-mark--top-right {
+    top: var(--space-4);
+    right: var(--space-4);
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+
+  .corner-mark--bottom-left {
+    bottom: var(--space-4);
+    left: var(--space-4);
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  }
+
+  .corner-mark--bottom-right {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+
+  /* Hide corner marks on small screens where they clutter the UI */
+  @media (max-width: 768px) {
+    .corner-marks {
+      display: none;
+    }
+  }
 </style>

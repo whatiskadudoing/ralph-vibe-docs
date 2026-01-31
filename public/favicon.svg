@@ -1,4 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#0969da"/>
-  <text x="16" y="23" font-family="system-ui, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">R</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Industrial Favicon for Ralph Vibe - Autonomous Build Station -->
+
+  <!-- Background: void -->
+  <rect width="32" height="32" rx="6" fill="#0C0C0C"/>
+
+  <!-- Inner border: concrete -->
+  <rect x="2" y="2" width="28" height="28" rx="4" fill="none" stroke="#1A1918" stroke-width="1"/>
+
+  <!-- R letter in signal orange -->
+  <text
+    x="16"
+    y="23"
+    font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+    font-size="20"
+    font-weight="700"
+    fill="#D4522A"
+    text-anchor="middle"
+  >R</text>
+
+  <!-- Subtle bracket marks at corners -->
+  <path d="M 5 8 L 5 5 L 8 5" fill="none" stroke="#5A5550" stroke-width="1"/>
+  <path d="M 24 5 L 27 5 L 27 8" fill="none" stroke="#5A5550" stroke-width="1"/>
+  <path d="M 27 24 L 27 27 L 24 27" fill="none" stroke="#5A5550" stroke-width="1"/>
+  <path d="M 8 27 L 5 27 L 5 24" fill="none" stroke="#5A5550" stroke-width="1"/>
 </svg>

@@ -163,10 +163,11 @@ Complete the design transformation with footer and site-wide polish.
   - Tagline styling: --font-sans, --text-secondary color
   - Uses design system spacing tokens (--space-X) and animation timing tokens
 
-- [ ] **Update Layout and site-wide elements** [spec: design-system.md] [file: src/components/Layout.astro]
-  - Update favicon if needed (consider industrial-themed icon)
-  - Verify Open Graph image still works against new design (may need update)
-  - Add any ambient industrial elements (section dividers, corner marks)
+- [x] **Update Layout and site-wide elements** [spec: design-system.md] [file: src/components/Layout.astro]
+  - Created industrial-themed favicon: void background (#0C0C0C), signal orange "R" (#D4522A), corner bracket marks
+  - Updated OG image to match industrial palette: void gradient background, signal orange accents, industrial terminal preview
+  - Added fixed corner marks (L-shaped) at page corners for industrial framing (hidden on mobile)
+  - Added section dividers between all page sections in index.astro
 
 ---
 <!-- CHECKPOINT: Full industrial rebrand complete, verify build succeeds -->

@@ -39,7 +39,7 @@
   - Test build + deploy works end-to-end
   [spec: grasp-value-proposition.md] [research: approaches/astro-project-structure.md]
 
-- [ ] Implement Hero section with static content and copy button (no terminal animation yet)
+- [x] Implement Hero section with static content and copy button (no terminal animation yet)
   - Create Hero component with headline, subheadline, install command
   - Create CopyButton component with Clipboard API + fallback
   - Style with Tailwind (responsive: mobile/tablet/desktop)

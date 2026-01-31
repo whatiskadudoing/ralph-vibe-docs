@@ -1,0 +1,143 @@
+---
+interface Props {
+  text: string;
+  label?: string;
+}
+
+const { text, label = 'Copy' } = Astro.props;
+---
+
+<button class="copy-button" data-copy-text={text} type="button">
+  <span class="copy-label">{label}</span>
+  <span class="copy-success" aria-hidden="true">Copied!</span>
+  <span class="copy-error" aria-hidden="true">Failed</span>
+  <svg class="copy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M4 4V2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="2" y="5" width="8" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+  <svg class="check-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<style>
+  .copy-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    transition: background 0.15s, border-color 0.15s;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .copy-button:hover {
+    background: #eaeef2;
+    border-color: #afb8c1;
+  }
+
+  .copy-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .copy-success,
+  .copy-error,
+  .check-icon {
+    display: none;
+  }
+
+  .copy-button.success .copy-label,
+  .copy-button.success .copy-icon {
+    display: none;
+  }
+
+  .copy-button.success .copy-success,
+  .copy-button.success .check-icon {
+    display: inline;
+    color: var(--color-success);
+  }
+
+  .copy-button.error .copy-label,
+  .copy-button.error .copy-icon {
+    display: none;
+  }
+
+  .copy-button.error .copy-error {
+    display: inline;
+    color: var(--color-error);
+  }
+</style>
+
+<script>
+  class CopyButton {
+    private button: HTMLButtonElement;
+    private text: string;
+    private timeout: number | null = null;
+
+    constructor(button: HTMLButtonElement) {
+      this.button = button;
+      this.text = button.dataset.copyText || '';
+
+      button.addEventListener('click', () => this.copy());
+    }
+
+    async copy(): Promise<void> {
+      const success = await this.writeToClipboard(this.text);
+      this.showFeedback(success ? 'success' : 'error');
+    }
+
+    async writeToClipboard(text: string): Promise<boolean> {
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (err) {
+          console.warn('Clipboard API failed, trying fallback');
+        }
+      }
+
+      return this.fallbackCopy(text);
+    }
+
+    fallbackCopy(text: string): boolean {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+      document.body.appendChild(textarea);
+      textarea.select();
+
+      try {
+        const success = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        return success;
+      } catch (err) {
+        document.body.removeChild(textarea);
+        return false;
+      }
+    }
+
+    showFeedback(state: 'success' | 'error'): void {
+      if (this.timeout) {
+        clearTimeout(this.timeout);
+        this.button.classList.remove('success', 'error');
+      }
+
+      this.button.classList.add(state);
+
+      this.timeout = window.setTimeout(() => {
+        this.button.classList.remove(state);
+        this.timeout = null;
+      }, 2000);
+    }
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.copy-button').forEach(btn => new CopyButton(btn));
+</script>

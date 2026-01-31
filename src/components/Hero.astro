@@ -1,0 +1,148 @@
+---
+import CopyButton from './CopyButton.astro';
+
+const installCommand = 'curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh';
+const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
+---
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="headline">Describe it. Walk away. Working code.</h1>
+    <p class="subheadline">
+      Everyone's talking about the Ralph Wiggum technique. It works. But have you tried setting it up? Ralph Vibe gives you all the benefits — without the homework.
+    </p>
+
+    <div class="install-block">
+      <div class="code-wrapper">
+        <code class="install-command">{installCommand}</code>
+        <CopyButton text={installCommand} />
+      </div>
+      <p class="install-links">
+        Or <a href={githubUrl} target="_blank" rel="noopener noreferrer">view on GitHub</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .hero-content {
+    max-width: 720px;
+    text-align: center;
+  }
+
+  .headline {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 0 0 1.5rem;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+  }
+
+  .subheadline {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0 0 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .install-block {
+    margin-bottom: 1rem;
+  }
+
+  .code-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #1e1e2e;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+  }
+
+  .install-command {
+    flex: 1;
+    min-width: 0;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: clamp(0.75rem, 2vw, 0.9rem);
+    color: #cdd6f4;
+    white-space: nowrap;
+    text-align: left;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #45475a #1e1e2e;
+  }
+
+  .install-command::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .install-command::-webkit-scrollbar-track {
+    background: #1e1e2e;
+  }
+
+  .install-command::-webkit-scrollbar-thumb {
+    background: #45475a;
+    border-radius: 2px;
+  }
+
+  .code-wrapper :global(.copy-button) {
+    flex-shrink: 0;
+    background: #313244;
+    border-color: #45475a;
+    color: #cdd6f4;
+  }
+
+  .code-wrapper :global(.copy-button:hover) {
+    background: #45475a;
+    border-color: #585b70;
+  }
+
+  .install-links {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .install-links a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .install-links a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 1.5rem 1rem;
+    }
+
+    .code-wrapper {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.75rem;
+      padding: 1rem;
+    }
+
+    .install-command {
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .code-wrapper :global(.copy-button) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

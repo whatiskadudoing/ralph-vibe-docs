@@ -99,7 +99,7 @@
 
 **Goal:** Social proof showing real projects built with Ralph.
 
-- [ ] Implement Examples section with project cards
+- [x] Implement Examples section with project cards
   - Create ExampleCard component (name, type badge, description, GitHub link)
   - Add 2 placeholder example projects (Task Manager, Weather API)
   - GitHub links open in new tab

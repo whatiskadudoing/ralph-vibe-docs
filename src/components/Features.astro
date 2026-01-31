@@ -21,6 +21,14 @@ const features = [
       "One task at a time. Nothing is marked 'done' until tests pass. Built-in quality gates that prevent half-finished features from slipping through.",
   },
 ];
+
+const comparison = [
+  { pain: "Write shell scripts", solution: "Just run ralph work" },
+  { pain: "Create prompt files manually", solution: "Auto-generated from interview" },
+  { pain: "Understand the architecture", solution: "Just answer questions" },
+  { pain: "Debug your setup", solution: "It just works" },
+  { pain: "Hours of configuration", solution: "One command" },
+];
 ---
 
 <section class="features" aria-labelledby="features-heading">
@@ -35,6 +43,34 @@ const features = [
         </li>
       ))}
     </ul>
+
+    <div class="comparison-wrapper">
+      <h3 class="comparison-heading">The Difference</h3>
+      <div class="comparison-table-container">
+        <table class="comparison-table" aria-label="Comparison between Original Ralph Loop and Ralph Vibe">
+          <thead>
+            <tr>
+              <th scope="col" class="comparison-header comparison-header-pain">
+                <span class="header-bracket">[</span>Original Ralph Loop<span class="header-bracket">]</span>
+              </th>
+              <th scope="col" class="comparison-header comparison-header-solution">
+                <span class="header-bracket">[</span>Ralph Vibe<span class="header-bracket">]</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((row) => (
+              <tr class="comparison-row">
+                <td class="comparison-cell comparison-cell-pain">{row.pain}</td>
+                <td class="comparison-cell comparison-cell-solution">
+                  <code class="solution-code">{row.solution}</code>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -153,6 +189,181 @@ const features = [
 
     .feature-title {
       font-size: 1.25rem;
+    }
+  }
+
+  /* ==========================================================================
+     Comparison Table - Industrial styling
+     ========================================================================== */
+
+  .comparison-wrapper {
+    margin-top: var(--space-7);
+  }
+
+  .comparison-heading {
+    font-family: var(--font-sans);
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 var(--space-4);
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .comparison-table-container {
+    background: var(--output);
+    border-radius: 16px;
+    padding: var(--space-3);
+    box-shadow:
+      0 20px 40px rgba(0,0,0,0.35),
+      0 8px 16px rgba(0,0,0,0.25);
+    border-top: var(--edge-top);
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-sans);
+  }
+
+  .comparison-header {
+    font-family: var(--font-mono);
+    font-size: var(--text-code);
+    font-weight: 600;
+    text-align: left;
+    padding: var(--space-3);
+    border-bottom: 2px solid var(--concrete);
+    color: var(--void);
+    letter-spacing: 0.02em;
+  }
+
+  .header-bracket {
+    color: var(--bracket);
+  }
+
+  .comparison-header-pain {
+    width: 50%;
+    background: rgba(12, 12, 12, 0.05);
+  }
+
+  .comparison-header-solution {
+    width: 50%;
+    background: rgba(212, 82, 42, 0.08);
+  }
+
+  .comparison-row {
+    transition: background var(--duration-micro) var(--ease-out);
+  }
+
+  .comparison-row:hover {
+    background: rgba(12, 12, 12, 0.03);
+  }
+
+  .comparison-cell {
+    padding: var(--space-3);
+    border-bottom: 1px solid rgba(26, 25, 24, 0.15);
+    vertical-align: middle;
+    color: rgba(12, 12, 12, 0.8);
+    font-size: 0.9375rem;
+  }
+
+  .comparison-row:last-child .comparison-cell {
+    border-bottom: none;
+  }
+
+  .comparison-cell-pain {
+    color: rgba(12, 12, 12, 0.6);
+    text-decoration: line-through;
+    text-decoration-color: rgba(12, 12, 12, 0.3);
+  }
+
+  .comparison-cell-solution {
+    font-weight: 500;
+    color: var(--void);
+  }
+
+  .solution-code {
+    font-family: var(--font-mono);
+    font-size: var(--text-code);
+    background: var(--signal);
+    color: var(--output);
+    padding: 0.25em 0.5em;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  /* Mobile: stacked layout */
+  @media (max-width: 599px) {
+    .comparison-table-container {
+      padding: var(--space-2);
+    }
+
+    .comparison-table,
+    .comparison-table thead,
+    .comparison-table tbody,
+    .comparison-table tr,
+    .comparison-table th,
+    .comparison-table td {
+      display: block;
+    }
+
+    .comparison-table thead {
+      display: none;
+    }
+
+    .comparison-row {
+      margin-bottom: var(--space-3);
+      padding: var(--space-3);
+      background: rgba(12, 12, 12, 0.03);
+      border-radius: 8px;
+      border: 1px solid rgba(26, 25, 24, 0.1);
+    }
+
+    .comparison-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .comparison-cell {
+      padding: var(--space-2) 0;
+      border-bottom: none;
+    }
+
+    .comparison-cell-pain {
+      font-size: 0.875rem;
+      margin-bottom: var(--space-1);
+    }
+
+    .comparison-cell-pain::before {
+      content: '✗ ';
+      color: rgba(12, 12, 12, 0.4);
+      text-decoration: none;
+    }
+
+    .comparison-cell-solution::before {
+      content: '→ ';
+      color: var(--signal);
+    }
+  }
+
+  /* Tablet and up: side-by-side table */
+  @media (min-width: 600px) {
+    .comparison-table-container {
+      padding: var(--space-4);
+    }
+
+    .comparison-header {
+      padding: var(--space-4);
+    }
+
+    .comparison-cell {
+      padding: var(--space-4);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .comparison-wrapper {
+      margin-top: var(--space-8);
     }
   }
 </style>

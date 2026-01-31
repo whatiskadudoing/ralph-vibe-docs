@@ -1,203 +1,182 @@
 # Implementation Plan
 
-## Current Status: Credibility Layer SLC COMPLETE ✅
+## Current Status: Industrial Rebrand SLC COMPLETE ✅
 
-**Verified:** January 2026 gap analysis confirms Elevator Pitch + Credibility Layer are complete.
+**Verified:** January 2026 gap analysis confirms all three completed SLCs are production-ready.
 
 | Activity | Spec Depth | Implemented | Status |
 |----------|------------|-------------|--------|
 | Grasp Value Proposition | Standard | Standard | ✅ COMPLETE |
-| See How It Works | Basic | Basic+ | ✅ COMPLETE |
-| Discover Features | Basic | Basic+ | ✅ COMPLETE |
-| Browse Examples | Standard | Standard | ✅ COMPLETE (real example + community CTA) |
+| See How It Works | Standard | Standard | ✅ COMPLETE |
+| Discover Features | Standard | Advanced | ✅ COMPLETE (with comparison table) |
+| Browse Examples | Standard | Standard | ✅ COMPLETE (1 real + community CTA) |
 | Get Answers | Standard | Standard | ✅ COMPLETE |
 | Install Tool | Standard | Standard | ✅ COMPLETE |
+| Design System | Full | Full | ✅ Industrial rebrand complete |
 
 **Build:** ✅ Succeeds (`bun run build`)
+**Code Quality:** Zero TODOs, no technical debt
 **Deployment:** Ready for GitHub Pages
 
 ---
 
-## Gap Analysis: Design System Divergence
+## Gap Analysis: What Remains
 
-### Critical Finding
+### Advanced Features Not Yet Implemented
 
-The design system specification (`specs/design-system.md`) defines a dark "Autonomous Build Station" industrial aesthetic inspired by NERV headquarters (Evangelion). However, the current implementation uses a light theme with GitHub's color palette.
+| Activity | Advanced Feature | Spec Reference |
+|----------|-----------------|----------------|
+| Grasp Value Proposition | Rotating taglines ("Built for [builders/dreamers/shippers]") | grasp-value-proposition.md |
+| Grasp Value Proposition | Particle/background effects | grasp-value-proposition.md |
+| See How It Works | Scroll-triggered entrance animations | see-how-it-works.md |
+| See How It Works | Interactive hover states on steps | see-how-it-works.md |
+| ~~Discover Features~~ | ~~**Comparison table** (Original Ralph vs Ralph Vibe)~~ | ~~discover-features.md~~ ✅ DONE |
+| Browse Examples | Project screenshots/previews | browse-examples.md |
+| Browse Examples | Live GitHub stats per project | browse-examples.md |
+| Get Answers | Searchable FAQ | get-answers.md |
+| Get Answers | Category filters | get-answers.md |
+| Install Tool | **Multiple install methods** (curl/npm/brew tabs) | install-tool.md |
+| Install Tool | **OS detection** for install command | install-tool.md |
 
-| Aspect | Spec | Current Implementation | Gap |
-|--------|------|------------------------|-----|
-| Background | `--void: #0C0C0C` (near-black) | `white` / light grays | ❌ Major |
-| Accent | `--signal: #D4522A` (burnt orange) | `#0969da` (GitHub blue) | ❌ Major |
-| Primary Font | Space Grotesk | System UI fonts | ❌ Major |
-| Mono Font | JetBrains Mono | System monospace | ⚠️ Minor |
-| Visual Language | Industrial, worn machinery | Clean tech startup | ❌ Major |
+### Content Gap
 
-**Exception:** The `TerminalDemo` component already uses a dark theme (Catppuccin Mocha: `#1e1e2e`), but not the spec'd industrial palette.
-
-### Decision Required
-
-**The next SLC has two paths:**
-
-1. **Path A: Design System Overhaul** — Rewrite CSS to match the NERV industrial aesthetic. High effort, transforms the visual identity.
-
-2. **Path B: Power User Experience** — Keep current light theme, add Advanced depth features (comparison table, OS detection, searchable FAQ). Lower effort, incremental improvement.
+The Examples section has only 1 real project (ClaudeApp). The second card is a placeholder inviting community contributions. This is a **content gap**, not a code gap — resolved by building more projects with Ralph Vibe.
 
 ---
 
-## Recommended SLC Release: The Industrial Rebrand
+## Recommended SLC Release: The Conversion Optimizer
 
-**Audience:** Developers who want autonomous AI coding — but the current light/generic design doesn't communicate the "industrial automation" narrative that differentiates Ralph Vibe.
+**Audience:** Developers evaluating Ralph Vibe who need clearer differentiation and lower friction to try it.
 
-**Value proposition:** Transform the visual identity from "generic tech landing page" to "Autonomous Build Station" — an industrial control room aesthetic that reinforces the core message: you set the specs, walk away, and the machine builds while you're gone.
+**Value proposition:** Remove the two biggest conversion barriers:
+1. "How is this different from just using Claude Code?" → Comparison table answers this visually
+2. "Will this work on my machine?" → OS-aware install commands remove uncertainty
 
 **Why this slice:**
 
-1. **Design carries meaning** — The industrial aesthetic isn't decoration; it reinforces the product's core value (autonomous machinery)
-2. **Differentiation** — Most AI coding tools have clean, corporate aesthetics. NERV/industrial is distinctive and memorable
-3. **The terminal already hints at it** — The dark terminal creates visual tension with the light page. Harmonizing the design feels unfinished
-4. **Research is complete** — The design system spec is comprehensive with exact tokens, patterns, and component examples
+1. **Comparison table directly addresses JTBD 3** — Visitors evaluating tools need to understand differentiation. The current Features section lists benefits but doesn't contrast them against the alternative (setting up Ralph manually).
+
+2. **OS detection reduces friction** — Developers seeing a curl command may hesitate ("Does this work on Windows?"). Showing their OS-specific command with tabs for alternatives increases confidence.
+
+3. **Both features are conversion-critical** — These aren't visual polish; they directly address the "should I try this?" decision point.
+
+4. **Scope is tight** — Two substantial features that build on existing infrastructure (Features section, CopyButton component).
 
 **Activities included:**
 
 | Activity | Depth Change | Why Included |
 |----------|--------------|--------------|
-| All Activities | Visual only | Restyle existing components to industrial palette |
-| Design System | Full implementation | Core infrastructure for all styling |
+| Discover Features | Standard → Advanced | Comparison table is the clearest differentiation |
+| Install Tool | Standard → Advanced | OS detection + method tabs reduce friction |
 
 **What's NOT in this slice:**
-- New features (rotating headlines, comparison table, searchable FAQ)
-- OS detection for install commands
-- Additional example projects
-- Analytics or tracking
+- Rotating taglines (visual polish, not conversion-critical)
+- Scroll animations (nice-to-have, not decision-changing)
+- Searchable FAQ (useful at scale, not yet needed with 6 questions)
+- Project screenshots (requires real projects first)
 
 ---
 <!-- HUMAN VERIFICATION: Does this slice form a coherent, valuable product? -->
-<!-- The Industrial Rebrand transforms the visual identity to match the product narrative. It's a polish release, not a feature release. -->
+<!-- The Conversion Optimizer addresses the two most common conversion blockers directly. -->
 
-## Phase 1: Design System Foundation - CRITICAL
+## Phase 1: Comparison Table - CRITICAL
 
-Implement the core design tokens and infrastructure that all components will use.
+Add a visual comparison that shows why Ralph Vibe exists.
 
-- [x] **Implement design system CSS custom properties and base styles** [spec: design-system.md] [file: src/styles/global.css]
-  - Replace current GitHub-based tokens with industrial palette (void/signal/output colors)
-  - Add Space Grotesk and JetBrains Mono via Google Fonts
-  - Add spacing scale (4px to 96px), typography scale, animation timing tokens
-  - Update body background to `--void`, text to `--text-primary`
-  - Add industrial shadow system (no blue tint, solid black shadows)
-  - Update reduced motion preferences
-  - Update skip-to-main link styling to use `--signal`
-
----
-<!-- CHECKPOINT: Verify design tokens load correctly, page has dark background, fonts render -->
-
-## Phase 2: Hero & Terminal Restyle
-
-Apply industrial design to the hero section — the most impactful visual change.
-
-- [x] **Restyle Hero section to industrial aesthetic** [spec: design-system.md, grasp-value-proposition.md] [file: src/components/Hero.astro]
-  - Updated `.headline` to use Space Grotesk (`--font-sans`), `--text-primary` color
-  - Updated `.subheadline` to use `--text-secondary` color
-  - Restyled `.code-wrapper` install block: `--void` background, `--concrete` border, `--signal` accent on code
-  - Updated CopyButton.astro: `--metal` background, `--concrete` border, signal hover states
-  - Updated GitHubStats.astro: `--text-secondary` text, `--signal` icons, monospace font
-  - Link colors now use `--signal` with `--signal-glow` hover
-
-- [x] **Restyle TerminalDemo to match industrial palette** [spec: design-system.md] [file: src/components/TerminalDemo.astro]
-  - Replaced Catppuccin colors with spec'd industrial colors
-  - Background: `--void-warm` (#121210)
-  - Border: `--concrete` (#1A1918), rounded to 16px per spec
-  - Header: `--concrete` background with industrial muted buttons
-  - Text: `--text-primary` (#E8E4DC)
-  - Accent (star): `--signal` (#D4522A)
-  - Success checkmarks: Using `--signal` for cohesive orange theme
-  - Spinner: Using `--signal` color, 800ms per spec
-  - Added inner edge highlight for depth
-  - Cursor blink uses `--signal` color
+- [x] **Implement comparison table in Features section** [spec: discover-features.md] [file: src/components/Features.astro]
+  - ✅ Added comparison table below feature cards
+  - ✅ Two columns: "[Original Ralph Loop]" vs "[Ralph Vibe]" with bracket syntax
+  - ✅ 5 rows contrasting pain points with solutions
+  - ✅ Industrial styling: output card background, concrete borders, signal-colored solution badges
+  - ✅ Responsive: side-by-side on desktop (600px+), stacked cards on mobile
+  - ✅ Accessible: proper table semantics with scope="col", aria-label
 
 ---
-<!-- CHECKPOINT: Verify Hero looks cohesive on dark background, terminal integrates smoothly -->
+<!-- CHECKPOINT: Verify comparison table renders correctly, is readable, and responsive -->
 
-## Phase 3: Content Sections Restyle
+## Phase 2: Multi-Method Install with OS Detection
 
-Apply industrial design to remaining content sections.
+Transform the install command into an intelligent, OS-aware component.
 
-- [x] **Restyle HowItWorks section to industrial aesthetic** [spec: design-system.md, see-how-it-works.md] [file: src/components/HowItWorks.astro]
-  - Removed emoji icons, replaced with bracketed step numbers `[01]` through `[05]` in `--bracket` color
-  - Step cards: `--void-warm` background, `--concrete` border, `--text-primary`/`--text-secondary` text
-  - Added hover lift effect with shadow expansion
-  - Arrows: Split into `.arrow-line` (gray) and `.arrow-head` (signal orange)
-  - Callout: `--void-warm` background with `--signal` colored code element
-  - Updated spacing to use design system tokens (--space-X)
-  - Added proper typography (font-sans, font-mono)
-
-- [x] **Restyle Features section to output card design** [spec: design-system.md, discover-features.md] [file: src/components/Features.astro]
-  - Feature cards: `--output` (#E8E4DC) off-white background
-  - Cards float on `--void` background
-  - Add industrial shadow (solid black, 35-45% opacity)
-  - Removed emoji icons (industrial design doesn't use emojis)
-  - Card hover: Subtle lift (translateY -4px), shadow expansion
-  - Added subtle paper texture via CSS pseudo-element (repeating gradient)
-  - Dark text (`--void`) on light cards for readability
-  - Proper typography using design system tokens
-
-- [x] **Restyle Examples and FAQ sections to industrial aesthetic** [spec: design-system.md] [files: src/components/Examples.astro, src/components/FAQ.astro]
-  - Examples: Output cards (`--output` off-white) with bracketed type badges `[macOS App]` in `--bracket` color
-  - Examples: Industrial shadows, hover lift effect, paper texture pseudo-element
-  - Examples: Dark text on light cards, `--signal` orange links
-  - FAQ: Dark background continues `--void`, `--concrete` borders
-  - FAQ: `--signal` orange expand icons (+/−), proper focus states
-  - FAQ: Code elements in answers use `--signal` color with dark background
-  - Maintained accessibility (focus states, keyboard navigation)
+- [ ] **Create InstallCommand component with OS detection and method tabs** [spec: install-tool.md] [files: src/components/InstallCommand.astro (new), src/components/Hero.astro, src/components/Footer.astro]
+  - Create new InstallCommand.astro component
+  - Detect OS on client-side (navigator.platform / userAgentData)
+  - Show 3 install methods as tabs: curl (default), npm, brew
+  - Auto-select appropriate tab based on detected OS:
+    - macOS: Prefer brew, show curl as fallback
+    - Linux: Prefer curl
+    - Windows: Show npm (WSL note for curl)
+  - Each tab shows the relevant command with CopyButton
+  - Commands:
+    - curl: `curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh`
+    - npm: `npm install -g ralph-vibe`
+    - brew: `brew install ralph-vibe`
+  - Industrial tab styling: concrete borders, signal accent on active tab
+  - Replace existing install blocks in Hero.astro and Footer.astro
+  - Graceful fallback: show curl if JS disabled or OS undetected
 
 ---
-<!-- CHECKPOINT: Verify all content sections harmonize with industrial theme -->
+<!-- CHECKPOINT: Verify OS detection works, tabs switch correctly, all commands copy properly -->
 
-## Phase 4: Footer & Final Polish
+## Phase 3: Polish & Integration
 
-Complete the design transformation with footer and site-wide polish.
+Ensure both features integrate seamlessly with existing design.
 
-- [x] **Restyle Footer CTA section to industrial aesthetic** [spec: design-system.md, install-tool.md] [file: src/components/Footer.astro]
-  - Decision: Continue `--void` background for consistency with other sections
-  - Install command: Industrial code block styling (--void bg, --concrete border, --signal code color)
-  - Links: Ghost button style (transparent bg, --concrete border, --signal hover)
-  - Tagline styling: --font-sans, --text-secondary color
-  - Uses design system spacing tokens (--space-X) and animation timing tokens
-
-- [x] **Update Layout and site-wide elements** [spec: design-system.md] [file: src/components/Layout.astro]
-  - Created industrial-themed favicon: void background (#0C0C0C), signal orange "R" (#D4522A), corner bracket marks
-  - Updated OG image to match industrial palette: void gradient background, signal orange accents, industrial terminal preview
-  - Added fixed corner marks (L-shaped) at page corners for industrial framing (hidden on mobile)
-  - Added section dividers between all page sections in index.astro
+- [ ] **Integration testing and responsive refinement** [files: src/components/Features.astro, src/components/InstallCommand.astro]
+  - Test comparison table at all breakpoints (375px, 768px, 1024px+)
+  - Test install tabs at all breakpoints
+  - Verify keyboard navigation for tabs (arrow keys, Enter)
+  - Verify ARIA attributes for tab panel pattern
+  - Test reduced-motion preferences (instant tab switch, no table animations)
+  - Run `bun run build` to verify no build errors
+  - Manual browser testing: Chrome, Firefox, Safari
 
 ---
-<!-- CHECKPOINT: Full industrial rebrand complete, verify build succeeds -->
+<!-- CHECKPOINT: Full conversion optimizer complete, build succeeds, ready for deployment -->
 
 ## Future Work (Outside Current Scope)
 
 Insights noted during gap analysis, deferred to future releases:
 
-### Next SLC: "The Power User Experience"
+### Next SLC: "The Polish Release"
 
 | Enhancement | Depth | Value |
 |-------------|-------|-------|
-| Multiple install methods | Advanced | Tabs for curl/npm/brew with OS detection |
-| Searchable FAQ | Advanced | Category filters, search input for large FAQ |
-| Comparison table | Advanced | Original Ralph Loop vs Ralph Vibe side-by-side |
+| Rotating taglines | Advanced | "Built for [builders/dreamers/shippers]" animation |
+| Scroll animations | Advanced | Subtle entrance for How It Works steps |
+| Interactive step hover | Advanced | Steps highlight with detail on hover |
+
+### Content Priorities
+
+| Priority | Description |
+|----------|-------------|
+| More example projects | Build real projects with Ralph Vibe to replace placeholder |
+| Video demo | Show the full ralph init --vibe flow in action |
+| Blog post | Explain the Ralph Wiggum technique and why Ralph Vibe exists |
 
 ### Future Enhancements
 
 | Enhancement | Description |
 |-------------|-------------|
-| Rotating headlines | "Built for [builders/dreamers/shippers]" animation (grasp-value-proposition Advanced) |
-| Scroll animations | Subtle entrance animations for How It Works (see-how-it-works Advanced) |
-| Project screenshots | Visual previews for example projects (browse-examples Advanced) |
-| Dark mode toggle | System preference with manual override (though site is now dark by default) |
-| Analytics tracking | Track install command copies, scroll depth, conversion funnel |
-| Paper/screen textures | Subtle grain overlays for output cards and terminal |
+| Searchable FAQ | Category filters, search input (when FAQ grows) |
+| Project screenshots | Visual previews in Examples section |
+| Analytics | Track copy button clicks, scroll depth, conversion funnel |
+| Dark mode toggle | System preference with manual override (site is dark by default) |
+| Paper/screen textures | PNG grain overlays for extra tactile feel |
 
 ---
 
 ## Completed Releases (Archive)
+
+### SLC 3: Industrial Rebrand ✅ (January 2026)
+
+**Value delivered:** Transformed visual identity from "generic tech landing page" to "Autonomous Build Station" — industrial control room aesthetic that reinforces the autonomous machinery narrative.
+
+- ✅ Full design system implementation (void/signal/output palette)
+- ✅ Space Grotesk + JetBrains Mono typography
+- ✅ Industrial shadows and edge highlights
+- ✅ Corner marks for page framing
+- ✅ All components restyled to industrial aesthetic
 
 ### SLC 2: Credibility Layer ✅ (January 2026)
 
@@ -212,15 +191,12 @@ Insights noted during gap analysis, deferred to future releases:
 
 **Value delivered:** A visitor lands on the page, immediately understands what Ralph Vibe does, sees the 5-step flow, reads why it works, gets their questions answered, and copies the install command.
 
-**Verified Working:**
-- ✅ Terminal animation with typing effects, status cycling, playful "Go grab a beer" message
-- ✅ Copy button with Clipboard API + execCommand fallback, 2-second feedback
-- ✅ FAQ accordion with CSS grid animation, one-at-a-time toggle
-- ✅ Responsive layout (mobile vertical stacking, desktop horizontal flow)
-- ✅ Accessibility (skip-to-main, ARIA labels, keyboard navigation, focus states)
-- ✅ SEO meta tags + Open Graph image (1200x630)
-- ✅ `prefers-reduced-motion` support throughout
-- ✅ `<noscript>` fallbacks for terminal
+- ✅ Terminal animation with typing effects
+- ✅ Copy button with Clipboard API + fallback
+- ✅ FAQ accordion with one-at-a-time toggle
+- ✅ Responsive layout
+- ✅ Accessibility (skip-to-main, ARIA, keyboard navigation)
+- ✅ SEO meta tags + Open Graph image
 
 ---
 

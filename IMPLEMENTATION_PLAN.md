@@ -113,7 +113,7 @@
 
 **Goal:** Address decision blockers with expandable Q&A.
 
-- [ ] Implement FAQ section with animated accordion
+- [x] Implement FAQ section with animated accordion
   - Use native `<details>/<summary>` for accessibility
   - Add CSS grid animation for smooth expand/collapse
   - Include all 6 FAQ items from spec

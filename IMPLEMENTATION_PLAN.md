@@ -156,11 +156,12 @@ Apply industrial design to remaining content sections.
 
 Complete the design transformation with footer and site-wide polish.
 
-- [ ] **Restyle Footer CTA section to industrial aesthetic** [spec: design-system.md, install-tool.md] [file: src/components/Footer.astro]
-  - Decision: Use `--signal` background for high-impact CTA OR continue `--void` with signal accent card
-  - Install command: Industrial code block styling
-  - Links: Ghost button style with `--signal` hover
-  - Tagline styling: Industrial typography
+- [x] **Restyle Footer CTA section to industrial aesthetic** [spec: design-system.md, install-tool.md] [file: src/components/Footer.astro]
+  - Decision: Continue `--void` background for consistency with other sections
+  - Install command: Industrial code block styling (--void bg, --concrete border, --signal code color)
+  - Links: Ghost button style (transparent bg, --concrete border, --signal hover)
+  - Tagline styling: --font-sans, --text-secondary color
+  - Uses design system spacing tokens (--space-X) and animation timing tokens
 
 - [ ] **Update Layout and site-wide elements** [spec: design-system.md] [file: src/components/Layout.astro]
   - Update favicon if needed (consider industrial-themed icon)

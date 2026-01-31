@@ -70,8 +70,7 @@ const examples: Example[] = [
 
 <style>
   .examples {
-    padding: 4rem 1rem;
-    background: var(--color-surface);
+    padding: var(--space-7) var(--space-3);
   }
 
   .container {
@@ -80,85 +79,135 @@ const examples: Example[] = [
   }
 
   .section-heading {
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
-    font-weight: 700;
+    font-family: var(--font-sans);
+    font-size: clamp(1.5rem, 4vw, var(--text-section));
+    font-weight: 600;
     text-align: center;
-    margin: 0 0 0.75rem;
-    color: var(--color-text);
+    margin: 0 0 var(--space-2);
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
   }
 
   .section-subheading {
+    font-family: var(--font-sans);
     font-size: 1rem;
-    color: var(--color-text-muted);
+    color: var(--text-secondary);
     text-align: center;
-    margin: 0 0 3rem;
+    margin: 0 0 var(--space-6);
   }
 
   .examples-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: var(--space-4);
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
   .example-card {
-    padding: 1.5rem;
-    background: white;
-    border-radius: 12px;
-    border: 1px solid var(--color-border);
+    padding: var(--space-5);
+    background: var(--output);
+    border-radius: 16px;
+    /* Industrial shadow - solid black, no blue tint */
+    box-shadow:
+      0 20px 40px rgba(0,0,0,0.35),
+      0 8px 16px rgba(0,0,0,0.25);
+    /* Edge highlight for physical presence */
+    border-top: var(--edge-top);
     display: flex;
     flex-direction: column;
+    position: relative;
+    transition: transform var(--duration-micro) var(--ease-out),
+                box-shadow var(--duration-micro) var(--ease-out);
+  }
+
+  /* Subtle paper texture effect */
+  .example-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.01) 2px,
+      rgba(0,0,0,0.01) 4px
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .example-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 24px 48px rgba(0,0,0,0.45),
+      0 12px 24px rgba(0,0,0,0.35);
   }
 
   .example-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
     flex-wrap: wrap;
   }
 
   .example-name {
-    font-size: 1.125rem;
+    font-family: var(--font-sans);
+    font-size: var(--text-card-title);
     font-weight: 600;
     margin: 0;
-    color: var(--color-text);
+    /* Dark text on light output card */
+    color: var(--void);
+    letter-spacing: -0.01em;
   }
 
+  /* Bracketed type badge - industrial classification */
   .example-type {
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.25rem 0.5rem;
-    border-radius: 9999px;
-    background: var(--color-primary);
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
+    font-family: var(--font-mono);
+    font-size: var(--text-bracket);
+    font-weight: 500;
+    padding: 0;
+    background: none;
+    color: var(--bracket);
+    letter-spacing: 0.02em;
+  }
+
+  /* Add brackets via pseudo-elements */
+  .example-type::before {
+    content: '[';
+  }
+
+  .example-type::after {
+    content: ']';
   }
 
   .example-description {
+    font-family: var(--font-sans);
     font-size: 0.9375rem;
-    color: var(--color-text-muted);
-    margin: 0 0 1rem;
-    line-height: 1.5;
+    /* Muted dark text for descriptions */
+    color: rgba(12, 12, 12, 0.7);
+    margin: 0 0 var(--space-3);
+    line-height: 1.6;
     flex-grow: 1;
   }
 
   .example-link {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: var(--text-code);
     font-weight: 500;
-    color: var(--color-primary);
+    color: var(--signal);
     text-decoration: none;
-    transition: color 0.15s ease;
+    transition: color var(--duration-micro) var(--ease-out);
   }
 
   .example-link:hover {
-    color: var(--color-text);
+    color: var(--signal-dim);
   }
 
   .github-icon {
@@ -168,27 +217,27 @@ const examples: Example[] = [
   /* Tablet: side-by-side */
   @media (min-width: 768px) {
     .examples {
-      padding: 5rem 2rem;
+      padding: var(--space-8) var(--space-5);
     }
 
     .examples-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: var(--space-5);
     }
 
     .example-card {
-      padding: 1.75rem;
+      padding: var(--space-5);
     }
   }
 
   /* Desktop: slightly larger spacing */
   @media (min-width: 1024px) {
     .examples-grid {
-      gap: 2rem;
+      gap: var(--space-6);
     }
 
     .example-card {
-      padding: 2rem;
+      padding: var(--space-6);
     }
 
     .example-name {

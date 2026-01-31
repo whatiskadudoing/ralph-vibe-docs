@@ -140,10 +140,14 @@ Apply industrial design to remaining content sections.
   - Dark text (`--void`) on light cards for readability
   - Proper typography using design system tokens
 
-- [ ] **Restyle Examples and FAQ sections to industrial aesthetic** [spec: design-system.md] [files: src/components/Examples.astro, src/components/FAQ.astro]
-  - Examples: Output cards with bracketed type badges `[Web App]` in `--bracket` color
-  - FAQ: Dark background, `--concrete` borders, `--signal` expand icons (+/−)
-  - Maintain accessibility (focus states, keyboard navigation)
+- [x] **Restyle Examples and FAQ sections to industrial aesthetic** [spec: design-system.md] [files: src/components/Examples.astro, src/components/FAQ.astro]
+  - Examples: Output cards (`--output` off-white) with bracketed type badges `[macOS App]` in `--bracket` color
+  - Examples: Industrial shadows, hover lift effect, paper texture pseudo-element
+  - Examples: Dark text on light cards, `--signal` orange links
+  - FAQ: Dark background continues `--void`, `--concrete` borders
+  - FAQ: `--signal` orange expand icons (+/−), proper focus states
+  - FAQ: Code elements in answers use `--signal` color with dark background
+  - Maintained accessibility (focus states, keyboard navigation)
 
 ---
 <!-- CHECKPOINT: Verify all content sections harmonize with industrial theme -->

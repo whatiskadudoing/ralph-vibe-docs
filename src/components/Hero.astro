@@ -1,9 +1,12 @@
 ---
 import CopyButton from './CopyButton.astro';
 import TerminalDemo from './TerminalDemo.astro';
+import GitHubStats from './GitHubStats.astro';
 
 const installCommand = 'curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh';
 const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
+const repoOwner = 'whatiskadudoing';
+const repoName = 'ralph-vibe';
 ---
 
 <section class="hero">
@@ -24,6 +27,7 @@ const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
       </div>
       <p class="install-links">
         Or <a href={githubUrl} target="_blank" rel="noopener noreferrer">view on GitHub</a>
+        <GitHubStats owner={repoOwner} repo={repoName} />
       </p>
     </div>
   </div>
@@ -121,6 +125,11 @@ const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
     margin-top: 1rem;
     font-size: 0.9rem;
     color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
 
   .install-links a {
@@ -130,6 +139,11 @@ const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
 
   .install-links a:hover {
     text-decoration: underline;
+  }
+
+  .install-links :global(.github-stats) {
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--color-border, #45475a);
   }
 
   @media (max-width: 640px) {

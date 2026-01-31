@@ -60,14 +60,11 @@ Replace placeholder example URLs with real Ralph-built projects. This is the sin
 
 Add live GitHub stats (stars, forks) fetched at build time to demonstrate project activity and community adoption.
 
-- [ ] **Implement GitHubStats component with build-time API fetch** [spec: browse-examples.md (Advanced depth)] [file: src/components/GitHubStats.astro] [research: research/apis/github.md]
-  - Create new `GitHubStats.astro` component
-  - Fetch `stargazers_count` and `forks_count` from GitHub API at build time
-  - Display as compact badge (e.g., "⭐ 1.2k stars")
-  - Handle API errors gracefully (show nothing rather than error state)
-  - Add to Hero section near the GitHub link
-  - Use unauthenticated requests (60/hour sufficient for builds)
-  - Format numbers with toLocaleString() for readability
+- [x] **Implement GitHubStats component with build-time API fetch** [spec: browse-examples.md (Advanced depth)] [file: src/components/GitHubStats.astro] [research: research/apis/github.md]
+  - Component already existed with full implementation (API fetch, error handling, number formatting)
+  - Added to Hero section next to "view on GitHub" link with vertical separator
+  - Displays star count (and forks if > 0) fetched at build time
+  - Build logs confirm API working: "GitHub API: 51/60 requests remaining"
 
 - [ ] **Add daily rebuild workflow for fresh stats** [research: research/apis/github.md]
   - Create `.github/workflows/daily-build.yml`

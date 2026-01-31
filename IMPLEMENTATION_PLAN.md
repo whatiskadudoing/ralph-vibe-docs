@@ -1,162 +1,167 @@
 # Implementation Plan
 
-## Recommended SLC Release: "The Elevator Pitch"
+## Current Status: Elevator Pitch SLC COMPLETE ✅
 
-**Audience:** Developers who want to build apps autonomously using AI — from experienced engineers seeking more leverage to newer developers tackling ambitious projects solo.
+**Verified:** January 2026 gap analysis confirms all 6 activities are implemented at their planned depths.
 
-**Value proposition:** A visitor lands on the page, immediately understands what Ralph Vibe does ("describe it, walk away, working code"), sees the 5-step flow, reads why it works, gets their questions answered, and copies the install command. One page, one job: convince them to try it.
+| Activity | Spec Depth | Implemented | Status |
+|----------|------------|-------------|--------|
+| Grasp Value Proposition | Standard | Standard | ✅ COMPLETE |
+| See How It Works | Basic | Basic+ | ✅ COMPLETE |
+| Discover Features | Basic | Basic+ | ✅ COMPLETE |
+| Browse Examples | Basic | Basic+ | ✅ COMPLETE (real example + community CTA) |
+| Get Answers | Standard | Standard | ✅ COMPLETE |
+| Install Tool | Standard | Standard | ✅ COMPLETE |
+
+**Build:** ✅ Succeeds (`bun run build` - 963ms)
+**Deployment:** Ready for GitHub Pages
+
+---
+
+## Recommended Next SLC: The Credibility Layer
+
+**Audience:** Same primary audience, but addressing users who need more trust signals before committing.
+
+**Value proposition:** Transform placeholder social proof into real credibility signals. Visitors see actual projects built with Ralph, live GitHub activity, and a path to documentation — answering "does this actually work?" before they commit to trying it.
 
 **Activities included:**
 
-| Activity | Depth | Why Included |
-|----------|-------|--------------|
-| Grasp Value Proposition | Standard | Core hook - animated terminal demo sells the "walk away" promise |
-| See How It Works | Basic | Essential context - shows the 5-step flow so visitors trust the magic |
-| Discover Features | Basic | Addresses "why not just use Claude Code?" objection |
-| Browse Examples | Basic | Social proof (placeholder repos acceptable for MVP) |
-| Get Answers | Standard | FAQ accordion addresses decision blockers |
-| Install Tool | Standard | Primary CTA with copy-to-clipboard - conversion point |
+| Activity | Depth Upgrade | Why Included |
+|----------|---------------|--------------|
+| Browse Examples | Basic → Standard | Real projects with descriptions build trust (JTBD 3: Evaluate Tool Fit) |
+| Install Tool | Standard → Standard+ | Add GitHub stats badge + docs link for credibility |
 
 **What's NOT in this slice:**
-- Advanced depth for any activity (rotating headlines, live GitHub stats, searchable FAQ)
-- GitHub stats badge (optional enhancement deferred)
-- Multiple install methods (brew, npm - curl only)
-- Video demos or interactive terminals
+- Advanced depth features (rotating headlines, particle effects, searchable FAQ)
+- Dark mode toggle
+- Analytics tracking
+- Multiple install methods (npm, brew)
+- Screenshot previews for examples
+- OS detection for install commands
 
 ---
 <!-- HUMAN VERIFICATION: Does this slice form a coherent, valuable product? -->
-<!-- Verification: YES - A visitor can understand the tool, see how it works, read features, see examples, get answers, and install. Complete evaluation-to-action journey. -->
+<!-- The Elevator Pitch SLC delivers the core value proposition. The Credibility Layer adds the social proof that converts skeptics. -->
 
-## Phase 1: Project Foundation & Vertical Slice
+## Phase 1: Real Example Projects - CRITICAL
 
-**Goal:** Working site with hero section deployed to GitHub Pages. Proves the entire pipeline works.
+Replace placeholder example URLs with real Ralph-built projects. This is the single most impactful change for credibility.
 
-- [x] Initialize Astro project with Tailwind CSS v4 and GitHub Pages deployment workflow
-  - Set up `astro.config.mjs` with GitHub Pages base path
-  - Configure Tailwind v4 with `@tailwindcss/vite`
-  - Add GitHub Actions workflow for deploy
-  - Create Layout component with SEO meta tags
-  - Test build + deploy works end-to-end
-  [spec: grasp-value-proposition.md] [research: approaches/astro-project-structure.md]
-
-- [x] Implement Hero section with static content and copy button (no terminal animation yet)
-  - Create Hero component with headline, subheadline, install command
-  - Create CopyButton component with Clipboard API + fallback
-  - Style with Tailwind (responsive: mobile/tablet/desktop)
-  - Verify copy button works and shows "Copied!" feedback
-  [spec: grasp-value-proposition.md, install-tool.md] [research: approaches/copy-button.md, apis/clipboard.md]
+- [x] **Update Examples section with real project URLs** [spec: browse-examples.md] [file: src/components/Examples.astro]
+  - Replaced placeholder with ClaudeApp (verified Ralph-built: has AGENTS.md, IMPLEMENTATION_PLAN.md, specs/)
+  - Added "Your Project?" placeholder card with honest "community just getting started" messaging
+  - GitHub link verified working: https://github.com/whatiskadudoing/claudeapp
+  - Second card links to ralph-vibe repo for community contribution discovery
 
 ---
-<!-- CHECKPOINT: Deploy working hero to GitHub Pages before proceeding -->
+<!-- CHECKPOINT: Verify real example URLs are live and accessible before proceeding -->
 
-## Phase 2: Terminal Animation (Hero Enhancement)
+## Phase 2: GitHub Credibility Badge
 
-**Goal:** The animated terminal demo that sells the "walk away" promise.
+Add live GitHub stats (stars, forks) fetched at build time to demonstrate project activity and community adoption.
 
-- [x] Implement TerminalDemo component with typing animation sequence
-  - Build terminal UI shell (dark background, border, mock title bar)
-  - Implement typing animation for `ralph init --vibe` command
-  - Add status message cycling: Interviewing → Specs → Planning → Building
-  - Show playful "Go grab a coffee. Or a beer." message
-  - Display success state: files created, tests passing
-  - Handle reduced-motion preference (show final state)
-  - Add noscript fallback for static terminal
-  [spec: grasp-value-proposition.md] [research: approaches/terminal-animation.md]
+- [ ] **Implement GitHubStats component with build-time API fetch** [spec: browse-examples.md (Advanced depth)] [file: src/components/GitHubStats.astro] [research: research/apis/github.md]
+  - Create new `GitHubStats.astro` component
+  - Fetch `stargazers_count` and `forks_count` from GitHub API at build time
+  - Display as compact badge (e.g., "⭐ 1.2k stars")
+  - Handle API errors gracefully (show nothing rather than error state)
+  - Add to Hero section near the GitHub link
+  - Use unauthenticated requests (60/hour sufficient for builds)
+  - Format numbers with toLocaleString() for readability
 
----
-<!-- CHECKPOINT: Hero with animated terminal working before adding more sections -->
-
-## Phase 3: How It Works Section
-
-**Goal:** Visual diagram showing the 5-step Ralph flow.
-
-- [x] Implement HowItWorks section with flow diagram
-  - Create 5 step boxes: Init → Interview → Research → Plan → Build
-  - Add icons/visual indicators for each step
-  - Style arrows/connectors between steps
-  - Responsive: horizontal on desktop, vertical stack on mobile
-  - Add callout for `--vibe` mode ("chains everything automatically")
-  [spec: see-how-it-works.md] [research: approaches/responsive-layout.md]
+- [ ] **Add daily rebuild workflow for fresh stats** [research: research/apis/github.md]
+  - Create `.github/workflows/daily-build.yml`
+  - Schedule cron job for daily rebuilds (e.g., 00:00 UTC)
+  - Ensure GitHub Pages deployment triggers on schedule
+  - Test workflow runs successfully
 
 ---
-<!-- CHECKPOINT: Above-the-fold content complete (hero + flow) -->
+<!-- CHECKPOINT: Verify GitHub stats display correctly and workflow runs -->
 
-## Phase 4: Features Section
+## Phase 3: Documentation Link
 
-**Goal:** Address the "why not just Claude Code?" objection with 4 differentiators.
+Add "Read the docs" link to complete the conversion funnel for users who want to learn more before installing.
 
-- [x] Implement Features section with 4 feature cards
-  - Create FeatureCard component (title, description, optional icon)
-  - Add 4 features: Fresh Start, Specs Are Truth, No Homework, Tests Keep It Honest
-  - Layout: 2x2 grid on tablet+, single column on mobile
-  - Style cards with consistent visual treatment
-  [spec: discover-features.md] [research: approaches/responsive-layout.md]
-
----
-<!-- CHECKPOINT: Core value messaging complete -->
-
-## Phase 5: Examples Section
-
-**Goal:** Social proof showing real projects built with Ralph.
-
-- [x] Implement Examples section with project cards
-  - Create ExampleCard component (name, type badge, description, GitHub link)
-  - Add 2 placeholder example projects (Task Manager, Weather API)
-  - GitHub links open in new tab
-  - Responsive: side-by-side on tablet+, stacked on mobile
-  [spec: browse-examples.md]
+- [ ] **Add documentation link to Footer section** [spec: install-tool.md] [file: src/components/Footer.astro]
+  - Add "Read the docs" link alongside "View on GitHub"
+  - Link to: `https://github.com/whatiskadudoing/ralph-vibe-docs` (or docs subdomain when available)
+  - Style consistently with existing GitHub link
+  - Ensure `target="_blank"` and `rel="noopener noreferrer"`
+  - Update Hero section to include docs link if space allows
 
 ---
-<!-- CHECKPOINT: Social proof section complete -->
-
-## Phase 6: FAQ Section
-
-**Goal:** Address decision blockers with expandable Q&A.
-
-- [x] Implement FAQ section with animated accordion
-  - Use native `<details>/<summary>` for accessibility
-  - Add CSS grid animation for smooth expand/collapse
-  - Include all 6 FAQ items from spec
-  - Optional: one-at-a-time behavior (close others when one opens)
-  - Style with consistent visual treatment
-  [spec: get-answers.md] [research: approaches/accordion-faq.md]
-
----
-<!-- CHECKPOINT: All objections addressed -->
-
-## Phase 7: Footer CTA & Polish
-
-**Goal:** Final conversion opportunity + production readiness.
-
-- [x] Implement Footer section with reinforcing CTA
-  - Add "Ready to build while AFK?" heading
-  - Reuse CopyButton component for install command
-  - Add GitHub link ("View on GitHub")
-  - Style footer with appropriate spacing
-  [spec: install-tool.md]
-
-- [x] Final polish and accessibility pass
-  - Created og-image.png (1200x630) for social sharing with terminal mockup and branding
-  - Added favicon-32.png fallback for browsers that prefer PNG
-  - Added apple-touch-icon link for iOS
-  - Added skip-to-main-content link (hidden until focused, for keyboard navigation)
-  - Fixed og:image and twitter:image URLs to include base path
-  - Removed nested <main> tag issue from Layout
-  - Verified build and type checking passes
-  [spec: all specs have test requirements]
-
----
+<!-- CHECKPOINT: Full credibility layer complete -->
 
 ## Future Work (Outside Current Scope)
 
-Insights noted during analysis, deferred to future releases:
+Insights noted during gap analysis, deferred to future releases:
 
-- **GitHub stats badge:** Live stars/forks via build-time API fetch (research complete in apis/github.md)
-- **Advanced terminal effects:** Shimmer, cursor blink, more realistic delays
-- **Rotating headlines:** "Built for [builders/dreamers/shippers]" animation
-- **Comparison table:** Original Ralph Loop vs Ralph Vibe side-by-side
-- **Real example projects:** Replace placeholders once actual Ralph-built projects exist
-- **Searchable FAQ:** Category filters, search input
-- **Multiple install methods:** Tabs for curl/npm/brew with OS detection
-- **Analytics:** Track install command copies, scroll depth
-- **Dark mode:** System preference toggle
+### Next SLC: "The Power User Experience"
+| Enhancement | Depth | Value |
+|-------------|-------|-------|
+| Multiple install methods | Advanced | Tabs for curl/npm/brew with OS detection |
+| Searchable FAQ | Advanced | Category filters, search input for large FAQ |
+| Dark mode toggle | Standard | System preference with manual override |
+
+### Future Enhancements
+| Enhancement | Description |
+|-------------|-------------|
+| Rotating headlines | "Built for [builders/dreamers/shippers]" animation (grasp-value-proposition Advanced) |
+| Advanced terminal effects | Shimmer, cursor blink, more realistic delays |
+| Comparison table | Original Ralph Loop vs Ralph Vibe side-by-side (discover-features Advanced) |
+| Project screenshots | Visual previews for example projects (browse-examples Advanced) |
+| Analytics tracking | Track install command copies, scroll depth, conversion funnel |
+| Live GitHub stats | Client-side refresh for always-current numbers |
+
+---
+
+## Completed Releases (Archive)
+
+### SLC 1: Elevator Pitch ✅ (January 2026)
+
+**Value delivered:** A visitor lands on the page, immediately understands what Ralph Vibe does, sees the 5-step flow, reads why it works, gets their questions answered, and copies the install command.
+
+**Verified Working:**
+- ✅ Terminal animation with typing effects, status cycling, playful "Go grab a beer" message
+- ✅ Copy button with Clipboard API + execCommand fallback, 2-second feedback
+- ✅ FAQ accordion with CSS grid animation, one-at-a-time toggle
+- ✅ Responsive layout (mobile vertical stacking, desktop horizontal flow)
+- ✅ Accessibility (skip-to-main, ARIA labels, keyboard navigation, focus states)
+- ✅ SEO meta tags + Open Graph image (1200x630)
+- ✅ `prefers-reduced-motion` support throughout
+- ✅ `<noscript>` fallbacks for terminal
+
+**Minor gaps (non-blocking):**
+- Example GitHub URLs are placeholders (`/example/` org) — acceptable per spec
+- Footer missing "Read the docs" link — docs site may not exist yet
+- CopyButton shows "Failed" not "Failed to copy" — minor UX detail
+
+| Phase | Status |
+|-------|--------|
+| Phase 1: Project Foundation & Vertical Slice | ✅ Complete |
+| Phase 2: Terminal Animation | ✅ Complete |
+| Phase 3: How It Works Section | ✅ Complete |
+| Phase 4: Features Section | ✅ Complete |
+| Phase 5: Examples Section | ✅ Complete (placeholder URLs) |
+| Phase 6: FAQ Section | ✅ Complete |
+| Phase 7: Footer CTA & Polish | ✅ Complete |
+
+---
+
+## Research Artifacts (Reference)
+
+```
+research/
+├── readiness.md              # Build readiness: READY
+├── inspiration.md            # Competitor analysis
+├── api-validation.md         # API test results
+├── apis/
+│   ├── github.md             # GitHub API (for stats badge) ← RELEVANT
+│   └── clipboard.md          # Clipboard API (implemented)
+└── approaches/
+    ├── terminal-animation.md # Hero terminal (implemented)
+    ├── accordion-faq.md      # FAQ section (implemented)
+    ├── copy-button.md        # Copy-to-clipboard (implemented)
+    ├── responsive-layout.md  # Mobile/tablet/desktop (implemented)
+    └── astro-project-structure.md  # Project setup (implemented)
+```

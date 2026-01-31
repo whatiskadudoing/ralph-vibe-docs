@@ -128,7 +128,7 @@
 
 **Goal:** Final conversion opportunity + production readiness.
 
-- [ ] Implement Footer section with reinforcing CTA
+- [x] Implement Footer section with reinforcing CTA
   - Add "Ready to build while AFK?" heading
   - Reuse CopyButton component for install command
   - Add GitHub link ("View on GitHub")

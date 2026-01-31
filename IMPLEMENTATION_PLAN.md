@@ -85,7 +85,7 @@
 
 **Goal:** Address the "why not just Claude Code?" objection with 4 differentiators.
 
-- [ ] Implement Features section with 4 feature cards
+- [x] Implement Features section with 4 feature cards
   - Create FeatureCard component (title, description, optional icon)
   - Add 4 features: Fresh Start, Specs Are Truth, No Homework, Tests Keep It Honest
   - Layout: 2x2 grid on tablet+, single column on mobile

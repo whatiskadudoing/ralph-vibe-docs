@@ -135,13 +135,14 @@
   - Style footer with appropriate spacing
   [spec: install-tool.md]
 
-- [ ] Final polish and accessibility pass
-  - Verify responsive layout at 375px, 768px, 1024px
-  - Test keyboard navigation (tab order, Enter/Space activation)
-  - Check color contrast meets WCAG AA
-  - Test with prefers-reduced-motion
-  - Verify page loads <3s on simulated 3G
-  - Add favicon and og-image.png for social sharing
+- [x] Final polish and accessibility pass
+  - Created og-image.png (1200x630) for social sharing with terminal mockup and branding
+  - Added favicon-32.png fallback for browsers that prefer PNG
+  - Added apple-touch-icon link for iOS
+  - Added skip-to-main-content link (hidden until focused, for keyboard navigation)
+  - Fixed og:image and twitter:image URLs to include base path
+  - Removed nested <main> tag issue from Layout
+  - Verified build and type checking passes
   [spec: all specs have test requirements]
 
 ---

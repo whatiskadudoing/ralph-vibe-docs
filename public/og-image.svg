@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0c0f16"/>
+
+  <!-- Subtle grid pattern -->
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1a1f2e" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Terminal window -->
+  <g transform="translate(100, 80)">
+    <!-- Terminal frame -->
+    <rect x="0" y="0" width="500" height="320" rx="12" fill="#1a1f2e" stroke="#2d3444" stroke-width="2"/>
+
+    <!-- Terminal title bar -->
+    <rect x="0" y="0" width="500" height="36" rx="12" fill="#1a1f2e"/>
+    <rect x="0" y="24" width="500" height="12" fill="#1a1f2e"/>
+
+    <!-- Traffic lights -->
+    <circle cx="24" cy="18" r="6" fill="#ff5f57"/>
+    <circle cx="48" cy="18" r="6" fill="#febc2e"/>
+    <circle cx="72" cy="18" r="6" fill="#28c840"/>
+
+    <!-- Terminal content -->
+    <text x="24" y="70" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#22c55e">✶</text>
+    <text x="48" y="70" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#a0aec0">Welcome to Ralph Vibe</text>
+
+    <text x="24" y="105" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#a0aec0">❯</text>
+    <text x="48" y="105" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#ffffff">ralph init --vibe</text>
+
+    <text x="24" y="145" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#0969da">?</text>
+    <text x="48" y="145" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#a0aec0">What are you building?</text>
+
+    <text x="24" y="185" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#fbbf24">◐</text>
+    <text x="48" y="185" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#a0aec0">Building...</text>
+
+    <text x="24" y="230" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="14" fill="#6b7280">☕</text>
+    <text x="50" y="230" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="13" fill="#6b7280" font-style="italic">Go grab a coffee. Or a beer.</text>
+
+    <text x="24" y="275" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#22c55e">✓</text>
+    <text x="48" y="275" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#22c55e">47 files created</text>
+
+    <text x="24" y="300" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#22c55e">✓</text>
+    <text x="48" y="300" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, monospace" font-size="15" fill="#22c55e">Tests passing</text>
+  </g>
+
+  <!-- Main text content -->
+  <g transform="translate(660, 140)">
+    <!-- Logo -->
+    <rect x="0" y="0" width="56" height="56" rx="12" fill="#0969da"/>
+    <text x="28" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">R</text>
+
+    <!-- Title -->
+    <text x="0" y="110" font-family="system-ui, -apple-system, sans-serif" font-size="48" font-weight="bold" fill="white">Ralph Vibe</text>
+
+    <!-- Tagline -->
+    <text x="0" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="24" fill="#a0aec0">Build while AFK</text>
+
+    <!-- Description -->
+    <text x="0" y="220" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#6b7280">Describe it. Walk away.</text>
+    <text x="0" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#6b7280">Working code.</text>
+
+    <!-- CTA hint -->
+    <rect x="0" y="290" width="200" height="44" rx="8" fill="#0969da"/>
+    <text x="100" y="318" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" fill="white" text-anchor="middle">Get Started</text>
+  </g>
+
+  <!-- URL at bottom -->
+  <text x="600" y="590" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="#4b5563" text-anchor="middle">github.com/whatiskadudoing/ralph-vibe</text>
+</svg>

@@ -1,118 +1,199 @@
 # Implementation Plan
 
-## Current Status: Elevator Pitch SLC COMPLETE ✅
+## Current Status: Credibility Layer SLC COMPLETE ✅
 
-**Verified:** January 2026 gap analysis confirms all 6 activities are implemented at their planned depths.
+**Verified:** January 2026 gap analysis confirms Elevator Pitch + Credibility Layer are complete.
 
 | Activity | Spec Depth | Implemented | Status |
 |----------|------------|-------------|--------|
 | Grasp Value Proposition | Standard | Standard | ✅ COMPLETE |
 | See How It Works | Basic | Basic+ | ✅ COMPLETE |
 | Discover Features | Basic | Basic+ | ✅ COMPLETE |
-| Browse Examples | Basic | Basic+ | ✅ COMPLETE (real example + community CTA) |
+| Browse Examples | Standard | Standard | ✅ COMPLETE (real example + community CTA) |
 | Get Answers | Standard | Standard | ✅ COMPLETE |
 | Install Tool | Standard | Standard | ✅ COMPLETE |
 
-**Build:** ✅ Succeeds (`bun run build` - 963ms)
+**Build:** ✅ Succeeds (`bun run build`)
 **Deployment:** Ready for GitHub Pages
 
 ---
 
-## Current SLC: The Credibility Layer ✅ COMPLETE
+## Gap Analysis: Design System Divergence
 
-**Audience:** Same primary audience, but addressing users who need more trust signals before committing.
+### Critical Finding
 
-**Value proposition:** Transform placeholder social proof into real credibility signals. Visitors see actual projects built with Ralph, live GitHub activity, and a path to documentation — answering "does this actually work?" before they commit to trying it.
+The design system specification (`specs/design-system.md`) defines a dark "Autonomous Build Station" industrial aesthetic inspired by NERV headquarters (Evangelion). However, the current implementation uses a light theme with GitHub's color palette.
+
+| Aspect | Spec | Current Implementation | Gap |
+|--------|------|------------------------|-----|
+| Background | `--void: #0C0C0C` (near-black) | `white` / light grays | ❌ Major |
+| Accent | `--signal: #D4522A` (burnt orange) | `#0969da` (GitHub blue) | ❌ Major |
+| Primary Font | Space Grotesk | System UI fonts | ❌ Major |
+| Mono Font | JetBrains Mono | System monospace | ⚠️ Minor |
+| Visual Language | Industrial, worn machinery | Clean tech startup | ❌ Major |
+
+**Exception:** The `TerminalDemo` component already uses a dark theme (Catppuccin Mocha: `#1e1e2e`), but not the spec'd industrial palette.
+
+### Decision Required
+
+**The next SLC has two paths:**
+
+1. **Path A: Design System Overhaul** — Rewrite CSS to match the NERV industrial aesthetic. High effort, transforms the visual identity.
+
+2. **Path B: Power User Experience** — Keep current light theme, add Advanced depth features (comparison table, OS detection, searchable FAQ). Lower effort, incremental improvement.
+
+---
+
+## Recommended SLC Release: The Industrial Rebrand
+
+**Audience:** Developers who want autonomous AI coding — but the current light/generic design doesn't communicate the "industrial automation" narrative that differentiates Ralph Vibe.
+
+**Value proposition:** Transform the visual identity from "generic tech landing page" to "Autonomous Build Station" — an industrial control room aesthetic that reinforces the core message: you set the specs, walk away, and the machine builds while you're gone.
+
+**Why this slice:**
+
+1. **Design carries meaning** — The industrial aesthetic isn't decoration; it reinforces the product's core value (autonomous machinery)
+2. **Differentiation** — Most AI coding tools have clean, corporate aesthetics. NERV/industrial is distinctive and memorable
+3. **The terminal already hints at it** — The dark terminal creates visual tension with the light page. Harmonizing the design feels unfinished
+4. **Research is complete** — The design system spec is comprehensive with exact tokens, patterns, and component examples
 
 **Activities included:**
 
-| Activity | Depth Upgrade | Why Included |
-|----------|---------------|--------------|
-| Browse Examples | Basic → Standard | Real projects with descriptions build trust (JTBD 3: Evaluate Tool Fit) |
-| Install Tool | Standard → Standard+ | Add GitHub stats badge + docs link for credibility |
+| Activity | Depth Change | Why Included |
+|----------|--------------|--------------|
+| All Activities | Visual only | Restyle existing components to industrial palette |
+| Design System | Full implementation | Core infrastructure for all styling |
 
 **What's NOT in this slice:**
-- Advanced depth features (rotating headlines, particle effects, searchable FAQ)
-- Dark mode toggle
-- Analytics tracking
-- Multiple install methods (npm, brew)
-- Screenshot previews for examples
+- New features (rotating headlines, comparison table, searchable FAQ)
 - OS detection for install commands
+- Additional example projects
+- Analytics or tracking
 
 ---
 <!-- HUMAN VERIFICATION: Does this slice form a coherent, valuable product? -->
-<!-- The Elevator Pitch SLC delivers the core value proposition. The Credibility Layer adds the social proof that converts skeptics. -->
+<!-- The Industrial Rebrand transforms the visual identity to match the product narrative. It's a polish release, not a feature release. -->
 
-## Phase 1: Real Example Projects - CRITICAL
+## Phase 1: Design System Foundation - CRITICAL
 
-Replace placeholder example URLs with real Ralph-built projects. This is the single most impactful change for credibility.
+Implement the core design tokens and infrastructure that all components will use.
 
-- [x] **Update Examples section with real project URLs** [spec: browse-examples.md] [file: src/components/Examples.astro]
-  - Replaced placeholder with ClaudeApp (verified Ralph-built: has AGENTS.md, IMPLEMENTATION_PLAN.md, specs/)
-  - Added "Your Project?" placeholder card with honest "community just getting started" messaging
-  - GitHub link verified working: https://github.com/whatiskadudoing/claudeapp
-  - Second card links to ralph-vibe repo for community contribution discovery
-
----
-<!-- CHECKPOINT: Verify real example URLs are live and accessible before proceeding -->
-
-## Phase 2: GitHub Credibility Badge
-
-Add live GitHub stats (stars, forks) fetched at build time to demonstrate project activity and community adoption.
-
-- [x] **Implement GitHubStats component with build-time API fetch** [spec: browse-examples.md (Advanced depth)] [file: src/components/GitHubStats.astro] [research: research/apis/github.md]
-  - Component already existed with full implementation (API fetch, error handling, number formatting)
-  - Added to Hero section next to "view on GitHub" link with vertical separator
-  - Displays star count (and forks if > 0) fetched at build time
-  - Build logs confirm API working: "GitHub API: 51/60 requests remaining"
-
-- [x] **Add daily rebuild workflow for fresh stats** [research: research/apis/github.md]
-  - Added schedule trigger to existing `.github/workflows/deploy.yml` (DRY approach vs separate file)
-  - Cron: `0 0 * * *` (daily at 00:00 UTC)
-  - GitHub Pages deployment triggers on schedule, push, and manual dispatch
-  - Workflow syntax validated; will execute on next UTC midnight
+- [x] **Implement design system CSS custom properties and base styles** [spec: design-system.md] [file: src/styles/global.css]
+  - Replace current GitHub-based tokens with industrial palette (void/signal/output colors)
+  - Add Space Grotesk and JetBrains Mono via Google Fonts
+  - Add spacing scale (4px to 96px), typography scale, animation timing tokens
+  - Update body background to `--void`, text to `--text-primary`
+  - Add industrial shadow system (no blue tint, solid black shadows)
+  - Update reduced motion preferences
+  - Update skip-to-main link styling to use `--signal`
 
 ---
-<!-- CHECKPOINT: Verify GitHub stats display correctly and workflow runs -->
+<!-- CHECKPOINT: Verify design tokens load correctly, page has dark background, fonts render -->
 
-## Phase 3: Documentation Link
+## Phase 2: Hero & Terminal Restyle
 
-Add "Read the docs" link to complete the conversion funnel for users who want to learn more before installing.
+Apply industrial design to the hero section — the most impactful visual change.
 
-- [x] **Add documentation link to Footer section** [spec: install-tool.md] [file: src/components/Footer.astro]
-  - Added "Read the docs" link alongside "View on GitHub" in Footer
-  - Links to: `https://github.com/whatiskadudoing/ralph-vibe-docs`
-  - Uses same `.footer-link` styling with book icon SVG
-  - Has `target="_blank"` and `rel="noopener noreferrer"` for security
-  - Hero section already has GitHub link with stats; docs link kept footer-only to avoid clutter
+- [ ] **Restyle Hero section to industrial aesthetic** [spec: design-system.md, grasp-value-proposition.md] [file: src/components/Hero.astro]
+  - Update `.headline` to use Space Grotesk, `--text-primary` color
+  - Update `.subheadline` to use `--text-secondary` color
+  - Restyle `.code-wrapper` install block to industrial dark with `--signal` accent on code
+  - Update link colors to `--signal` with `--signal-dim` hover
+  - Consider adding vertical text label ("BUILDING WHILE AFK") or corner marks for industrial framing
+
+- [ ] **Restyle TerminalDemo to match industrial palette** [spec: design-system.md] [file: src/components/TerminalDemo.astro]
+  - Replace Catppuccin colors with spec'd industrial colors
+  - Background: `--void-warm` (#121210)
+  - Border: `--concrete` (#1A1918)
+  - Text: `--text-primary` (#E8E4DC)
+  - Accent (star): `--signal` (#D4522A)
+  - Success checkmarks: Keep green or use `--signal`
+  - Spinner: Use `--signal` color
+  - Optional: Add subtle screen texture overlay (2% opacity noise)
 
 ---
-<!-- CHECKPOINT: Full credibility layer complete -->
+<!-- CHECKPOINT: Verify Hero looks cohesive on dark background, terminal integrates smoothly -->
+
+## Phase 3: Content Sections Restyle
+
+Apply industrial design to remaining content sections.
+
+- [ ] **Restyle HowItWorks section to industrial aesthetic** [spec: design-system.md, see-how-it-works.md] [file: src/components/HowItWorks.astro]
+  - Background: `--void`
+  - Step cards: `--void-warm` background with `--text-primary` text
+  - Step numbers: Consider bracketed format `[01]` in `--bracket` color
+  - Connectors/arrows: `--concrete` lines with `--signal` arrow tips
+  - Callout: Industrial styling
+
+- [ ] **Restyle Features section to output card design** [spec: design-system.md, discover-features.md] [file: src/components/Features.astro]
+  - Feature cards: `--output` (#E8E4DC) off-white background
+  - Cards float on `--void` background
+  - Add industrial shadow (solid black, 30-40% opacity)
+  - Icon styling: Consider stroke-only icons in `--signal`
+  - Card hover: Subtle lift (translateY -4px), shadow expansion
+  - Optional: Add paper texture overlay (3-5% opacity)
+
+- [ ] **Restyle Examples and FAQ sections to industrial aesthetic** [spec: design-system.md] [files: src/components/Examples.astro, src/components/FAQ.astro]
+  - Examples: Output cards with bracketed type badges `[Web App]` in `--bracket` color
+  - FAQ: Dark background, `--concrete` borders, `--signal` expand icons (+/−)
+  - Maintain accessibility (focus states, keyboard navigation)
+
+---
+<!-- CHECKPOINT: Verify all content sections harmonize with industrial theme -->
+
+## Phase 4: Footer & Final Polish
+
+Complete the design transformation with footer and site-wide polish.
+
+- [ ] **Restyle Footer CTA section to industrial aesthetic** [spec: design-system.md, install-tool.md] [file: src/components/Footer.astro]
+  - Decision: Use `--signal` background for high-impact CTA OR continue `--void` with signal accent card
+  - Install command: Industrial code block styling
+  - Links: Ghost button style with `--signal` hover
+  - Tagline styling: Industrial typography
+
+- [ ] **Update Layout and site-wide elements** [spec: design-system.md] [file: src/components/Layout.astro]
+  - Update favicon if needed (consider industrial-themed icon)
+  - Verify Open Graph image still works against new design (may need update)
+  - Add any ambient industrial elements (section dividers, corner marks)
+
+---
+<!-- CHECKPOINT: Full industrial rebrand complete, verify build succeeds -->
 
 ## Future Work (Outside Current Scope)
 
 Insights noted during gap analysis, deferred to future releases:
 
 ### Next SLC: "The Power User Experience"
+
 | Enhancement | Depth | Value |
 |-------------|-------|-------|
 | Multiple install methods | Advanced | Tabs for curl/npm/brew with OS detection |
 | Searchable FAQ | Advanced | Category filters, search input for large FAQ |
-| Dark mode toggle | Standard | System preference with manual override |
+| Comparison table | Advanced | Original Ralph Loop vs Ralph Vibe side-by-side |
 
 ### Future Enhancements
+
 | Enhancement | Description |
 |-------------|-------------|
 | Rotating headlines | "Built for [builders/dreamers/shippers]" animation (grasp-value-proposition Advanced) |
-| Advanced terminal effects | Shimmer, cursor blink, more realistic delays |
-| Comparison table | Original Ralph Loop vs Ralph Vibe side-by-side (discover-features Advanced) |
+| Scroll animations | Subtle entrance animations for How It Works (see-how-it-works Advanced) |
 | Project screenshots | Visual previews for example projects (browse-examples Advanced) |
+| Dark mode toggle | System preference with manual override (though site is now dark by default) |
 | Analytics tracking | Track install command copies, scroll depth, conversion funnel |
-| Live GitHub stats | Client-side refresh for always-current numbers |
+| Paper/screen textures | Subtle grain overlays for output cards and terminal |
 
 ---
 
 ## Completed Releases (Archive)
+
+### SLC 2: Credibility Layer ✅ (January 2026)
+
+**Value delivered:** Real projects replace placeholders, GitHub stats badge shows activity, documentation link completes conversion funnel.
+
+- ✅ ClaudeApp as real example project
+- ✅ GitHub stars badge in Hero (fetched at build time)
+- ✅ Daily rebuild workflow for fresh stats
+- ✅ Documentation link in Footer
 
 ### SLC 1: Elevator Pitch ✅ (January 2026)
 
@@ -128,21 +209,6 @@ Insights noted during gap analysis, deferred to future releases:
 - ✅ `prefers-reduced-motion` support throughout
 - ✅ `<noscript>` fallbacks for terminal
 
-**Minor gaps (non-blocking):**
-- Example GitHub URLs are placeholders (`/example/` org) — acceptable per spec
-- Footer missing "Read the docs" link — docs site may not exist yet
-- CopyButton shows "Failed" not "Failed to copy" — minor UX detail
-
-| Phase | Status |
-|-------|--------|
-| Phase 1: Project Foundation & Vertical Slice | ✅ Complete |
-| Phase 2: Terminal Animation | ✅ Complete |
-| Phase 3: How It Works Section | ✅ Complete |
-| Phase 4: Features Section | ✅ Complete |
-| Phase 5: Examples Section | ✅ Complete (placeholder URLs) |
-| Phase 6: FAQ Section | ✅ Complete |
-| Phase 7: Footer CTA & Polish | ✅ Complete |
-
 ---
 
 ## Research Artifacts (Reference)
@@ -153,7 +219,7 @@ research/
 ├── inspiration.md            # Competitor analysis
 ├── api-validation.md         # API test results
 ├── apis/
-│   ├── github.md             # GitHub API (for stats badge) ← RELEVANT
+│   ├── github.md             # GitHub API (for stats badge)
 │   └── clipboard.md          # Clipboard API (implemented)
 └── approaches/
     ├── terminal-animation.md # Hero terminal (implemented)

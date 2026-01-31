@@ -1,53 +1,255 @@
 @import "tailwindcss";
 
-/* Custom properties */
+/* ==========================================================================
+   Design System: Autonomous Build Station
+   Industrial aesthetic inspired by NERV headquarters (Evangelion)
+
+   Narrative: Ralph Vibe is an Autonomous Build Station — industrial automation
+   for code. You set the specs, walk away, and come back to working code.
+   ========================================================================== */
+
+/* ==========================================================================
+   Color Architecture - The Muted Industrial Palette
+   Colors are desaturated and dusty — like equipment under fluorescent lights
+   in a basement control room.
+   ========================================================================== */
+
 :root {
-  --color-primary: #0969da;
+  /* The Void - Primary backgrounds (70%+ of canvas) */
+  --void: #0C0C0C;           /* Near-black with slight warmth */
+  --void-warm: #121210;      /* Warmer black variant - card backgrounds, depth layers */
+
+  /* The Signal - Primary accent, CTAs, active states */
+  --signal: #D4522A;         /* Muted burnt orange */
+  --signal-dim: #A3402B;     /* Darker muted orange - hover states, secondary signals */
+  --signal-glow: #E86A45;    /* Slightly brighter - glow effects, focus states (use sparingly) */
+
+  /* Output - Cards, output panels, deliverables */
+  --output: #E8E4DC;         /* Warm aged paper */
+  --output-dim: #D4D0C8;     /* Grayed paper - secondary surfaces */
+
+  /* Structure - Borders, dividers, recessed areas */
+  --concrete: #1A1918;       /* Dark warm gray - borders, dividers */
+  --metal: #2A2826;          /* Medium warm gray - inactive elements, tracks */
+
+  /* Text hierarchy */
+  --text-primary: #E8E4DC;   /* Off-white - primary text on dark */
+  --text-secondary: #8A8580; /* Muted gray - secondary text, labels */
+  --text-tertiary: #5A5550;  /* Dark gray - hints, disabled text */
+
+  /* Bracket syntax - metadata, classification */
+  --bracket: #C44A28;        /* Deep muted red-orange */
+
+  /* Semantic colors (preserved for compatibility) */
   --color-success: #2da44e;
   --color-error: #cf222e;
-  --color-surface: #f6f8fa;
-  --color-border: #d0d7de;
-  --color-text: #1f2328;
-  --color-text-muted: #656d76;
+
+  /* ==========================================================================
+     Spacing Scale - 16px base unit, 4px baseline grid
+     ========================================================================== */
+  --space-1: 4px;    /* Hairline gaps */
+  --space-2: 8px;    /* Tight padding */
+  --space-3: 16px;   /* Standard padding */
+  --space-4: 24px;   /* Component margins */
+  --space-5: 32px;   /* Section padding */
+  --space-6: 48px;   /* Large gaps */
+  --space-7: 64px;   /* Section margins */
+  --space-8: 96px;   /* Major divisions */
+
+  /* ==========================================================================
+     Typography Scale
+     ========================================================================== */
+  --font-sans: 'Space Grotesk', 'Inter', 'SF Pro Display', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+
+  /* Type sizes */
+  --text-hero: 48px;       /* 3rem - Hero headline */
+  --text-section: 32px;    /* 2rem - Section heading */
+  --text-card-title: 20px; /* 1.25rem - Card title */
+  --text-body: 16px;       /* 1rem - Body text */
+  --text-code: 14px;       /* 0.875rem - Code/command */
+  --text-bracket: 12px;    /* 0.75rem - Bracket metadata */
+  --text-vertical: 10px;   /* 0.625rem - Vertical label */
+  --text-small: 11px;      /* 0.6875rem - Small label */
+  --text-data: 24px;       /* 1.5rem - Data value */
+
+  /* ==========================================================================
+     Animation Timing - Mechanical precision, no bounce
+     ========================================================================== */
+  --duration-micro: 150ms;    /* Hover, focus */
+  --duration-state: 200ms;    /* State change, toggle */
+  --duration-layout: 300ms;   /* Layout shift, expand */
+  --duration-data: 800ms;     /* Data update, progress */
+  --duration-page: 400ms;     /* Page transition */
+
+  --ease-out: ease-out;
+  --ease-mechanical: cubic-bezier(0.22, 1, 0.36, 1);  /* Fast start, precise stop */
+
+  /* ==========================================================================
+     Shadow System - Solid black shadows, no blue tint
+     ========================================================================== */
+  --shadow-card: 0 20px 40px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.3);
+  --shadow-elevated: 0 8px 24px rgba(0,0,0,0.5);
+  --shadow-subtle: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-inset: inset 0 2px 4px rgba(0,0,0,0.3);
+  --shadow-signal-glow: 0 0 20px rgba(212, 82, 42, 0.3);
+  --shadow-focus: 0 0 0 2px var(--signal-dim);
+
+  /* Edge highlights - simulate light catching edges */
+  --edge-top: 1px solid rgba(255,255,255,0.05);
+  --edge-left: 1px solid rgba(255,255,255,0.03);
+  --edge-inner: inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
-/* Base resets */
+/* ==========================================================================
+   Base Resets
+   ========================================================================== */
+
 * {
   box-sizing: border-box;
 }
 
+/* ==========================================================================
+   Body - The Void as canvas
+   ========================================================================== */
+
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
   line-height: 1.6;
-  color: var(--color-text);
+  color: var(--text-primary);
+  background-color: var(--void);
+  /* Subtle gradient for depth */
+  background-image: linear-gradient(180deg, var(--void) 0%, var(--void-warm) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
-/* Skip to main content link - visible only on keyboard focus */
+/* ==========================================================================
+   Typography Utilities
+   ========================================================================== */
+
+/* Monospace for data/code elements */
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+/* Bracket syntax styling */
+.bracket {
+  color: var(--bracket);
+  font-family: var(--font-mono);
+  font-size: var(--text-bracket);
+  letter-spacing: 0.02em;
+}
+
+/* Vertical label styling */
+.vertical-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-vertical);
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   Skip to Main Content Link - Accessible navigation
+   ========================================================================== */
+
 .skip-to-main {
   position: absolute;
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
   padding: 0.75rem 1.5rem;
-  background-color: var(--color-primary);
-  color: white;
+  background-color: var(--signal);
+  color: var(--void);
+  font-family: var(--font-sans);
   font-weight: 600;
   text-decoration: none;
   border-radius: 0.5rem;
   z-index: 9999;
-  transition: top 0.2s ease;
+  transition: top var(--duration-state) var(--ease-out);
 }
 
 .skip-to-main:focus {
   top: 1rem;
-  outline: 2px solid white;
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--shadow-focus), var(--shadow-signal-glow);
 }
 
-/* Reduced motion */
+/* ==========================================================================
+   Section Dividers - Industrial separators
+   ========================================================================== */
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--concrete) 20%,
+    var(--concrete) 80%,
+    transparent 100%
+  );
+  margin: var(--space-7) 0;
+}
+
+/* ==========================================================================
+   Reduced Motion - Respect user preferences
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
+}
+
+/* ==========================================================================
+   Selection - Industrial highlight
+   ========================================================================== */
+
+::selection {
+  background-color: var(--signal);
+  color: var(--void);
+}
+
+::-moz-selection {
+  background-color: var(--signal);
+  color: var(--void);
+}
+
+/* ==========================================================================
+   Focus Styles - Consistent industrial focus ring
+   ========================================================================== */
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ==========================================================================
+   Scrollbar - Industrial styling (Webkit browsers)
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--void-warm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--metal);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--concrete);
 }

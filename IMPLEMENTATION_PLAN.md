@@ -70,7 +70,7 @@
 
 **Goal:** Visual diagram showing the 5-step Ralph flow.
 
-- [ ] Implement HowItWorks section with flow diagram
+- [x] Implement HowItWorks section with flow diagram
   - Create 5 step boxes: Init → Interview → Research → Plan → Build
   - Add icons/visual indicators for each step
   - Style arrows/connectors between steps

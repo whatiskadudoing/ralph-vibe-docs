@@ -34,23 +34,36 @@
 
 <style>
   .terminal {
-    background: #1e1e2e;
-    border-radius: 12px;
+    background: var(--void-warm);
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--concrete);
+    box-shadow: var(--shadow-card);
     max-width: 560px;
     width: 100%;
     margin: 0 auto;
-    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: clamp(0.75rem, 2vw, 0.875rem);
+    /* Subtle inner highlight for depth */
+    position: relative;
+  }
+
+  .terminal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: var(--edge-inner);
+    pointer-events: none;
   }
 
   .terminal-header {
-    background: #313244;
+    background: var(--concrete);
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
   }
 
   .terminal-buttons {
@@ -62,16 +75,19 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #45475a;
+    background: var(--metal);
   }
 
-  .terminal-button.close { background: #f38ba8; }
-  .terminal-button.minimize { background: #f9e2af; }
-  .terminal-button.maximize { background: #a6e3a1; }
+  /* Industrial muted buttons - not colorful like macOS */
+  .terminal-button.close { background: var(--signal-dim); }
+  .terminal-button.minimize { background: var(--metal); }
+  .terminal-button.maximize { background: var(--metal); }
 
   .terminal-title {
-    color: #6c7086;
-    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-size: var(--text-bracket);
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
     flex: 1;
     text-align: center;
     margin-right: 56px; /* Balance the buttons width */
@@ -83,7 +99,7 @@
   }
 
   .terminal-content {
-    color: #cdd6f4;
+    color: var(--text-primary);
   }
 
   .terminal-line {
@@ -96,7 +112,7 @@
   .terminal-line.typing::after {
     content: '▋';
     animation: blink 1s step-end infinite;
-    color: #cdd6f4;
+    color: var(--signal);
   }
 
   @keyframes blink {
@@ -110,14 +126,16 @@
 
   .spinner {
     display: inline-block;
-    animation: spin 1s linear infinite;
+    animation: spin 800ms linear infinite;
+    color: var(--signal);
   }
 
-  .text-accent { color: #f9e2af; }
-  .text-muted { color: #6c7086; }
-  .text-cyan { color: #89dceb; }
-  .text-success { color: #a6e3a1; }
-  .text-beer { color: #fab387; }
+  /* Industrial color classes - using design system tokens */
+  .text-accent { color: var(--signal); }
+  .text-muted { color: var(--text-tertiary); }
+  .text-cyan { color: var(--text-secondary); }
+  .text-success { color: var(--signal); }
+  .text-beer { color: var(--signal-glow); }
 
   /* Reduced motion: show final state immediately */
   @media (prefers-reduced-motion: reduce) {

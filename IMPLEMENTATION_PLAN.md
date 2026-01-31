@@ -102,15 +102,17 @@ Apply industrial design to the hero section — the most impactful visual change
   - Updated GitHubStats.astro: `--text-secondary` text, `--signal` icons, monospace font
   - Link colors now use `--signal` with `--signal-glow` hover
 
-- [ ] **Restyle TerminalDemo to match industrial palette** [spec: design-system.md] [file: src/components/TerminalDemo.astro]
-  - Replace Catppuccin colors with spec'd industrial colors
+- [x] **Restyle TerminalDemo to match industrial palette** [spec: design-system.md] [file: src/components/TerminalDemo.astro]
+  - Replaced Catppuccin colors with spec'd industrial colors
   - Background: `--void-warm` (#121210)
-  - Border: `--concrete` (#1A1918)
+  - Border: `--concrete` (#1A1918), rounded to 16px per spec
+  - Header: `--concrete` background with industrial muted buttons
   - Text: `--text-primary` (#E8E4DC)
   - Accent (star): `--signal` (#D4522A)
-  - Success checkmarks: Keep green or use `--signal`
-  - Spinner: Use `--signal` color
-  - Optional: Add subtle screen texture overlay (2% opacity noise)
+  - Success checkmarks: Using `--signal` for cohesive orange theme
+  - Spinner: Using `--signal` color, 800ms per spec
+  - Added inner edge highlight for depth
+  - Cursor blink uses `--signal` color
 
 ---
 <!-- CHECKPOINT: Verify Hero looks cohesive on dark background, terminal integrates smoothly -->

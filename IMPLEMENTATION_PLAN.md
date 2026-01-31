@@ -130,13 +130,15 @@ Apply industrial design to remaining content sections.
   - Updated spacing to use design system tokens (--space-X)
   - Added proper typography (font-sans, font-mono)
 
-- [ ] **Restyle Features section to output card design** [spec: design-system.md, discover-features.md] [file: src/components/Features.astro]
+- [x] **Restyle Features section to output card design** [spec: design-system.md, discover-features.md] [file: src/components/Features.astro]
   - Feature cards: `--output` (#E8E4DC) off-white background
   - Cards float on `--void` background
-  - Add industrial shadow (solid black, 30-40% opacity)
-  - Icon styling: Consider stroke-only icons in `--signal`
+  - Add industrial shadow (solid black, 35-45% opacity)
+  - Removed emoji icons (industrial design doesn't use emojis)
   - Card hover: Subtle lift (translateY -4px), shadow expansion
-  - Optional: Add paper texture overlay (3-5% opacity)
+  - Added subtle paper texture via CSS pseudo-element (repeating gradient)
+  - Dark text (`--void`) on light cards for readability
+  - Proper typography using design system tokens
 
 - [ ] **Restyle Examples and FAQ sections to industrial aesthetic** [spec: design-system.md] [files: src/components/Examples.astro, src/components/FAQ.astro]
   - Examples: Output cards with bracketed type badges `[Web App]` in `--bracket` color

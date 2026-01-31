@@ -4,25 +4,21 @@ const features = [
     title: "Fresh Start Every Time",
     description:
       "Each build iteration starts with zero memory. No accumulated confusion. No 'I thought I already did that.' Claude reads the specs fresh, picks a task, builds it, and exits.",
-    icon: "🔄",
   },
   {
     title: "Specs Are the Truth",
     description:
       "The specs in your project are what gets built. Not vague ideas. Not old comments in code. Clear specifications that Claude follows exactly. When context resets, nothing is lost.",
-    icon: "📄",
   },
   {
     title: "No Homework Required",
     description:
       "No shell scripts to write. No prompt files to create. No architecture to understand. One command to start. The tool that simplifies Ralph was built with Ralph.",
-    icon: "✨",
   },
   {
     title: "Tests Keep It Honest",
     description:
       "One task at a time. Nothing is marked 'done' until tests pass. Built-in quality gates that prevent half-finished features from slipping through.",
-    icon: "✓",
   },
 ];
 ---
@@ -34,7 +30,6 @@ const features = [
     <ul class="feature-grid" role="list">
       {features.map((feature) => (
         <li class="feature-card">
-          <div class="feature-icon" aria-hidden="true">{feature.icon}</div>
           <h3 class="feature-title">{feature.title}</h3>
           <p class="feature-description">{feature.description}</p>
         </li>
@@ -45,8 +40,7 @@ const features = [
 
 <style>
   .features {
-    padding: 4rem 1rem;
-    background: white;
+    padding: var(--space-7) var(--space-3);
   }
 
   .container {
@@ -55,72 +49,106 @@ const features = [
   }
 
   .section-heading {
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
-    font-weight: 700;
+    font-family: var(--font-sans);
+    font-size: clamp(1.5rem, 4vw, var(--text-section));
+    font-weight: 600;
     text-align: center;
-    margin: 0 0 3rem;
-    color: var(--color-text);
+    margin: 0 0 var(--space-6);
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
   }
 
   .feature-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: var(--space-4);
     list-style: none;
     padding: 0;
     margin: 0;
   }
 
   .feature-card {
-    padding: 1.5rem;
-    background: var(--color-surface);
-    border-radius: 12px;
-    border: 1px solid var(--color-border);
+    padding: var(--space-5);
+    background: var(--output);
+    border-radius: 16px;
+    /* Industrial shadow - solid black, no blue tint */
+    box-shadow:
+      0 20px 40px rgba(0,0,0,0.35),
+      0 8px 16px rgba(0,0,0,0.25);
+    /* Edge highlight for physical presence */
+    border-top: var(--edge-top);
+    position: relative;
+    transition: transform var(--duration-micro) var(--ease-out),
+                box-shadow var(--duration-micro) var(--ease-out);
   }
 
-  .feature-icon {
-    font-size: 1.75rem;
-    margin-bottom: 0.75rem;
+  /* Subtle paper texture effect via pseudo-element */
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.01) 2px,
+      rgba(0,0,0,0.01) 4px
+    );
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 24px 48px rgba(0,0,0,0.45),
+      0 12px 24px rgba(0,0,0,0.35);
   }
 
   .feature-title {
-    font-size: 1.125rem;
+    font-family: var(--font-sans);
+    font-size: var(--text-card-title);
     font-weight: 600;
-    margin: 0 0 0.5rem;
-    color: var(--color-text);
+    margin: 0 0 var(--space-2);
+    /* Dark text on light output card */
+    color: var(--void);
+    letter-spacing: -0.01em;
   }
 
   .feature-description {
+    font-family: var(--font-sans);
     font-size: 0.9375rem;
-    color: var(--color-text-muted);
+    /* Muted dark text for descriptions */
+    color: rgba(12, 12, 12, 0.7);
     margin: 0;
-    line-height: 1.5;
+    line-height: 1.6;
   }
 
   /* Tablet: 2x2 grid */
   @media (min-width: 768px) {
     .features {
-      padding: 5rem 2rem;
+      padding: var(--space-8) var(--space-5);
     }
 
     .feature-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: var(--space-5);
     }
 
     .feature-card {
-      padding: 1.75rem;
+      padding: var(--space-5);
     }
   }
 
   /* Desktop: slightly larger spacing */
   @media (min-width: 1024px) {
     .feature-grid {
-      gap: 2rem;
+      gap: var(--space-6);
     }
 
     .feature-card {
-      padding: 2rem;
+      padding: var(--space-6);
     }
 
     .feature-title {

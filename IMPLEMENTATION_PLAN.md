@@ -121,12 +121,14 @@ Apply industrial design to the hero section — the most impactful visual change
 
 Apply industrial design to remaining content sections.
 
-- [ ] **Restyle HowItWorks section to industrial aesthetic** [spec: design-system.md, see-how-it-works.md] [file: src/components/HowItWorks.astro]
-  - Background: `--void`
-  - Step cards: `--void-warm` background with `--text-primary` text
-  - Step numbers: Consider bracketed format `[01]` in `--bracket` color
-  - Connectors/arrows: `--concrete` lines with `--signal` arrow tips
-  - Callout: Industrial styling
+- [x] **Restyle HowItWorks section to industrial aesthetic** [spec: design-system.md, see-how-it-works.md] [file: src/components/HowItWorks.astro]
+  - Removed emoji icons, replaced with bracketed step numbers `[01]` through `[05]` in `--bracket` color
+  - Step cards: `--void-warm` background, `--concrete` border, `--text-primary`/`--text-secondary` text
+  - Added hover lift effect with shadow expansion
+  - Arrows: Split into `.arrow-line` (gray) and `.arrow-head` (signal orange)
+  - Callout: `--void-warm` background with `--signal` colored code element
+  - Updated spacing to use design system tokens (--space-X)
+  - Added proper typography (font-sans, font-mono)
 
 - [ ] **Restyle Features section to output card design** [spec: design-system.md, discover-features.md] [file: src/components/Features.astro]
   - Feature cards: `--output` (#E8E4DC) off-white background

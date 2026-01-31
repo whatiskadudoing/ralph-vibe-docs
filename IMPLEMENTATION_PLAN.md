@@ -94,12 +94,13 @@ Implement the core design tokens and infrastructure that all components will use
 
 Apply industrial design to the hero section — the most impactful visual change.
 
-- [ ] **Restyle Hero section to industrial aesthetic** [spec: design-system.md, grasp-value-proposition.md] [file: src/components/Hero.astro]
-  - Update `.headline` to use Space Grotesk, `--text-primary` color
-  - Update `.subheadline` to use `--text-secondary` color
-  - Restyle `.code-wrapper` install block to industrial dark with `--signal` accent on code
-  - Update link colors to `--signal` with `--signal-dim` hover
-  - Consider adding vertical text label ("BUILDING WHILE AFK") or corner marks for industrial framing
+- [x] **Restyle Hero section to industrial aesthetic** [spec: design-system.md, grasp-value-proposition.md] [file: src/components/Hero.astro]
+  - Updated `.headline` to use Space Grotesk (`--font-sans`), `--text-primary` color
+  - Updated `.subheadline` to use `--text-secondary` color
+  - Restyled `.code-wrapper` install block: `--void` background, `--concrete` border, `--signal` accent on code
+  - Updated CopyButton.astro: `--metal` background, `--concrete` border, signal hover states
+  - Updated GitHubStats.astro: `--text-secondary` text, `--signal` icons, monospace font
+  - Link colors now use `--signal` with `--signal-glow` hover
 
 - [ ] **Restyle TerminalDemo to match industrial palette** [spec: design-system.md] [file: src/components/TerminalDemo.astro]
   - Replace Catppuccin colors with spec'd industrial colors

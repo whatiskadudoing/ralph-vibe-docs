@@ -25,27 +25,30 @@ const { text, label = 'Copy' } = Astro.props;
     display: inline-flex;
     align-items: center;
     gap: 0.375rem;
-    padding: 0.5rem 0.75rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    padding: var(--space-2) var(--space-3);
+    background: var(--metal);
+    border: 1px solid var(--concrete);
     border-radius: 6px;
     cursor: pointer;
-    font-family: inherit;
-    font-size: 0.875rem;
-    color: var(--color-text);
-    transition: background 0.15s, border-color 0.15s;
+    font-family: var(--font-sans);
+    font-size: var(--text-code);
+    color: var(--text-primary);
+    transition: background var(--duration-micro) var(--ease-out),
+                border-color var(--duration-micro) var(--ease-out),
+                color var(--duration-micro) var(--ease-out);
     min-width: 44px;
     min-height: 44px;
   }
 
   .copy-button:hover {
-    background: #eaeef2;
-    border-color: #afb8c1;
+    background: var(--concrete);
+    border-color: var(--metal);
+    color: var(--signal);
   }
 
   .copy-button:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: var(--shadow-focus), var(--shadow-signal-glow);
   }
 
   .copy-success,
@@ -62,7 +65,7 @@ const { text, label = 'Copy' } = Astro.props;
   .copy-button.success .copy-success,
   .copy-button.success .check-icon {
     display: inline;
-    color: var(--color-success);
+    color: var(--signal);
   }
 
   .copy-button.error .copy-label,

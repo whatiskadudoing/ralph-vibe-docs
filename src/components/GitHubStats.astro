@@ -88,22 +88,25 @@ const hasStats = stars !== null;
   .github-stats {
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-code);
+    color: var(--text-secondary);
   }
 
   .stat {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .icon {
     opacity: 0.8;
+    color: var(--signal);
   }
 
   .value {
     font-weight: 500;
+    color: var(--text-primary);
   }
 </style>

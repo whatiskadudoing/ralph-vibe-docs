@@ -7,98 +7,18 @@ interface Props {
 
 const { class: className } = Astro.props;
 
-// Install commands for each method
-const commands = {
-  curl: 'curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh',
-  npm: 'npm install -g ralph-vibe',
-  brew: 'brew install ralph-vibe',
-};
+const command = 'curl -fsSL https://raw.githubusercontent.com/whatiskadudoing/ralph-vibe/main/install.sh | sh';
 ---
 
-<div class:list={['install-command-wrapper', className]} data-install-tabs>
-  <div class="tab-list" role="tablist" aria-label="Installation methods">
-    <button
-      class="tab active"
-      role="tab"
-      aria-selected="true"
-      aria-controls="panel-curl"
-      id="tab-curl"
-      data-method="curl"
-      type="button"
-    >
-      <span class="tab-label" data-scramble>[curl]</span>
-    </button>
-    <button
-      class="tab"
-      role="tab"
-      aria-selected="false"
-      aria-controls="panel-npm"
-      id="tab-npm"
-      data-method="npm"
-      type="button"
-    >
-      <span class="tab-label" data-scramble>[npm]</span>
-    </button>
-    <button
-      class="tab"
-      role="tab"
-      aria-selected="false"
-      aria-controls="panel-brew"
-      id="tab-brew"
-      data-method="brew"
-      type="button"
-    >
-      <span class="tab-label" data-scramble>[brew]</span>
-    </button>
-  </div>
-
-  <div class="tab-panels">
-    <div
-      class="tab-panel active"
-      role="tabpanel"
-      id="panel-curl"
-      aria-labelledby="tab-curl"
-      data-method="curl"
-    >
-      <div class="code-wrapper">
-        <code class="command-text">{commands.curl}</code>
-        <CopyButton text={commands.curl} />
-      </div>
-      <p class="method-note">Works on macOS, Linux, and WSL</p>
-    </div>
-
-    <div
-      class="tab-panel"
-      role="tabpanel"
-      id="panel-npm"
-      aria-labelledby="tab-npm"
-      data-method="npm"
-      hidden
-    >
-      <div class="code-wrapper">
-        <code class="command-text">{commands.npm}</code>
-        <CopyButton text={commands.npm} />
-      </div>
-      <p class="method-note">Requires Node.js 18+</p>
-    </div>
-
-    <div
-      class="tab-panel"
-      role="tabpanel"
-      id="panel-brew"
-      aria-labelledby="tab-brew"
-      data-method="brew"
-      hidden
-    >
-      <div class="code-wrapper">
-        <code class="command-text">{commands.brew}</code>
-        <CopyButton text={commands.brew} />
-      </div>
-      <p class="method-note">macOS and Linux with Homebrew</p>
+<div class:list={['install-command-wrapper', className]} data-install-command>
+  <div class="command-box">
+    <span class="command-label" data-scramble>[curl]</span>
+    <div class="code-wrapper">
+      <code class="command-text">{command}</code>
+      <CopyButton text={command} />
     </div>
   </div>
-
-  <p class="os-hint" aria-live="polite"></p>
+  <p class="method-note">Works on macOS, Linux, and WSL</p>
 </div>
 
 <style>
@@ -107,75 +27,22 @@ const commands = {
     overflow: visible;
   }
 
-  /* Tab List - Industrial styling */
-  .tab-list {
-    display: flex;
-    gap: var(--space-1);
+  .command-box {
+    background: var(--void);
+    border: 1px solid var(--concrete);
+    border-radius: 8px;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .command-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-code);
+    color: var(--signal);
     margin-bottom: var(--space-2);
   }
 
-  .tab {
-    padding: var(--space-2) var(--space-3);
-    background: transparent;
-    border: 1px solid var(--concrete);
-    border-bottom: none;
-    border-radius: 6px 6px 0 0;
-    cursor: pointer;
-    font-family: var(--font-mono);
-    font-size: var(--text-code);
-    color: var(--text-secondary);
-    transition: background var(--duration-micro) var(--ease-out),
-                border-color var(--duration-micro) var(--ease-out),
-                color var(--duration-micro) var(--ease-out);
-    min-height: 44px;
-    position: relative;
-    top: 1px;
-  }
-
-  .tab:hover {
-    color: var(--text-primary);
-    background: var(--void-warm);
-  }
-
-  .tab:focus-visible {
-    outline: none;
-    box-shadow: var(--shadow-focus), var(--shadow-signal-glow);
-    z-index: 1;
-  }
-
-  .tab.active {
-    background: var(--void);
-    border-color: var(--concrete);
-    border-bottom-color: var(--void);
-    color: var(--signal);
-  }
-
-  .tab-label {
-    color: inherit;
-  }
-
-  /* Tab Panels */
-  .tab-panels {
-    background: var(--void);
-    border: 1px solid var(--concrete);
-    border-radius: 0 8px 8px 8px;
-    overflow: hidden;
-  }
-
-  .tab-panel {
-    padding: var(--space-3) var(--space-4);
-    display: none;
-  }
-
-  .tab-panel.active {
-    display: block;
-  }
-
-  .tab-panel[hidden] {
-    display: none;
-  }
-
-  /* Code wrapper - matches existing pattern */
+  /* Code wrapper */
   .code-wrapper {
     display: flex;
     align-items: center;
@@ -221,16 +88,8 @@ const commands = {
     color: var(--signal);
   }
 
-  /* Method note - subtle hint below command */
+  /* Method note */
   .method-note {
-    margin: var(--space-2) 0 0 0;
-    font-size: var(--text-small);
-    color: var(--text-tertiary);
-    font-family: var(--font-mono);
-  }
-
-  /* OS detection hint */
-  .os-hint {
     margin: var(--space-2) 0 0 0;
     font-size: var(--text-small);
     color: var(--text-tertiary);
@@ -238,34 +97,9 @@ const commands = {
     text-align: center;
   }
 
-  .os-hint:empty {
-    display: none;
-  }
-
   /* Mobile adjustments */
   @media (max-width: 640px) {
-    .tab-list {
-      gap: 0;
-      display: flex;
-      width: 100%;
-    }
-
-    .tab {
-      flex: 1 1 0;
-      padding: 6px 2px;
-      text-align: center;
-      font-size: 11px;
-      min-width: 0;
-      white-space: nowrap;
-      min-height: 36px;
-    }
-
-    .tab-panels {
-      border-radius: 0 0 8px 8px;
-    }
-
-    /* Tighten the tab panel padding on mobile */
-    .tab-panel {
+    .command-box {
       padding: var(--space-3);
     }
 
@@ -288,48 +122,18 @@ const commands = {
 </style>
 
 <script>
-  interface OSInfo {
-    os: 'macos' | 'windows' | 'linux' | 'unknown';
-    preferredMethod: 'curl' | 'npm' | 'brew';
-  }
+  // Initialize scramble animation for install command
+  document.querySelectorAll<HTMLElement>('[data-install-command]').forEach(wrapper => {
+    setTimeout(() => {
+      if (typeof (window as any).scrambleText === 'function') {
+        const label = wrapper.querySelector('.command-label');
+        const commandText = wrapper.querySelector('.command-text');
+        const methodNote = wrapper.querySelector('.method-note');
 
-  class InstallTabs {
-    private wrapper: HTMLElement;
-    private tabs: NodeListOf<HTMLButtonElement>;
-    private panels: NodeListOf<HTMLElement>;
-    private osHint: HTMLElement | null;
-
-    constructor(wrapper: HTMLElement) {
-      this.wrapper = wrapper;
-      this.tabs = wrapper.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-      this.panels = wrapper.querySelectorAll<HTMLElement>('[role="tabpanel"]');
-      this.osHint = wrapper.querySelector('.os-hint');
-
-      this.init();
-    }
-
-    private init(): void {
-      // Add click listeners to tabs
-      this.tabs.forEach(tab => {
-        tab.addEventListener('click', () => this.selectTab(tab));
-      });
-
-      // Add keyboard navigation
-      this.wrapper.addEventListener('keydown', (e) => this.handleKeydown(e));
-
-      // Detect OS and auto-select appropriate tab (this also triggers initial scramble)
-      this.autoSelectByOS();
-
-      // Trigger initial scramble for active panel after a short delay
-      setTimeout(() => this.triggerInitialScramble(), 100);
-    }
-
-    private triggerInitialScramble(): void {
-      const activePanel = this.wrapper.querySelector('.tab-panel.active');
-      if (activePanel && typeof (window as any).scrambleText === 'function') {
-        const commandText = activePanel.querySelector('.command-text');
-        const methodNote = activePanel.querySelector('.method-note');
-
+        if (label) {
+          const text = label.textContent || '';
+          (window as any).scrambleText(label, text, { duration: 500 });
+        }
         if (commandText) {
           const text = commandText.textContent || '';
           (window as any).scrambleText(commandText, text, { duration: 700 });
@@ -339,131 +143,6 @@ const commands = {
           (window as any).scrambleText(methodNote, text, { duration: 500 });
         }
       }
-    }
-
-    private selectTab(selectedTab: HTMLButtonElement): void {
-      const method = selectedTab.dataset.method;
-      if (!method) return;
-
-      // Update tabs
-      this.tabs.forEach(tab => {
-        const isSelected = tab === selectedTab;
-        tab.classList.toggle('active', isSelected);
-        tab.setAttribute('aria-selected', String(isSelected));
-        tab.tabIndex = isSelected ? 0 : -1;
-      });
-
-      // Update panels
-      this.panels.forEach(panel => {
-        const isActive = panel.dataset.method === method;
-        panel.classList.toggle('active', isActive);
-        panel.hidden = !isActive;
-
-        // Trigger scramble animation on newly visible panel content
-        if (isActive && typeof (window as any).scrambleText === 'function') {
-          const commandText = panel.querySelector('.command-text');
-          const methodNote = panel.querySelector('.method-note');
-
-          if (commandText) {
-            const text = commandText.textContent || '';
-            (window as any).scrambleText(commandText, text, { duration: 500 });
-          }
-          if (methodNote) {
-            const text = methodNote.textContent || '';
-            (window as any).scrambleText(methodNote, text, { duration: 400 });
-          }
-        }
-      });
-    }
-
-    private handleKeydown(e: KeyboardEvent): void {
-      const target = e.target as HTMLElement;
-      if (!target.matches('[role="tab"]')) return;
-
-      const tabsArray = Array.from(this.tabs);
-      const currentIndex = tabsArray.indexOf(target as HTMLButtonElement);
-
-      let newIndex: number;
-
-      switch (e.key) {
-        case 'ArrowLeft':
-          newIndex = currentIndex === 0 ? tabsArray.length - 1 : currentIndex - 1;
-          break;
-        case 'ArrowRight':
-          newIndex = currentIndex === tabsArray.length - 1 ? 0 : currentIndex + 1;
-          break;
-        case 'Home':
-          newIndex = 0;
-          break;
-        case 'End':
-          newIndex = tabsArray.length - 1;
-          break;
-        default:
-          return;
-      }
-
-      e.preventDefault();
-      const newTab = tabsArray[newIndex];
-      newTab.focus();
-      this.selectTab(newTab);
-    }
-
-    private detectOS(): OSInfo {
-      // Try modern userAgentData API first
-      const platform = (navigator as any).userAgentData?.platform?.toLowerCase() ||
-                       navigator.platform?.toLowerCase() ||
-                       '';
-
-      const userAgent = navigator.userAgent.toLowerCase();
-
-      if (platform.includes('mac') || userAgent.includes('mac')) {
-        return { os: 'macos', preferredMethod: 'brew' };
-      }
-
-      if (platform.includes('win') || userAgent.includes('win')) {
-        return { os: 'windows', preferredMethod: 'npm' };
-      }
-
-      if (platform.includes('linux') || userAgent.includes('linux')) {
-        return { os: 'linux', preferredMethod: 'curl' };
-      }
-
-      return { os: 'unknown', preferredMethod: 'curl' };
-    }
-
-    private autoSelectByOS(): void {
-      const { os, preferredMethod } = this.detectOS();
-
-      // Find and select the preferred tab
-      const preferredTab = Array.from(this.tabs).find(
-        tab => tab.dataset.method === preferredMethod
-      );
-
-      if (preferredTab) {
-        this.selectTab(preferredTab);
-      }
-
-      // Show OS hint with scramble animation
-      if (this.osHint && os !== 'unknown') {
-        const osNames: Record<string, string> = {
-          macos: 'macOS',
-          windows: 'Windows',
-          linux: 'Linux',
-        };
-        const hintText = `Detected: ${osNames[os]}`;
-        this.osHint.textContent = hintText;
-        this.osHint.style.opacity = '1';
-
-        // Trigger scramble animation if available
-        if (typeof (window as any).scrambleText === 'function') {
-          (window as any).scrambleText(this.osHint, hintText, { duration: 600 });
-        }
-      }
-    }
-  }
-
-  // Initialize all install command wrappers
-  document.querySelectorAll<HTMLElement>('[data-install-tabs]').forEach(
-    wrapper => new InstallTabs(wrapper)
-  );
+    }, 100);
+  });
 </script>

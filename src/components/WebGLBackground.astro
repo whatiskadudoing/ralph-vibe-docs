@@ -1,0 +1,552 @@
+---
+/**
+ * WebGL Background - Alche-style
+ * Curved grid with crosses, mouse smoke/trail effect, section-based themes
+ */
+---
+
+<div id="webgl-background" class="webgl-background" aria-hidden="true">
+  <canvas id="webgl-canvas" class="webgl-canvas"></canvas>
+</div>
+
+<style>
+  .webgl-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .webgl-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .webgl-background {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import * as THREE from 'three';
+
+  class AlcheBackground {
+    private canvas: HTMLCanvasElement | null = null;
+    private renderer: THREE.WebGLRenderer | null = null;
+    private scene: THREE.Scene | null = null;
+    private camera: THREE.PerspectiveCamera | null = null;
+    private gridMesh: THREE.Mesh | null = null;
+    private crossesMesh: THREE.InstancedMesh | null = null;
+    private smokeTexture: THREE.WebGLRenderTarget | null = null;
+    private smokeMaterial: THREE.ShaderMaterial | null = null;
+    private smokeScene: THREE.Scene | null = null;
+    private smokeCamera: THREE.OrthographicCamera | null = null;
+    private smokeMesh: THREE.Mesh | null = null;
+    private uniforms: { [key: string]: THREE.IUniform } = {};
+    private startTime: number = Date.now();
+
+    // Mouse tracking
+    private mouse = { x: 0.5, y: 0.5 };
+    private targetMouse = { x: 0.5, y: 0.5 };
+    private mouseVel = { x: 0, y: 0 };
+    private prevMouse = { x: 0.5, y: 0.5 };
+
+    // Theme
+    private targetTheme: number = 0;
+    private currentTheme: number = 0;
+
+    private scrollY: number = 0;
+    private screenAspect: number = 1;
+
+    constructor() {
+      if (typeof window === 'undefined') return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      this.init();
+    }
+
+    private init(): void {
+      this.canvas = document.getElementById('webgl-canvas') as HTMLCanvasElement;
+      if (!this.canvas) return;
+
+      // Renderer
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance',
+      });
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      this.renderer.setClearColor(0x000000, 0);
+
+      this.screenAspect = window.innerWidth / window.innerHeight;
+
+      // Main Scene
+      this.scene = new THREE.Scene();
+
+      // Camera - perspective for curved effect
+      this.camera = new THREE.PerspectiveCamera(
+        60,
+        this.screenAspect,
+        0.1,
+        100
+      );
+      this.camera.position.z = 2;
+
+      // Setup smoke simulation
+      this.setupSmokeSimulation();
+
+      // Uniforms
+      this.uniforms = {
+        uTime: { value: 0 },
+        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+        uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+        uMouseVel: { value: new THREE.Vector2(0, 0) },
+        uScroll: { value: 0 },
+        uTheme: { value: 0 },
+        uScale: { value: new THREE.Vector3(6, 5, 1) },
+        uGrid: { value: new THREE.Vector2(32, 32) },
+        uScreenAspect: { value: this.screenAspect },
+        uSmokeTex: { value: this.smokeTexture?.texture },
+      };
+
+      this.createGrid();
+      this.createCrosses();
+
+      // Events
+      window.addEventListener('resize', this.onResize.bind(this));
+      window.addEventListener('mousemove', this.onMouseMove.bind(this));
+      window.addEventListener('scroll', this.onScroll.bind(this), { passive: true });
+
+      this.animate();
+    }
+
+    private setupSmokeSimulation(): void {
+      // Create render target for smoke/fluid simulation
+      const size = 256;
+      this.smokeTexture = new THREE.WebGLRenderTarget(size, size, {
+        minFilter: THREE.LinearFilter,
+        magFilter: THREE.LinearFilter,
+        format: THREE.RGBAFormat,
+        type: THREE.FloatType,
+      });
+
+      this.smokeScene = new THREE.Scene();
+      this.smokeCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+      // Smoke shader - simulates fluid-like mouse trail
+      const smokeVert = `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = vec4(position.xy, 0.0, 1.0);
+        }
+      `;
+
+      const smokeFrag = `
+        uniform sampler2D uPrevTex;
+        uniform vec2 uMousePos;
+        uniform vec2 uMouseVel;
+        uniform float uScreenAspect;
+        uniform float uTime;
+        varying vec2 vUv;
+
+        void main() {
+          vec2 uv = vUv;
+          vec2 texelSize = vec2(1.0) / vec2(256.0);
+
+          // Sample previous frame with slight diffusion
+          vec4 prev = texture2D(uPrevTex, uv);
+
+          // Advection - move fluid based on velocity field
+          vec2 vel = prev.xy;
+          vec2 advectedUv = uv - vel * 0.01;
+          vec4 advected = texture2D(uPrevTex, advectedUv);
+
+          // Diffusion
+          vec4 l = texture2D(uPrevTex, uv - vec2(texelSize.x, 0.0));
+          vec4 r = texture2D(uPrevTex, uv + vec2(texelSize.x, 0.0));
+          vec4 t = texture2D(uPrevTex, uv + vec2(0.0, texelSize.y));
+          vec4 b = texture2D(uPrevTex, uv - vec2(0.0, texelSize.y));
+          vec4 diffused = (advected + (l + r + t + b) * 0.25) * 0.5;
+
+          // Add mouse influence (splat)
+          vec2 mouseUv = uMousePos;
+          vec2 toMouse = uv - mouseUv;
+
+          // Adjust for screen aspect
+          if (uScreenAspect > 1.0) {
+            toMouse.x *= uScreenAspect;
+          } else {
+            toMouse.y /= uScreenAspect;
+          }
+
+          float dist = length(toMouse);
+          float radius = 0.04;
+          float strength = smoothstep(radius, 0.0, dist);
+
+          // Add velocity from mouse movement
+          vec2 addVel = uMouseVel * strength * 0.8;
+
+          // Combine
+          vec4 result = diffused;
+          result.xy += addVel;
+
+          // Decay
+          result *= 0.985;
+
+          // Clamp velocity
+          result.xy = clamp(result.xy, vec2(-1.0), vec2(1.0));
+
+          gl_FragColor = result;
+        }
+      `;
+
+      this.smokeMaterial = new THREE.ShaderMaterial({
+        vertexShader: smokeVert,
+        fragmentShader: smokeFrag,
+        uniforms: {
+          uPrevTex: { value: null },
+          uMousePos: { value: new THREE.Vector2(0.5, 0.5) },
+          uMouseVel: { value: new THREE.Vector2(0, 0) },
+          uScreenAspect: { value: this.screenAspect },
+          uTime: { value: 0 },
+        },
+      });
+
+      const planeGeo = new THREE.PlaneGeometry(2, 2);
+      this.smokeMesh = new THREE.Mesh(planeGeo, this.smokeMaterial);
+      this.smokeScene.add(this.smokeMesh);
+
+      // Create second render target for ping-pong
+      (this as any).smokeTexture2 = new THREE.WebGLRenderTarget(size, size, {
+        minFilter: THREE.LinearFilter,
+        magFilter: THREE.LinearFilter,
+        format: THREE.RGBAFormat,
+        type: THREE.FloatType,
+      });
+    }
+
+    private createGrid(): void {
+      const vertexShader = `
+        varying vec2 vUv;
+        varying vec3 vPos;
+        uniform float uTime;
+        uniform float uScroll;
+        uniform vec3 uScale;
+        uniform vec2 uMouse;
+        uniform vec2 uMouseVel;
+        uniform sampler2D uSmokeTex;
+
+        #define PI 3.14159265359
+
+        void main() {
+          vUv = uv;
+          vec3 pos = position;
+
+          // Sample smoke for distortion
+          vec4 smoke = texture2D(uSmokeTex, uv);
+
+          // Curved tube effect - reduced angle to avoid seam
+          float theta = pos.x * PI * 0.6; // Less than full PI to avoid edge seam
+          vec3 curvedPos = vec3(
+            sin(theta) * 0.5 * uScale.x,
+            pos.y * uScale.y,
+            -cos(theta) * uScale.x * 0.3
+          );
+
+          // Apply smoke distortion (subtle)
+          curvedPos.xy += smoke.xy * 0.08;
+          curvedPos.z += length(smoke.xy) * 0.04;
+
+          // Scroll-based wave
+          curvedPos.z += sin(pos.y * 3.0 + uScroll * 0.002 + uTime * 0.2) * 0.02;
+
+          vPos = curvedPos;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(curvedPos, 1.0);
+        }
+      `;
+
+      const fragmentShader = `
+        varying vec2 vUv;
+        varying vec3 vPos;
+        uniform vec2 uGrid;
+        uniform float uTime;
+        uniform float uScroll;
+        uniform float uTheme;
+        uniform vec2 uMouse;
+        uniform sampler2D uSmokeTex;
+
+        void main() {
+          // Create grid lines - scroll offset makes lines move
+          vec2 gridUv = vUv * uGrid;
+          gridUv.y -= uScroll * 0.003;
+
+          // Sample smoke for color influence
+          vec4 smoke = texture2D(uSmokeTex, vUv);
+          float smokeIntensity = length(smoke.xy);
+
+          // Line threshold - thinner on light theme
+          float lineThreshold = mix(0.45, 0.46, uTheme);
+          float line = 0.0;
+          line += smoothstep(lineThreshold, 0.5, abs(fract(gridUv.x) - 0.5));
+          line = max(line, smoothstep(lineThreshold, 0.5, abs(fract(gridUv.y) - 0.5)));
+
+          // Theme colors
+          // Dark theme: near-black with slight warmth
+          vec3 darkBg = vec3(0.047, 0.047, 0.047);
+          vec3 darkLine = vec3(0.18, 0.17, 0.16); // More visible lines
+
+          // Light theme: warm off-white
+          vec3 lightBg = vec3(0.91, 0.89, 0.86);
+          vec3 lightLine = vec3(0.75, 0.73, 0.70);
+
+          vec3 bgColor = mix(darkBg, lightBg, uTheme);
+          vec3 lineColor = mix(darkLine, lightLine, uTheme);
+
+          // Smoke glow effect (subtle)
+          vec3 smokeColor = mix(
+            vec3(0.83, 0.32, 0.16) * 0.2, // Signal color on dark
+            vec3(0.0),
+            uTheme
+          );
+
+          vec3 color = bgColor;
+          color = mix(color, lineColor, line * 0.4); // More visible lines
+
+          // Add smoke glow
+          color += smokeColor * smokeIntensity * 0.6 * (1.0 - uTheme);
+
+          gl_FragColor = vec4(color, 1.0);
+        }
+      `;
+
+      const geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
+      const material = new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms: this.uniforms,
+        side: THREE.DoubleSide,
+      });
+
+      this.gridMesh = new THREE.Mesh(geometry, material);
+      this.scene!.add(this.gridMesh);
+    }
+
+    private createCrosses(): void {
+      const crossSize = 0.02;
+      const crossGeo = new THREE.PlaneGeometry(crossSize, crossSize);
+
+      const crossVertexShader = `
+        varying vec2 vUv;
+        uniform float uTime;
+        uniform float uScroll;
+        uniform vec3 uScale;
+        uniform vec2 uMouse;
+        uniform sampler2D uSmokeTex;
+
+        #define PI 3.14159265359
+
+        void main() {
+          vUv = uv;
+
+          vec4 mvPosition = instanceMatrix * vec4(position, 1.0);
+
+          // Scroll offset - crosses move with scroll (looping)
+          float scrollAmount = uScroll * 0.002;
+          float yPos = mvPosition.y;
+          yPos = mod(yPos - scrollAmount + 1.0, 2.0) - 1.0; // Loop from -1 to 1
+
+          // Sample smoke at cross position
+          vec2 instanceUv = (vec2(mvPosition.x, yPos) + 1.0) * 0.5;
+          vec4 smoke = texture2D(uSmokeTex, instanceUv);
+
+          // Curved tube - matching grid curve
+          float theta = mvPosition.x * PI * 0.5;
+          vec3 curvedPos = vec3(
+            sin(theta) * uScale.x * 0.25,
+            yPos * uScale.y * 0.5,
+            -cos(theta) * uScale.x * 0.25 + 0.01
+          );
+
+          // Apply smoke distortion (subtle)
+          curvedPos.xy += smoke.xy * 0.05;
+          curvedPos.z += length(smoke.xy) * 0.02;
+
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(curvedPos, 1.0);
+        }
+      `;
+
+      const crossFragmentShader = `
+        varying vec2 vUv;
+        uniform float uTheme;
+
+        void main() {
+          vec2 uv = vUv - 0.5;
+          float w = 0.1;
+
+          float cross = 0.0;
+          cross += smoothstep(w, 0.02, abs(uv.x));
+          cross = max(cross, smoothstep(w, 0.02, abs(uv.y)));
+
+          // Colors - more visible
+          vec3 darkCrossColor = vec3(0.35, 0.33, 0.30);
+          vec3 lightCrossColor = vec3(0.5, 0.48, 0.45);
+          vec3 color = mix(darkCrossColor, lightCrossColor, uTheme);
+
+          float alpha = cross * 0.5;
+
+          if (alpha < 0.01) discard;
+
+          gl_FragColor = vec4(color, alpha);
+        }
+      `;
+
+      const crossMaterial = new THREE.ShaderMaterial({
+        vertexShader: crossVertexShader,
+        fragmentShader: crossFragmentShader,
+        uniforms: this.uniforms,
+        transparent: true,
+        depthWrite: false,
+      });
+
+      // Grid of crosses
+      const gridX = 16;
+      const gridY = 12;
+      const count = gridX * gridY;
+
+      this.crossesMesh = new THREE.InstancedMesh(crossGeo, crossMaterial, count);
+
+      const dummy = new THREE.Object3D();
+      let index = 0;
+
+      for (let y = 0; y < gridY; y++) {
+        for (let x = 0; x < gridX; x++) {
+          const px = (x / (gridX - 1)) * 2 - 1;
+          const py = (y / (gridY - 1)) * 2 - 1;
+
+          dummy.position.set(px, py, 0);
+          dummy.updateMatrix();
+          this.crossesMesh.setMatrixAt(index, dummy.matrix);
+          index++;
+        }
+      }
+
+      this.crossesMesh.instanceMatrix.needsUpdate = true;
+      this.scene!.add(this.crossesMesh);
+    }
+
+    private onResize(): void {
+      if (!this.renderer || !this.camera) return;
+
+      this.screenAspect = window.innerWidth / window.innerHeight;
+      this.camera.aspect = this.screenAspect;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+      this.uniforms.uScreenAspect.value = this.screenAspect;
+
+      if (this.smokeMaterial) {
+        this.smokeMaterial.uniforms.uScreenAspect.value = this.screenAspect;
+      }
+    }
+
+    private onMouseMove(e: MouseEvent): void {
+      this.targetMouse.x = e.clientX / window.innerWidth;
+      this.targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
+    }
+
+    private onScroll(): void {
+      this.scrollY = window.scrollY;
+
+      // Detect section for theme
+      const sections = document.querySelectorAll('section[id]');
+      const viewportMiddle = window.innerHeight / 2;
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= viewportMiddle && rect.bottom > viewportMiddle) {
+          const id = section.id;
+          if (id === 'hero' || id === 'how-it-works' || id === 'faq') {
+            this.targetTheme = 0;
+          } else if (id === 'features' || id === 'examples') {
+            this.targetTheme = 1;
+          }
+        }
+      });
+    }
+
+    private updateSmoke(): void {
+      if (!this.renderer || !this.smokeScene || !this.smokeCamera || !this.smokeMaterial || !this.smokeTexture) return;
+
+      const smokeTexture2 = (this as any).smokeTexture2 as THREE.WebGLRenderTarget;
+
+      // Update smoke uniforms
+      this.smokeMaterial.uniforms.uPrevTex.value = this.smokeTexture.texture;
+      this.smokeMaterial.uniforms.uMousePos.value.set(this.mouse.x, this.mouse.y);
+      this.smokeMaterial.uniforms.uMouseVel.value.set(this.mouseVel.x * 3, this.mouseVel.y * 3);
+      this.smokeMaterial.uniforms.uTime.value = (Date.now() - this.startTime) / 1000;
+
+      // Render to smokeTexture2
+      this.renderer.setRenderTarget(smokeTexture2);
+      this.renderer.render(this.smokeScene, this.smokeCamera);
+      this.renderer.setRenderTarget(null);
+
+      // Swap textures
+      const temp = this.smokeTexture;
+      this.smokeTexture = smokeTexture2;
+      (this as any).smokeTexture2 = temp;
+
+      // Update main uniforms
+      this.uniforms.uSmokeTex.value = this.smokeTexture.texture;
+    }
+
+    private animate(): void {
+      requestAnimationFrame(this.animate.bind(this));
+      if (!this.renderer || !this.scene || !this.camera) return;
+
+      // Calculate mouse velocity
+      this.mouseVel.x = this.targetMouse.x - this.prevMouse.x;
+      this.mouseVel.y = this.targetMouse.y - this.prevMouse.y;
+      this.prevMouse.x = this.mouse.x;
+      this.prevMouse.y = this.mouse.y;
+
+      // Lerp mouse position
+      this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.1;
+      this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.1;
+
+      // Lerp theme
+      this.currentTheme += (this.targetTheme - this.currentTheme) * 0.03;
+
+      // Update smoke simulation
+      this.updateSmoke();
+
+      // Update main uniforms
+      const time = (Date.now() - this.startTime) / 1000;
+      this.uniforms.uTime.value = time;
+      this.uniforms.uMouse.value.set(this.mouse.x, this.mouse.y);
+      this.uniforms.uMouseVel.value.set(this.mouseVel.x * 10, this.mouseVel.y * 10);
+      this.uniforms.uScroll.value = this.scrollY;
+      this.uniforms.uTheme.value = this.currentTheme;
+
+      this.renderer.render(this.scene, this.camera);
+    }
+  }
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new AlcheBackground());
+  } else {
+    new AlcheBackground();
+  }
+</script>

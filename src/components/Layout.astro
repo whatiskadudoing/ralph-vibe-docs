@@ -1,4 +1,8 @@
 ---
+import LoadingScreen from './LoadingScreen.astro';
+import WebGLBackground from './WebGLBackground.astro';
+import ScrollIndicator from './ScrollIndicator.astro';
+
 interface Props {
   title: string;
   description: string;
@@ -44,6 +48,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}/favicon-32.png`}>
 </head>
 <body>
+  <LoadingScreen />
+  <WebGLBackground />
+
   <a href="#main-content" class="skip-to-main">Skip to main content</a>
 
   <!-- Industrial corner marks - fixed position frame -->
@@ -54,9 +61,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <div class="corner-mark corner-mark--bottom-right"></div>
   </div>
 
+  <ScrollIndicator />
+
   <main id="main-content">
     <slot />
   </main>
+
+  <script>
+    import '../scripts/alche/main';
+  </script>
 </body>
 </html>
 

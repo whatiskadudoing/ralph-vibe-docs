@@ -1,0 +1,154 @@
+---
+const sections = [
+  { id: 'hero', label: 'TOP' },
+  { id: 'how-it-works', label: 'FLOW' },
+  { id: 'features', label: 'FEATURES' },
+  { id: 'examples', label: 'EXAMPLES' },
+  { id: 'faq', label: 'FAQ' },
+];
+---
+
+<div class="scroll-indicator" data-scroll-indicator>
+  <div class="section-list">
+    {sections.map((section) => (
+      <div class="section-item" data-section={section.id}>
+        <a href={`#${section.id}`} class="section-main">
+          <div class="section-line"></div>
+          <div class="section-label">{section.label}</div>
+        </a>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  function initScrollIndicator() {
+    const indicator = document.querySelector('[data-scroll-indicator]');
+    if (!indicator) return;
+
+    const sections = document.querySelectorAll('section[id], .hero');
+    const items = indicator.querySelectorAll('.section-item');
+
+    function updateActiveSection() {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      let activeId = 'hero';
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionTop = rect.top + scrollY;
+        const sectionMiddle = sectionTop + rect.height / 3;
+
+        if (scrollY + windowHeight / 2 >= sectionMiddle) {
+          activeId = section.id || 'hero';
+        }
+      });
+
+      items.forEach((item) => {
+        const sectionId = item.getAttribute('data-section');
+        if (sectionId === activeId) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+
+    // Throttled scroll handler
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    updateActiveSection();
+  }
+
+  document.addEventListener('DOMContentLoaded', initScrollIndicator);
+</script>
+
+<style>
+  .scroll-indicator {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    mix-blend-mode: difference;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .section-item {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .section-item.active {
+    opacity: 1;
+  }
+
+  .section-item.active .section-line {
+    width: 20px;
+    background: #fff;
+  }
+
+  .section-item.active .section-label {
+    opacity: 1;
+    color: #fff;
+  }
+
+  .section-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .section-line {
+    position: relative;
+    width: 16px;
+    height: 1px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .section-label {
+    position: absolute;
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .section-main:hover .section-label {
+    opacity: 1;
+  }
+
+  @media (max-width: 1024px) {
+    .scroll-indicator {
+      display: none;
+    }
+  }
+</style>

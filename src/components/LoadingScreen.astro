@@ -1,0 +1,209 @@
+---
+/**
+ * Loading Screen with Lottie Animations
+ * Alche-inspired loading overlay with background and logo animations
+ */
+---
+
+<div id="loading-screen" class="loading-screen" aria-hidden="true">
+  <div id="loading-lottie-bg" class="loading-lottie-bg"></div>
+  <div class="loading-content">
+    <div id="loading-lottie-logo" class="loading-lottie-logo"></div>
+    <div class="loading-text">
+      <span class="loading-text-line">Initializing...</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--void, #0C0C0C);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+  }
+
+  .loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .loading-lottie-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .loading-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loading-lottie-logo {
+    width: clamp(120px, 20vw, 200px);
+    height: clamp(120px, 20vw, 200px);
+    margin-bottom: var(--space-4, 24px);
+  }
+
+  /* Fallback logo when Lottie isn't available */
+  .loading-lottie-logo:empty::after {
+    content: 'R';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-family: var(--font-sans, 'Space Grotesk', system-ui, sans-serif);
+    font-size: clamp(48px, 10vw, 96px);
+    font-weight: 700;
+    color: var(--text-primary, #E8E4DC);
+    animation: loadingPulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes loadingPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .loading-text {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: var(--text-small, 11px);
+    color: var(--text-tertiary, #5A5550);
+    letter-spacing: var(--tracking-wide, 0.1em);
+    text-transform: uppercase;
+  }
+
+  .loading-text-line {
+    display: block;
+    opacity: 0;
+    animation: textFadeIn 0.5s ease-out 0.5s forwards;
+  }
+
+  @keyframes textFadeIn {
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-screen {
+      display: none;
+    }
+
+    .loading-lottie-logo:empty::after {
+      animation: none;
+    }
+
+    .loading-text-line {
+      animation: none;
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  // Import lottie-web for animations
+  import lottie from 'lottie-web';
+
+  const loadingScreen = document.getElementById('loading-screen');
+  const lottieBg = document.getElementById('loading-lottie-bg');
+  const lottieLogo = document.getElementById('loading-lottie-logo');
+  const loadingText = document.querySelector('.loading-text-line');
+
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    loadingScreen?.remove();
+  } else {
+    let bgAnimation: ReturnType<typeof lottie.loadAnimation> | null = null;
+    let logoAnimation: ReturnType<typeof lottie.loadAnimation> | null = null;
+    let assetsLoaded = 0;
+    const totalAssets = 2;
+
+    function checkAllLoaded() {
+      assetsLoaded++;
+      if (assetsLoaded >= totalAssets) {
+        // All Lottie assets loaded
+        if (loadingText) {
+          loadingText.textContent = 'Ready';
+        }
+      }
+    }
+
+    function onLottieError(name: string) {
+      console.warn(`[LoadingScreen] Failed to load ${name} Lottie, using fallback`);
+      checkAllLoaded();
+    }
+
+    // Initialize background Lottie
+    if (lottieBg) {
+      try {
+        bgAnimation = lottie.loadAnimation({
+          container: lottieBg,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: `${import.meta.env.BASE_URL}common/loading/bg/data.json`,
+        });
+        bgAnimation.addEventListener('DOMLoaded', checkAllLoaded);
+        bgAnimation.addEventListener('data_failed', () => onLottieError('background'));
+      } catch (e) {
+        onLottieError('background');
+      }
+    }
+
+    // Initialize logo Lottie
+    if (lottieLogo) {
+      try {
+        logoAnimation = lottie.loadAnimation({
+          container: lottieLogo,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true,
+          path: `${import.meta.env.BASE_URL}common/loading/logo/data.json`,
+        });
+        logoAnimation.addEventListener('DOMLoaded', checkAllLoaded);
+        logoAnimation.addEventListener('data_failed', () => onLottieError('logo'));
+      } catch (e) {
+        onLottieError('logo');
+      }
+    }
+
+    // Hide loading screen function - coordinated with main.ts
+    function hideLoading(): void {
+      if (!loadingScreen) return;
+
+      // Fade out
+      loadingScreen.classList.add('hidden');
+
+      // Cleanup after transition
+      setTimeout(() => {
+        bgAnimation?.destroy();
+        logoAnimation?.destroy();
+        loadingScreen.remove();
+      }, 700);
+    }
+
+    // Listen for alche:ready event from main.ts
+    window.addEventListener('alche:ready', hideLoading);
+
+    // Fallback: hide after max wait time if alche:ready never fires
+    setTimeout(() => {
+      if (loadingScreen && !loadingScreen.classList.contains('hidden')) {
+        console.warn('[LoadingScreen] Fallback hide triggered');
+        hideLoading();
+      }
+    }, 5000);
+  }
+</script>

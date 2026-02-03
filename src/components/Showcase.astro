@@ -21,12 +21,6 @@ const projects: Project[] = [
     github: "https://github.com/whatiskadudoing/claudeapp",
     featured: true,
   },
-  {
-    name: "Your Project",
-    category: "Open Source",
-    description: "Built something with Ralph Vibe? Share it with the community.",
-    github: "https://github.com/whatiskadudoing/ralph-vibe",
-  },
 ];
 ---
 
@@ -39,7 +33,7 @@ const projects: Project[] = [
         <span class="meta-bracket">]</span>
       </div>
       <h2 id="showcase-heading" class="showcase-title" data-scramble-reveal="Built with Ralph">Built with Ralph</h2>
-      <p class="showcase-subtitle" data-scramble-reveal="Real projects built autonomously">Real projects built autonomously</p>
+      <p class="showcase-subtitle" data-scramble-reveal="This website was built autonomously while I was working on other projects. And enjoying a coffee.">This website was built autonomously while I was working on other projects. And enjoying a coffee.</p>
     </header>
 
     <div class="showcase-grid">
@@ -151,12 +145,18 @@ const projects: Project[] = [
     border-radius: 16px;
     overflow: hidden;
     transition: border-color 0.3s var(--ease-smooth),
-                transform 0.3s var(--ease-smooth);
+                transform 0.3s var(--ease-smooth),
+                box-shadow 0.3s var(--ease-smooth);
   }
 
   .showcase-card:hover {
     border-color: var(--metal);
-    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .showcase-card:hover .visual-number {
+    opacity: 0.5 !important;
+    transform: scale(1.05);
   }
 
   .showcase-card--featured {
@@ -171,21 +171,23 @@ const projects: Project[] = [
     padding: var(--space-5);
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 2;
   }
 
   .card-header {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
     margin-bottom: var(--space-4);
   }
 
   .card-number {
     font-family: var(--font-mono);
-    font-size: var(--text-data);
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--text-tertiary);
-    letter-spacing: var(--tracking-wide);
+    letter-spacing: -0.02em;
   }
 
   .card-category {
@@ -246,9 +248,10 @@ const projects: Project[] = [
 
   .card-visual {
     display: none;
-    background: linear-gradient(135deg, var(--concrete) 0%, var(--void) 100%);
-    min-height: 200px;
+    background: linear-gradient(135deg, var(--void-warm) 0%, var(--void) 100%);
+    min-height: 240px;
     position: relative;
+    overflow: hidden;
   }
 
   .visual-placeholder {
@@ -261,10 +264,12 @@ const projects: Project[] = [
 
   .visual-number {
     font-family: var(--font-mono);
-    font-size: clamp(4rem, 10vw, 8rem);
+    font-size: clamp(6rem, 15vw, 10rem);
     font-weight: 700;
     color: var(--metal);
-    opacity: 0.3;
+    opacity: 0;
+    letter-spacing: -0.05em;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   @media (min-width: 768px) {

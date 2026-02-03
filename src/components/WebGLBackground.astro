@@ -115,7 +115,7 @@
         uScroll: { value: 0 },
         uTheme: { value: 0 },
         uScale: { value: new THREE.Vector3(6, 5, 1) },
-        uGrid: { value: new THREE.Vector2(32, 32) },
+        uGrid: { value: new THREE.Vector2(120, 90) }, // Very fine grid
         uScreenAspect: { value: this.screenAspect },
         uSmokeTex: { value: this.smokeTexture?.texture },
       };
@@ -181,15 +181,12 @@
           vec4 diffused = (advected + (l + r + t + b) * 0.25) * 0.5;
 
           // Add mouse influence (splat)
-          vec2 mouseUv = uMousePos;
+          // Convert NDC mouse (-1 to 1) to UV space (0 to 1)
+          vec2 mouseUv = uMousePos * 0.5 + 0.5;
           vec2 toMouse = uv - mouseUv;
 
-          // Adjust for screen aspect
-          if (uScreenAspect > 1.0) {
-            toMouse.x *= uScreenAspect;
-          } else {
-            toMouse.y /= uScreenAspect;
-          }
+          // Adjust distance calculation for screen aspect ratio
+          toMouse.x *= uScreenAspect;
 
           float dist = length(toMouse);
           float radius = 0.04;
@@ -296,8 +293,8 @@
           vec4 smoke = texture2D(uSmokeTex, vUv);
           float smokeIntensity = length(smoke.xy);
 
-          // Line threshold - thinner on light theme
-          float lineThreshold = mix(0.45, 0.46, uTheme);
+          // Line threshold - subtle grid lines like Alche
+          float lineThreshold = mix(0.47, 0.48, uTheme);
           float line = 0.0;
           line += smoothstep(lineThreshold, 0.5, abs(fract(gridUv.x) - 0.5));
           line = max(line, smoothstep(lineThreshold, 0.5, abs(fract(gridUv.y) - 0.5)));
@@ -322,7 +319,7 @@
           );
 
           vec3 color = bgColor;
-          color = mix(color, lineColor, line * 0.4); // More visible lines
+          color = mix(color, lineColor, line * 0.5); // More visible lines like Alche
 
           // Add smoke glow
           color += smokeColor * smokeIntensity * 0.6 * (1.0 - uTheme);
@@ -344,7 +341,7 @@
     }
 
     private createCrosses(): void {
-      const crossSize = 0.02;
+      const crossSize = 0.025; // Slightly larger crosses
       const crossGeo = new THREE.PlaneGeometry(crossSize, crossSize);
 
       const crossVertexShader = `
@@ -393,18 +390,19 @@
 
         void main() {
           vec2 uv = vUv - 0.5;
-          float w = 0.1;
+          float lineWidth = 0.12; // Thin lines for small + shape
 
+          // Create + shape
           float cross = 0.0;
-          cross += smoothstep(w, 0.02, abs(uv.x));
-          cross = max(cross, smoothstep(w, 0.02, abs(uv.y)));
+          cross += smoothstep(lineWidth, 0.0, abs(uv.x)) * step(abs(uv.y), 0.45);
+          cross = max(cross, smoothstep(lineWidth, 0.0, abs(uv.y)) * step(abs(uv.x), 0.45));
 
-          // Colors - more visible
+          // Colors - subtle gray like Alche
           vec3 darkCrossColor = vec3(0.35, 0.33, 0.30);
           vec3 lightCrossColor = vec3(0.5, 0.48, 0.45);
           vec3 color = mix(darkCrossColor, lightCrossColor, uTheme);
 
-          float alpha = cross * 0.5;
+          float alpha = cross * 0.6;
 
           if (alpha < 0.01) discard;
 
@@ -420,9 +418,9 @@
         depthWrite: false,
       });
 
-      // Grid of crosses
-      const gridX = 16;
-      const gridY = 12;
+      // Grid of crosses - fewer, more spaced like Alche
+      const gridX = 9;
+      const gridY = 7;
       const count = gridX * gridY;
 
       this.crossesMesh = new THREE.InstancedMesh(crossGeo, crossMaterial, count);
@@ -462,8 +460,9 @@
     }
 
     private onMouseMove(e: MouseEvent): void {
-      this.targetMouse.x = e.clientX / window.innerWidth;
-      this.targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
+      // NDC coordinates like Alche: -1 to 1 range
+      this.targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      this.targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
     }
 
     private onScroll(): void {
@@ -477,10 +476,10 @@
         const rect = section.getBoundingClientRect();
         if (rect.top <= viewportMiddle && rect.bottom > viewportMiddle) {
           const id = section.id;
-          if (id === 'hero' || id === 'how-it-works' || id === 'faq') {
-            this.targetTheme = 0;
-          } else if (id === 'features' || id === 'examples') {
-            this.targetTheme = 1;
+          if (id === 'hero' || id === 'how-it-works' || id === 'showcase' || id === 'faq') {
+            this.targetTheme = 0; // Dark theme
+          } else if (id === 'statement' || id === 'features') {
+            this.targetTheme = 1; // Light theme
           }
         }
       });
@@ -521,9 +520,9 @@
       this.prevMouse.x = this.mouse.x;
       this.prevMouse.y = this.mouse.y;
 
-      // Lerp mouse position
-      this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.1;
-      this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.1;
+      // Lerp mouse position - faster follow
+      this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.3;
+      this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.3;
 
       // Lerp theme
       this.currentTheme += (this.targetTheme - this.currentTheme) * 0.03;

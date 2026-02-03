@@ -187,7 +187,7 @@ function initStatementSection(webglScene?: WebGLScene) {
 }
 
 /**
- * How It Works Section - stagger steps fade-in
+ * How It Works Section - staggered horizontal slide-in
  */
 function initHowItWorksSection(webglScene?: WebGLScene) {
   const section = document.getElementById('how-it-works');
@@ -197,42 +197,54 @@ function initHowItWorksSection(webglScene?: WebGLScene) {
   const arrows = section.querySelectorAll('.arrow');
   const vibeCallout = section.querySelector('.vibe-callout');
 
-  // Stagger animate steps
-  steps.forEach((step, index) => {
-    gsap.fromTo(step,
-      { opacity: 0, y: 40, scale: 0.95 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.6,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: step,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
-        }
-      }
-    );
-  });
+  // Set initial states
+  gsap.set(steps, { opacity: 0, x: -30, scale: 0.95 });
+  gsap.set(arrows, { opacity: 0, scale: 0 });
 
-  // Animate arrows
-  arrows.forEach((arrow, index) => {
-    gsap.fromTo(arrow,
-      { opacity: 0, scale: 0.5 },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 0.4,
-        delay: 0.1,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: arrow,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
+  // Create timeline for staggered horizontal slide-in
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top 75%',
+    once: true,
+    onEnter: () => {
+      // Animate steps with stagger
+      steps.forEach((step, index) => {
+        gsap.to(step, {
+          opacity: 1,
+          x: 0,
+          scale: 1,
+          duration: 0.7,
+          delay: index * 0.12,
+          ease: 'power3.out'
+        });
+      });
+
+      // Animate arrows with stagger (delayed after steps start)
+      arrows.forEach((arrow, index) => {
+        // Animate the arrow appearing
+        gsap.to(arrow, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.4,
+          delay: 0.15 + index * 0.12,
+          ease: 'back.out(2)'
+        });
+
+        // Animate the arrow line drawing
+        const arrowLine = arrow.querySelector('.arrow-line');
+        if (arrowLine) {
+          gsap.fromTo(arrowLine,
+            { strokeDasharray: '14', strokeDashoffset: '14' },
+            {
+              strokeDashoffset: 0,
+              duration: 0.4,
+              delay: 0.25 + index * 0.12,
+              ease: 'power2.out'
+            }
+          );
         }
-      }
-    );
+      });
+    }
   });
 
   // Animate vibe callout
@@ -345,7 +357,7 @@ function initFeaturesSection(webglScene?: WebGLScene) {
 }
 
 /**
- * Showcase Section - project cards slide in
+ * Showcase Section - staggered slide-up reveal (Alche-style)
  */
 function initShowcaseSection(webglScene?: WebGLScene) {
   const section = document.getElementById('showcase');
@@ -353,6 +365,9 @@ function initShowcaseSection(webglScene?: WebGLScene) {
 
   const cards = section.querySelectorAll('.showcase-card');
   const header = section.querySelector('.showcase-header');
+
+  // Set initial states
+  gsap.set(cards, { opacity: 0, y: 50 });
 
   // Animate header
   if (header) {
@@ -372,38 +387,82 @@ function initShowcaseSection(webglScene?: WebGLScene) {
     );
   }
 
-  // Slide in cards alternating from left/right
+  // Staggered slide-up reveal for cards (Alche pattern)
   cards.forEach((card, index) => {
-    const fromX = index % 2 === 0 ? -50 : 50;
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        // Main card animation
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: index * 0.1,
+          ease: 'power2.out',
+          onStart: () => {
+            card.classList.add('visible');
+          }
+        });
 
-    gsap.fromTo(card,
-      { opacity: 0, x: fromX },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse'
+        // Animate internal elements with stagger
+        const cardNumber = card.querySelector('.card-number');
+        const cardCategory = card.querySelector('.card-category');
+        const cardTitle = card.querySelector('.card-title');
+        const cardDescription = card.querySelector('.card-description');
+        const cardLink = card.querySelector('.card-link');
+        const visualNumber = card.querySelector('.visual-number');
+
+        const elements = [cardNumber, cardCategory, cardTitle, cardDescription, cardLink].filter(Boolean);
+
+        elements.forEach((el, i) => {
+          gsap.fromTo(el,
+            { opacity: 0, y: 15 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              delay: index * 0.1 + 0.1 + i * 0.05,
+              ease: 'power2.out'
+            }
+          );
+        });
+
+        // Animate the large visual number
+        if (visualNumber) {
+          gsap.fromTo(visualNumber,
+            { opacity: 0, scale: 0.8 },
+            {
+              opacity: 0.3,
+              scale: 1,
+              duration: 0.8,
+              delay: index * 0.1 + 0.2,
+              ease: 'power2.out'
+            }
+          );
         }
       }
-    );
+    });
   });
 
-  // Hover effect for cards
+  // Hover effects for cards
   cards.forEach(card => {
-    const link = card.querySelector('.card-link');
-    if (!link) return;
+    const visualNumber = card.querySelector('.visual-number');
 
-    link.addEventListener('mouseenter', () => {
-      gsap.to(card, { scale: 1.01, duration: 0.3, ease: 'power3.out' });
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, { y: -4, duration: 0.3, ease: 'power3.out' });
+      if (visualNumber) {
+        gsap.to(visualNumber, { opacity: 0.5, scale: 1.05, duration: 0.3, ease: 'power3.out' });
+      }
       window.dispatchEvent(new CustomEvent('alche:hover'));
     });
 
-    link.addEventListener('mouseleave', () => {
-      gsap.to(card, { scale: 1, duration: 0.3, ease: 'power3.out' });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, { y: 0, duration: 0.3, ease: 'power3.out' });
+      if (visualNumber) {
+        gsap.to(visualNumber, { opacity: 0.3, scale: 1, duration: 0.3, ease: 'power3.out' });
+      }
     });
   });
 

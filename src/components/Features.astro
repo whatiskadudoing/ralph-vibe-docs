@@ -33,37 +33,37 @@ const comparison = [
 
 <section id="features" class="features" aria-labelledby="features-heading">
   <div class="container">
-    <h2 id="features-heading" class="section-heading">Why It Works</h2>
+    <h2 id="features-heading" class="section-heading" data-scramble-reveal="Why It Works">Why It Works</h2>
 
     <ul class="feature-grid" role="list">
       {features.map((feature) => (
         <li class="feature-card">
-          <h3 class="feature-title">{feature.title}</h3>
-          <p class="feature-description">{feature.description}</p>
+          <h3 class="feature-title" data-scramble>{feature.title}</h3>
+          <p class="feature-description" data-scramble>{feature.description}</p>
         </li>
       ))}
     </ul>
 
     <div class="comparison-wrapper">
-      <h3 class="comparison-heading">The Difference</h3>
+      <h3 class="comparison-heading" data-scramble-reveal="The Difference">The Difference</h3>
       <div class="comparison-table-container">
         <table class="comparison-table" aria-label="Comparison between Original Ralph Loop and Ralph Vibe">
           <thead>
             <tr>
               <th scope="col" class="comparison-header comparison-header-pain">
-                <span class="header-bracket">[</span>Original Ralph Loop<span class="header-bracket">]</span>
+                <span class="header-bracket">[</span><span data-scramble>Original Ralph Loop</span><span class="header-bracket">]</span>
               </th>
               <th scope="col" class="comparison-header comparison-header-solution">
-                <span class="header-bracket">[</span>Ralph Vibe<span class="header-bracket">]</span>
+                <span class="header-bracket">[</span><span data-scramble>Ralph Vibe</span><span class="header-bracket">]</span>
               </th>
             </tr>
           </thead>
           <tbody>
             {comparison.map((row) => (
               <tr class="comparison-row">
-                <td class="comparison-cell comparison-cell-pain">{row.pain}</td>
+                <td class="comparison-cell comparison-cell-pain" data-scramble>{row.pain}</td>
                 <td class="comparison-cell comparison-cell-solution">
-                  <code class="solution-code">{row.solution}</code>
+                  <code class="solution-code" data-scramble>{row.solution}</code>
                 </td>
               </tr>
             ))}
@@ -76,22 +76,25 @@ const comparison = [
 
 <style>
   .features {
-    padding: var(--space-7) var(--space-3);
+    padding: var(--space-8) var(--space-5);
+    background: var(--void);
+    position: relative;
+    z-index: 10;
   }
 
   .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
   }
 
   .section-heading {
     font-family: var(--font-sans);
-    font-size: clamp(1.5rem, 4vw, var(--text-section));
+    font-size: clamp(1.75rem, 4vw, var(--text-section));
     font-weight: 600;
     text-align: center;
     margin: 0 0 var(--space-6);
     color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .feature-grid {
@@ -105,41 +108,17 @@ const comparison = [
 
   .feature-card {
     padding: var(--space-5);
-    background: var(--output);
-    border-radius: 16px;
-    /* Industrial shadow - solid black, no blue tint */
-    box-shadow:
-      0 20px 40px rgba(0,0,0,0.35),
-      0 8px 16px rgba(0,0,0,0.25);
-    /* Edge highlight for physical presence */
-    border-top: var(--edge-top);
+    background: var(--void-warm);
+    border: 1px solid var(--concrete);
+    border-radius: 12px;
     position: relative;
-    transition: transform var(--duration-micro) var(--ease-out),
-                box-shadow var(--duration-micro) var(--ease-out);
-  }
-
-  /* Subtle paper texture effect via pseudo-element */
-  .feature-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.01) 2px,
-      rgba(0,0,0,0.01) 4px
-    );
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0.5;
+    transition: transform var(--duration-state) var(--ease-smooth),
+                border-color var(--duration-state) var(--ease-smooth);
   }
 
   .feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      0 24px 48px rgba(0,0,0,0.45),
-      0 12px 24px rgba(0,0,0,0.35);
+    transform: translateY(-2px);
+    border-color: var(--metal);
   }
 
   .feature-title {
@@ -147,26 +126,20 @@ const comparison = [
     font-size: var(--text-card-title);
     font-weight: 600;
     margin: 0 0 var(--space-2);
-    /* Dark text on light output card */
-    color: var(--void);
+    color: var(--text-primary);
     letter-spacing: -0.01em;
   }
 
   .feature-description {
     font-family: var(--font-sans);
     font-size: 0.9375rem;
-    /* Muted dark text for descriptions */
-    color: rgba(12, 12, 12, 0.7);
+    color: var(--text-secondary);
     margin: 0;
     line-height: 1.6;
   }
 
   /* Tablet: 2x2 grid */
   @media (min-width: 768px) {
-    .features {
-      padding: var(--space-8) var(--space-5);
-    }
-
     .feature-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-5);
@@ -177,14 +150,18 @@ const comparison = [
     }
   }
 
-  /* Desktop: slightly larger spacing */
+  /* Desktop: larger spacing and padding */
   @media (min-width: 1024px) {
+    .features {
+      padding: 80px var(--space-6);
+    }
+
     .feature-grid {
-      gap: var(--space-6);
+      gap: 40px;
     }
 
     .feature-card {
-      padding: var(--space-6);
+      padding: var(--space-5);
     }
 
     .feature-title {
@@ -211,13 +188,10 @@ const comparison = [
   }
 
   .comparison-table-container {
-    background: var(--output);
-    border-radius: 16px;
+    background: var(--void-warm);
+    border: 1px solid var(--concrete);
+    border-radius: 12px;
     padding: var(--space-3);
-    box-shadow:
-      0 20px 40px rgba(0,0,0,0.35),
-      0 8px 16px rgba(0,0,0,0.25);
-    border-top: var(--edge-top);
     overflow-x: auto;
   }
 
@@ -233,9 +207,9 @@ const comparison = [
     font-weight: 600;
     text-align: left;
     padding: var(--space-3);
-    border-bottom: 2px solid var(--concrete);
-    color: var(--void);
-    letter-spacing: 0.02em;
+    border-bottom: 1px solid var(--concrete);
+    color: var(--text-primary);
+    letter-spacing: var(--tracking-wide);
   }
 
   .header-bracket {
@@ -244,12 +218,12 @@ const comparison = [
 
   .comparison-header-pain {
     width: 50%;
-    background: rgba(12, 12, 12, 0.05);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .comparison-header-solution {
     width: 50%;
-    background: rgba(212, 82, 42, 0.08);
+    background: rgba(212, 82, 42, 0.1);
   }
 
   .comparison-row {
@@ -257,14 +231,14 @@ const comparison = [
   }
 
   .comparison-row:hover {
-    background: rgba(12, 12, 12, 0.03);
+    background: rgba(255, 255, 255, 0.02);
   }
 
   .comparison-cell {
     padding: var(--space-3);
-    border-bottom: 1px solid rgba(26, 25, 24, 0.15);
+    border-bottom: 1px solid var(--concrete);
     vertical-align: middle;
-    color: rgba(12, 12, 12, 0.8);
+    color: var(--text-secondary);
     font-size: 0.9375rem;
   }
 
@@ -273,21 +247,21 @@ const comparison = [
   }
 
   .comparison-cell-pain {
-    color: rgba(12, 12, 12, 0.6);
+    color: var(--text-tertiary);
     text-decoration: line-through;
-    text-decoration-color: rgba(12, 12, 12, 0.3);
+    text-decoration-color: var(--text-tertiary);
   }
 
   .comparison-cell-solution {
     font-weight: 500;
-    color: var(--void);
+    color: var(--text-primary);
   }
 
   .solution-code {
     font-family: var(--font-mono);
     font-size: var(--text-code);
-    background: var(--signal);
-    color: var(--output);
+    background: rgba(212, 82, 42, 0.2);
+    color: var(--signal-glow);
     padding: 0.25em 0.5em;
     border-radius: 4px;
     display: inline-block;
@@ -315,9 +289,9 @@ const comparison = [
     .comparison-row {
       margin-bottom: var(--space-3);
       padding: var(--space-3);
-      background: rgba(12, 12, 12, 0.03);
+      background: rgba(255, 255, 255, 0.02);
       border-radius: 8px;
-      border: 1px solid rgba(26, 25, 24, 0.1);
+      border: 1px solid var(--concrete);
     }
 
     .comparison-row:last-child {
@@ -336,7 +310,7 @@ const comparison = [
 
     .comparison-cell-pain::before {
       content: '✗ ';
-      color: rgba(12, 12, 12, 0.4);
+      color: var(--text-tertiary);
       text-decoration: none;
     }
 

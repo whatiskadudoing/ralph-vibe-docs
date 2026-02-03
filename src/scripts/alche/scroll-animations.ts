@@ -26,9 +26,10 @@ export function initScrollAnimations(lenis: Lenis, webglScene?: WebGLScene) {
   // Initialize section animations
   initScrollIndicator();
   initHeroSection(webglScene);
+  initStatementSection(webglScene);
   initHowItWorksSection(webglScene);
   initFeaturesSection(webglScene);
-  initExamplesSection(webglScene);
+  initShowcaseSection(webglScene);
   initFAQSection(webglScene);
 }
 
@@ -39,7 +40,7 @@ function initScrollIndicator() {
   const indicator = document.querySelector('[data-scroll-indicator]');
   if (!indicator) return;
 
-  const sectionIds = ['hero', 'how-it-works', 'features', 'examples', 'faq'];
+  const sectionIds = ['hero', 'statement', 'how-it-works', 'features', 'showcase', 'faq'];
 
   sectionIds.forEach(sectionId => {
     const sectionEl = document.getElementById(sectionId);
@@ -82,14 +83,14 @@ function initHeroSection(webglScene?: WebGLScene) {
   if (headline) {
     gsap.fromTo(headline,
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.2, ease: 'power2.out' }
+      { opacity: 1, y: 0, duration: 1, delay: 0.2, ease: 'power3.out' }
     );
   }
 
   if (subheadline) {
     gsap.fromTo(subheadline,
       { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, delay: 0.4, ease: 'power2.out' }
+      { opacity: 1, y: 0, duration: 1, delay: 0.4, ease: 'power3.out' }
     );
   }
 
@@ -123,6 +124,69 @@ function initHeroSection(webglScene?: WebGLScene) {
 }
 
 /**
+ * Statement Section - text reveal animation
+ */
+function initStatementSection(webglScene?: WebGLScene) {
+  const section = document.getElementById('statement');
+  if (!section) return;
+
+  const statementTexts = section.querySelectorAll('.statement-text');
+  const meta = section.querySelector('.statement-meta');
+
+  // Animate statement text blocks
+  statementTexts.forEach((text, index) => {
+    const lines = text.querySelectorAll('.statement-line');
+
+    lines.forEach((line, lineIndex) => {
+      gsap.fromTo(line,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: lineIndex * 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: text,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+  });
+
+  // Animate meta text
+  if (meta) {
+    gsap.fromTo(meta,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: meta,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+  }
+
+  // Update WebGL
+  ScrollTrigger.create({
+    trigger: section,
+    start: 'top bottom',
+    end: 'bottom top',
+    scrub: true,
+    onUpdate: (self) => {
+      webglScene?.updateProgress('statement', self.progress);
+    }
+  });
+}
+
+/**
  * How It Works Section - stagger steps fade-in
  */
 function initHowItWorksSection(webglScene?: WebGLScene) {
@@ -142,7 +206,7 @@ function initHowItWorksSection(webglScene?: WebGLScene) {
         y: 0,
         scale: 1,
         duration: 0.6,
-        ease: 'power2.out',
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: step,
           start: 'top 85%',
@@ -179,7 +243,7 @@ function initHowItWorksSection(webglScene?: WebGLScene) {
         opacity: 1,
         y: 0,
         duration: 0.6,
-        ease: 'power2.out',
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: vibeCallout,
           start: 'top 85%',
@@ -220,7 +284,7 @@ function initFeaturesSection(webglScene?: WebGLScene) {
         y: 0,
         rotateX: 0,
         duration: 0.8,
-        ease: 'power2.out',
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: card,
           start: 'top 85%',
@@ -238,7 +302,7 @@ function initFeaturesSection(webglScene?: WebGLScene) {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        ease: 'power2.out',
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: comparisonTable,
           start: 'top 80%',
@@ -257,7 +321,7 @@ function initFeaturesSection(webglScene?: WebGLScene) {
           x: 0,
           duration: 0.5,
           delay: index * 0.1,
-          ease: 'power2.out',
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: comparisonTable,
             start: 'top 75%',
@@ -281,13 +345,32 @@ function initFeaturesSection(webglScene?: WebGLScene) {
 }
 
 /**
- * Examples Section - project cards slide in
+ * Showcase Section - project cards slide in
  */
-function initExamplesSection(webglScene?: WebGLScene) {
-  const section = document.getElementById('examples');
+function initShowcaseSection(webglScene?: WebGLScene) {
+  const section = document.getElementById('showcase');
   if (!section) return;
 
-  const cards = section.querySelectorAll('.example-card');
+  const cards = section.querySelectorAll('.showcase-card');
+  const header = section.querySelector('.showcase-header');
+
+  // Animate header
+  if (header) {
+    gsap.fromTo(header,
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: header,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+  }
 
   // Slide in cards alternating from left/right
   cards.forEach((card, index) => {
@@ -299,7 +382,7 @@ function initExamplesSection(webglScene?: WebGLScene) {
         opacity: 1,
         x: 0,
         duration: 0.8,
-        ease: 'power2.out',
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: card,
           start: 'top 85%',
@@ -311,27 +394,27 @@ function initExamplesSection(webglScene?: WebGLScene) {
 
   // Hover effect for cards
   cards.forEach(card => {
-    const link = card.querySelector('.example-link');
+    const link = card.querySelector('.card-link');
     if (!link) return;
 
     link.addEventListener('mouseenter', () => {
-      gsap.to(card, { scale: 1.02, duration: 0.3, ease: 'power2.out' });
+      gsap.to(card, { scale: 1.01, duration: 0.3, ease: 'power3.out' });
       window.dispatchEvent(new CustomEvent('alche:hover'));
     });
 
     link.addEventListener('mouseleave', () => {
-      gsap.to(card, { scale: 1, duration: 0.3, ease: 'power2.out' });
+      gsap.to(card, { scale: 1, duration: 0.3, ease: 'power3.out' });
     });
   });
 
-  // Update WebGL - Examples uses light theme
+  // Update WebGL
   ScrollTrigger.create({
     trigger: section,
     start: 'top bottom',
     end: 'bottom top',
     scrub: true,
     onUpdate: (self) => {
-      webglScene?.updateProgress('examples', self.progress);
+      webglScene?.updateProgress('showcase', self.progress);
     }
   });
 }
@@ -353,7 +436,7 @@ function initFAQSection(webglScene?: WebGLScene) {
         opacity: 1,
         y: 0,
         duration: 0.5,
-        ease: 'power2.out',
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: item,
           start: 'top 90%',

@@ -35,7 +35,7 @@ const repoName = 'ralph-vibe';
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-5) var(--space-3);
+    padding: var(--space-6) var(--space-5);
     position: relative;
   }
 
@@ -46,21 +46,22 @@ const repoName = 'ralph-vibe';
 
   .headline {
     font-family: var(--font-sans);
-    font-size: clamp(2rem, 5vw, var(--text-hero));
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.1;
     margin: 0 0 var(--space-4);
     color: var(--text-primary);
-    letter-spacing: -0.02em;
+    letter-spacing: var(--tracking-tight);
   }
 
   .subheadline {
     font-family: var(--font-sans);
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     line-height: 1.6;
+    letter-spacing: var(--tracking-normal);
     color: var(--text-secondary);
     margin: 0 0 var(--space-6);
-    max-width: 600px;
+    max-width: 640px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -102,7 +103,7 @@ const repoName = 'ralph-vibe';
 
   @media (max-width: 640px) {
     .hero {
-      padding: var(--space-4) var(--space-3);
+      padding: var(--space-5) var(--space-3);
     }
   }
 </style>

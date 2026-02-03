@@ -1,9 +1,10 @@
 ---
 const sections = [
   { id: 'hero', label: 'TOP' },
+  { id: 'statement', label: 'MISSION' },
   { id: 'how-it-works', label: 'FLOW' },
-  { id: 'features', label: 'FEATURES' },
-  { id: 'examples', label: 'EXAMPLES' },
+  { id: 'features', label: 'WHY' },
+  { id: 'showcase', label: 'WORKS' },
   { id: 'faq', label: 'FAQ' },
 ];
 ---
@@ -14,7 +15,7 @@ const sections = [
       <div class="section-item" data-section={section.id}>
         <a href={`#${section.id}`} class="section-main">
           <div class="section-line"></div>
-          <div class="section-label">{section.label}</div>
+          <div class="section-label" data-scramble>{section.label}</div>
         </a>
       </div>
     ))}
@@ -76,13 +77,13 @@ const sections = [
 <style>
   .scroll-indicator {
     position: fixed;
-    left: 0;
+    left: 12px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 100;
     mix-blend-mode: difference;
     opacity: 1;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .section-list {
@@ -93,7 +94,7 @@ const sections = [
 
   .section-item {
     opacity: 0.5;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .section-item.active {
@@ -101,7 +102,7 @@ const sections = [
   }
 
   .section-item.active .section-line {
-    width: 20px;
+    width: 24px;
     background: #fff;
   }
 
@@ -120,10 +121,11 @@ const sections = [
 
   .section-line {
     position: relative;
-    width: 16px;
+    width: 12px;
     height: 1px;
     background-color: #fff;
-    transition: all 0.3s ease;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex-shrink: 0;
   }
 
@@ -132,14 +134,16 @@ const sections = [
     left: calc(100% + 8px);
     top: 50%;
     transform: translateY(-50%);
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-size: 10px;
+    font-family: var(--font-mono, 'JetBrains Mono', 'SF Mono', monospace);
+    font-size: 9px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
     white-space: nowrap;
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .section-main:hover .section-label {

@@ -26,7 +26,7 @@ const commands = {
       data-method="curl"
       type="button"
     >
-      <span class="tab-label">[curl]</span>
+      <span class="tab-label" data-scramble>[curl]</span>
     </button>
     <button
       class="tab"
@@ -37,7 +37,7 @@ const commands = {
       data-method="npm"
       type="button"
     >
-      <span class="tab-label">[npm]</span>
+      <span class="tab-label" data-scramble>[npm]</span>
     </button>
     <button
       class="tab"
@@ -48,7 +48,7 @@ const commands = {
       data-method="brew"
       type="button"
     >
-      <span class="tab-label">[brew]</span>
+      <span class="tab-label" data-scramble>[brew]</span>
     </button>
   </div>
 
@@ -317,8 +317,28 @@ const commands = {
       // Add keyboard navigation
       this.wrapper.addEventListener('keydown', (e) => this.handleKeydown(e));
 
-      // Detect OS and auto-select appropriate tab
+      // Detect OS and auto-select appropriate tab (this also triggers initial scramble)
       this.autoSelectByOS();
+
+      // Trigger initial scramble for active panel after a short delay
+      setTimeout(() => this.triggerInitialScramble(), 100);
+    }
+
+    private triggerInitialScramble(): void {
+      const activePanel = this.wrapper.querySelector('.tab-panel.active');
+      if (activePanel && typeof (window as any).scrambleText === 'function') {
+        const commandText = activePanel.querySelector('.command-text');
+        const methodNote = activePanel.querySelector('.method-note');
+
+        if (commandText) {
+          const text = commandText.textContent || '';
+          (window as any).scrambleText(commandText, text, { duration: 700 });
+        }
+        if (methodNote) {
+          const text = methodNote.textContent || '';
+          (window as any).scrambleText(methodNote, text, { duration: 500 });
+        }
+      }
     }
 
     private selectTab(selectedTab: HTMLButtonElement): void {
@@ -338,6 +358,21 @@ const commands = {
         const isActive = panel.dataset.method === method;
         panel.classList.toggle('active', isActive);
         panel.hidden = !isActive;
+
+        // Trigger scramble animation on newly visible panel content
+        if (isActive && typeof (window as any).scrambleText === 'function') {
+          const commandText = panel.querySelector('.command-text');
+          const methodNote = panel.querySelector('.method-note');
+
+          if (commandText) {
+            const text = commandText.textContent || '';
+            (window as any).scrambleText(commandText, text, { duration: 500 });
+          }
+          if (methodNote) {
+            const text = methodNote.textContent || '';
+            (window as any).scrambleText(methodNote, text, { duration: 400 });
+          }
+        }
       });
     }
 
@@ -408,14 +443,21 @@ const commands = {
         this.selectTab(preferredTab);
       }
 
-      // Show OS hint
+      // Show OS hint with scramble animation
       if (this.osHint && os !== 'unknown') {
         const osNames: Record<string, string> = {
           macos: 'macOS',
           windows: 'Windows',
           linux: 'Linux',
         };
-        this.osHint.textContent = `Detected: ${osNames[os]}`;
+        const hintText = `Detected: ${osNames[os]}`;
+        this.osHint.textContent = hintText;
+        this.osHint.style.opacity = '1';
+
+        // Trigger scramble animation if available
+        if (typeof (window as any).scrambleText === 'function') {
+          (window as any).scrambleText(this.osHint, hintText, { duration: 600 });
+        }
       }
     }
   }

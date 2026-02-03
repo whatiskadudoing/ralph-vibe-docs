@@ -35,14 +35,14 @@ const faqItems = [
 
 <section id="faq" class="faq" aria-labelledby="faq-heading">
   <div class="container">
-    <h2 id="faq-heading" class="section-heading">Frequently Asked Questions</h2>
+    <h2 id="faq-heading" class="section-heading" data-scramble-reveal="Frequently Asked Questions">Frequently Asked Questions</h2>
 
     <div class="faq-list">
       {
         faqItems.map((item) => (
           <details class="faq-item" data-faq-item>
             <summary class="faq-summary">
-              <span class="faq-question">{item.question}</span>
+              <span class="faq-question" data-scramble>{item.question}</span>
               <span class="faq-icon" aria-hidden="true">
                 <svg
                   width="20"
@@ -86,8 +86,10 @@ const faqItems = [
 
 <style>
   .faq {
-    padding: var(--space-7) var(--space-3);
-    /* Continues the void background */
+    padding: var(--space-8) var(--space-5);
+    background: var(--void);
+    position: relative;
+    z-index: 10;
   }
 
   .container {
@@ -97,12 +99,12 @@ const faqItems = [
 
   .section-heading {
     font-family: var(--font-sans);
-    font-size: clamp(1.5rem, 4vw, var(--text-section));
+    font-size: clamp(1.75rem, 4vw, var(--text-section));
     font-weight: 600;
     text-align: center;
     margin: 0 0 var(--space-6);
     color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .faq-list {
@@ -217,10 +219,6 @@ const faqItems = [
 
   /* Tablet and up */
   @media (min-width: 768px) {
-    .faq {
-      padding: var(--space-8) var(--space-5);
-    }
-
     .faq-summary {
       padding: var(--space-4) 0;
     }
@@ -236,6 +234,10 @@ const faqItems = [
 
   /* Desktop */
   @media (min-width: 1024px) {
+    .faq {
+      padding: 80px var(--space-6);
+    }
+
     .faq-question {
       font-size: 1.125rem;
     }

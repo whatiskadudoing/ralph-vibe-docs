@@ -1,9 +1,10 @@
 ---
 import Layout from '../components/Layout.astro';
-import Hero from '../components/Hero.astro';
+import HeroMinimal from '../components/HeroMinimal.astro';
+import Statement from '../components/Statement.astro';
 import HowItWorks from '../components/HowItWorks.astro';
 import Features from '../components/Features.astro';
-import Examples from '../components/Examples.astro';
+import Showcase from '../components/Showcase.astro';
 import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
 ---
@@ -12,15 +13,18 @@ import Footer from '../components/Footer.astro';
   title="Ralph Vibe - Build while AFK"
   description="The Ralph technique, without learning the Ralph technique. Describe it. Walk away. Working code."
 >
-  <Hero />
-  <div class="section-divider" aria-hidden="true"></div>
+  <HeroMinimal />
+  <Statement />
   <HowItWorks />
-  <div class="section-divider" aria-hidden="true"></div>
   <Features />
-  <div class="section-divider" aria-hidden="true"></div>
-  <Examples />
-  <div class="section-divider" aria-hidden="true"></div>
+  <Showcase />
   <FAQ />
-  <div class="section-divider" aria-hidden="true"></div>
   <Footer />
 </Layout>
+
+<style is:global>
+  /* Remove section dividers for cleaner flow */
+  .section-divider {
+    display: none;
+  }
+</style>

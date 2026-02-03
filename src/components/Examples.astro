@@ -70,22 +70,22 @@ const examples: Example[] = [
 
 <style>
   .examples {
-    padding: var(--space-7) var(--space-3);
+    padding: var(--space-8) var(--space-5);
   }
 
   .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
   }
 
   .section-heading {
     font-family: var(--font-sans);
-    font-size: clamp(1.5rem, 4vw, var(--text-section));
+    font-size: clamp(1.75rem, 4vw, var(--text-section));
     font-weight: 600;
     text-align: center;
     margin: 0 0 var(--space-2);
     color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .section-subheading {
@@ -109,41 +109,20 @@ const examples: Example[] = [
     padding: var(--space-5);
     background: var(--output);
     border-radius: 16px;
-    /* Industrial shadow - solid black, no blue tint */
-    box-shadow:
-      0 20px 40px rgba(0,0,0,0.35),
-      0 8px 16px rgba(0,0,0,0.25);
+    /* Lighter, more elegant shadows */
+    box-shadow: var(--shadow-card);
     /* Edge highlight for physical presence */
     border-top: var(--edge-top);
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: transform var(--duration-micro) var(--ease-out),
-                box-shadow var(--duration-micro) var(--ease-out);
-  }
-
-  /* Subtle paper texture effect */
-  .example-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0,0,0,0.01) 2px,
-      rgba(0,0,0,0.01) 4px
-    );
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0.5;
+    transition: transform var(--duration-state) var(--ease-smooth),
+                box-shadow var(--duration-state) var(--ease-smooth);
   }
 
   .example-card:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      0 24px 48px rgba(0,0,0,0.45),
-      0 12px 24px rgba(0,0,0,0.35);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
   }
 
   .example-header {
@@ -172,7 +151,7 @@ const examples: Example[] = [
     padding: 0;
     background: none;
     color: var(--bracket);
-    letter-spacing: 0.02em;
+    letter-spacing: var(--tracking-wider);
   }
 
   /* Add brackets via pseudo-elements */
@@ -216,10 +195,6 @@ const examples: Example[] = [
 
   /* Tablet: side-by-side */
   @media (min-width: 768px) {
-    .examples {
-      padding: var(--space-8) var(--space-5);
-    }
-
     .examples-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-5);
@@ -230,14 +205,18 @@ const examples: Example[] = [
     }
   }
 
-  /* Desktop: slightly larger spacing */
+  /* Desktop: larger spacing and padding */
   @media (min-width: 1024px) {
+    .examples {
+      padding: 80px var(--space-6);
+    }
+
     .examples-grid {
-      gap: var(--space-6);
+      gap: 40px;
     }
 
     .example-card {
-      padding: var(--space-6);
+      padding: var(--space-5);
     }
 
     .example-name {

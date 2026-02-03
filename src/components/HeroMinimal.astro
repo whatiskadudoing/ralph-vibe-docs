@@ -1,0 +1,318 @@
+---
+/**
+ * HeroMinimal - Bold, minimal hero section
+ * Inspired by Alche.studio's stark, impactful design
+ */
+import InstallCommand from './InstallCommand.astro';
+import SlotButton from './SlotButton.astro';
+
+const githubUrl = 'https://github.com/whatiskadudoing/ralph-vibe';
+---
+
+<section id="hero" class="hero">
+  <div class="hero-content">
+    <div class="hero-meta">
+      <span class="meta-bracket">[</span>
+      <span class="meta-text" data-scramble-reveal="Autonomous Build System">Autonomous Build System</span>
+      <span class="meta-bracket">]</span>
+    </div>
+
+    <h1 class="headline">
+      <span class="headline-line" data-scramble-reveal="Describe it.">Describe it.</span>
+      <span class="headline-line" data-scramble-reveal="Walk away.">Walk away.</span>
+      <span class="headline-line"><span class="highlight" data-scramble-reveal="Working code.">Working code.</span></span>
+    </h1>
+
+    <p class="subheadline" data-scramble-reveal="Everyone's talking about the Ralph Wiggum technique. Ralph Vibe gives you all the benefits — without the homework.">
+      Everyone's talking about the Ralph Wiggum technique. Ralph Vibe gives you all the benefits — without the homework.
+    </p>
+
+    <div class="hero-actions">
+      <div class="install-wrapper">
+        <InstallCommand />
+      </div>
+
+      <div class="action-links">
+        <SlotButton
+          href={githubUrl}
+          text="View on GitHub"
+          hoverText="Star the repo"
+          variant="ghost"
+          external
+        />
+        <SlotButton
+          href="#how-it-works"
+          text="How it works"
+          hoverText="Learn more"
+          variant="signal"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="visual-grid">
+      <div class="grid-line grid-line--h1"></div>
+      <div class="grid-line grid-line--h2"></div>
+      <div class="grid-line grid-line--v1"></div>
+      <div class="grid-line grid-line--v2"></div>
+    </div>
+    <div class="visual-glow"></div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span class="scroll-text" data-scramble-reveal="Scroll">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-7) var(--space-5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    max-width: 900px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-mono);
+    font-size: var(--text-bracket);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    margin-bottom: var(--space-5);
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+  }
+
+  .meta-bracket {
+    color: var(--bracket);
+  }
+
+  .meta-text {
+    color: var(--text-secondary);
+  }
+
+  .headline {
+    font-family: var(--font-sans);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    margin: 0 0 var(--space-5);
+    color: var(--text-primary);
+    letter-spacing: -0.04em;
+  }
+
+  .headline-line {
+    display: block;
+    opacity: 0;
+  }
+
+  .headline-line[data-scramble-reveal] {
+    opacity: 0;
+  }
+
+  .highlight {
+    color: var(--signal);
+  }
+
+  .subheadline {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    line-height: 1.6;
+    letter-spacing: var(--tracking-normal);
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-6);
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.75s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s forwards;
+  }
+
+  .install-wrapper {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .action-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Visual Elements */
+  .hero-visual {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .visual-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+  }
+
+  .grid-line {
+    position: absolute;
+    background: var(--text-primary);
+  }
+
+  .grid-line--h1 {
+    top: 25%;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+
+  .grid-line--h2 {
+    top: 75%;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+
+  .grid-line--v1 {
+    left: 25%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+  }
+
+  .grid-line--v2 {
+    left: 75%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+  }
+
+  .visual-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 82, 42, 0.08) 0%, transparent 70%);
+    filter: blur(60px);
+  }
+
+  /* Scroll Hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: var(--space-5);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    opacity: 0;
+    animation: fadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+  }
+
+  .scroll-text {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--text-tertiary), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scaleY(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scaleY(1.2);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: var(--space-6) var(--space-3);
+    }
+
+    .action-links {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero {
+      padding: var(--space-8) var(--space-6);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .headline {
+      font-size: clamp(3.5rem, 8vw, 6rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .headline-line,
+    .hero-meta,
+    .subheadline,
+    .hero-actions,
+    .scroll-hint {
+      opacity: 1;
+      animation: none;
+    }
+
+    .scroll-line {
+      animation: none;
+    }
+  }
+</style>

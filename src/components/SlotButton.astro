@@ -1,0 +1,124 @@
+---
+interface Props {
+  href: string;
+  text: string;
+  hoverText?: string;
+  external?: boolean;
+  variant?: 'default' | 'ghost' | 'signal';
+  class?: string;
+}
+
+const {
+  href,
+  text,
+  hoverText = text,
+  external = false,
+  variant = 'default',
+  class: className = ''
+} = Astro.props;
+
+const externalProps = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+---
+
+<a
+  href={href}
+  class:list={['slot-button', `slot-button--${variant}`, className]}
+  data-slot-button
+  {...externalProps}
+>
+  <span class="slot-button__container">
+    <span class="slot-button__text slot-button__text--default" data-scramble>{text}</span>
+    <span class="slot-button__text slot-button__text--hover">{hoverText}</span>
+  </span>
+</a>
+
+<style>
+  .slot-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-size: var(--text-code);
+    font-weight: 500;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    padding: var(--space-3) var(--space-4);
+    border-radius: 8px;
+    transition: background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                border-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .slot-button__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 1.2em;
+    overflow: hidden;
+  }
+
+  .slot-button__text {
+    display: block;
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    line-height: 1.2;
+  }
+
+  .slot-button__text--default {
+    transform: translateY(0);
+  }
+
+  .slot-button__text--hover {
+    transform: translateY(0);
+  }
+
+  .slot-button:hover .slot-button__text--default {
+    transform: translateY(-100%);
+  }
+
+  .slot-button:hover .slot-button__text--hover {
+    transform: translateY(-100%);
+  }
+
+  /* Default variant - filled signal */
+  .slot-button--default {
+    background: var(--signal);
+    color: var(--output);
+    border: 1px solid var(--signal);
+  }
+
+  .slot-button--default:hover {
+    background: var(--signal-glow);
+    border-color: var(--signal-glow);
+  }
+
+  /* Ghost variant - outlined */
+  .slot-button--ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--concrete);
+  }
+
+  .slot-button--ghost:hover {
+    border-color: var(--signal);
+    color: var(--signal);
+  }
+
+  /* Signal variant - text only with signal color */
+  .slot-button--signal {
+    background: transparent;
+    color: var(--signal);
+    border: none;
+    padding: var(--space-2) 0;
+  }
+
+  .slot-button--signal:hover {
+    color: var(--signal-glow);
+  }
+
+  .slot-button:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus), var(--shadow-signal-glow);
+  }
+</style>

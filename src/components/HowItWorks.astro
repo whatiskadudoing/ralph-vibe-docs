@@ -30,15 +30,15 @@ const steps = [
 
 <section id="how-it-works" class="how-it-works" aria-labelledby="how-it-works-heading">
   <div class="container">
-    <h2 id="how-it-works-heading" class="section-heading">How It Works</h2>
+    <h2 id="how-it-works-heading" class="section-heading" data-scramble-reveal="How It Works">How It Works</h2>
 
     <ol class="steps" role="list">
       {steps.map((step, index) => (
         <>
           <li class="step">
-            <span class="step-number" aria-hidden="true">[{step.number}]</span>
-            <h3 class="step-label">{step.label}</h3>
-            <p class="step-description">{step.description}</p>
+            <span class="step-number" aria-hidden="true" data-scramble>[{step.number}]</span>
+            <h3 class="step-label" data-scramble>{step.label}</h3>
+            <p class="step-description" data-scramble>{step.description}</p>
           </li>
           {index < steps.length - 1 && (
             <li class="arrow" aria-hidden="true">
@@ -56,7 +56,7 @@ const steps = [
       ))}
     </ol>
 
-    <p class="vibe-callout">
+    <p class="vibe-callout" data-scramble-reveal="With --vibe, it chains automatically. One command, zero babysitting.">
       With <code>--vibe</code>, it chains automatically. One command, zero babysitting.
     </p>
   </div>
@@ -64,22 +64,25 @@ const steps = [
 
 <style>
   .how-it-works {
-    padding: var(--space-7) var(--space-3);
+    padding: var(--space-8) var(--space-5);
+    background: var(--void);
+    position: relative;
+    z-index: 10;
   }
 
   .container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
   }
 
   .section-heading {
     font-family: var(--font-sans);
-    font-size: clamp(1.5rem, 4vw, var(--text-section));
+    font-size: clamp(1.75rem, 4vw, var(--text-section));
     font-weight: 600;
     text-align: center;
     margin: 0 0 var(--space-6);
     color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .steps {
@@ -99,19 +102,17 @@ const steps = [
     text-align: center;
     padding: var(--space-4);
     background: var(--void-warm);
-    border-radius: 16px;
+    border-radius: 12px;
     border: 1px solid var(--concrete);
     width: 100%;
     max-width: 200px;
-    box-shadow: var(--shadow-subtle);
-    border-top: var(--edge-top);
-    transition: transform var(--duration-micro) var(--ease-out),
-                box-shadow var(--duration-micro) var(--ease-out);
+    transition: transform var(--duration-state) var(--ease-smooth),
+                border-color var(--duration-state) var(--ease-smooth);
   }
 
   .step:hover {
     transform: translateY(-2px);
-    box-shadow: var(--shadow-elevated);
+    border-color: var(--metal);
   }
 
   .step-number {
@@ -119,7 +120,7 @@ const steps = [
     font-size: var(--text-bracket);
     font-weight: 500;
     color: var(--bracket);
-    letter-spacing: 0.02em;
+    letter-spacing: var(--tracking-wider);
     margin-bottom: var(--space-2);
   }
 
@@ -174,7 +175,6 @@ const steps = [
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: var(--shadow-subtle);
   }
 
   .vibe-callout code {
@@ -189,10 +189,6 @@ const steps = [
 
   /* Tablet and up: horizontal flow */
   @media (min-width: 768px) {
-    .how-it-works {
-      padding: var(--space-8) var(--space-5);
-    }
-
     .steps {
       flex-direction: row;
       justify-content: center;
@@ -213,8 +209,12 @@ const steps = [
     }
   }
 
-  /* Desktop: slightly larger */
+  /* Desktop: larger spacing */
   @media (min-width: 1024px) {
+    .how-it-works {
+      padding: 80px var(--space-6);
+    }
+
     .steps {
       gap: var(--space-3);
     }

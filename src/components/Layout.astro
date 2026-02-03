@@ -69,6 +69,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   <script>
     import '../scripts/alche/main';
+    import { initTextEffects } from '../scripts/text-effects';
+
+    // Initialize text effects after page load
+    document.addEventListener('DOMContentLoaded', () => {
+      initTextEffects();
+    });
   </script>
 </body>
 </html>
